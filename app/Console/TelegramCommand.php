@@ -5,11 +5,12 @@ namespace App\Console;
 use App\Services\TelegramService;
 use Illuminate\Console\Command;
 use Telegram\Bot\Laravel\Facades\Telegram;
+use Telegram\Bot\Objects\Update;
 
 class TelegramCommand extends Command
 {
     /** @var string $name */
-    protected $name = 'telegram';
+    protected $name = 'telegram:start';
 
     /** @var TelegramService $telegramService */
     protected $telegramService;
@@ -30,6 +31,7 @@ class TelegramCommand extends Command
     public function handle()
     {
         while (1) {
+            /** @var Update[] $updates */
             $updates = Telegram::getUpdates();
             foreach ($updates as $update) {
                 $this->telegramService->handle($update);

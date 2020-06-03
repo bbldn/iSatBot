@@ -2,10 +2,22 @@
 
 namespace App;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
+/**
+ * @property integer id
+ * @property string name
+ * @property string password
+ * @property Collection chats
+ * @method static User|null find(integer $id)
+ * @method static Collection all($columns = ['*'])
+ * @method static Builder where($column, $operator = null, $value = null, $boolean = 'and')
+ * @method static User create($attributes)
+ */
 class User extends Authenticatable
 {
     use Notifiable;
@@ -16,7 +28,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'password',
     ];
 
     /**
@@ -25,15 +37,17 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password',
     ];
 
+    /** @var Chat|null $chat */
+    public $chat = null;
+
     /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
+     * @return HasMany
      */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
+    public function chats(): HasMany
+    {
+        return $this->hasMany(Chat::class, 'user_id', 'id');
+    }
 }
