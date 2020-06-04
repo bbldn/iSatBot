@@ -23,11 +23,11 @@ class LoginActivity extends Activity
             return false;
         }
 
-        if (false === key_exists('action', $chat->data)) {
+        if (false === $chat->data->has('action')) {
             return false;
         }
 
-        if (false === in_array($chat->data['action'], [Actions::INPUT_LOGIN, Actions::INPUT_PASSWORD])) {
+        if (false === in_array($chat->data->get('action'), [Actions::INPUT_LOGIN, Actions::INPUT_PASSWORD])) {
             return false;
         }
 
@@ -41,7 +41,7 @@ class LoginActivity extends Activity
      */
     public function handle(Update $update): int
     {
-        $action = ChatKeeper::instance()->getChat()->data['action'];
+        $action = ChatKeeper::instance()->getChat()->data->get('action');
         if (Actions::INPUT_LOGIN === $action) {
             return $this->login($update);
         } elseif (Actions::INPUT_PASSWORD === $action) {
@@ -57,13 +57,14 @@ class LoginActivity extends Activity
      */
     protected function login(Update $update): int
     {
+        $chat = ChatKeeper::instance()->getChat();
         $text = $update->getMessage()->getText();
         $user = User::where('login', $text)->first();
 
         if (null === $user) {
             Telegram::sendMessage([
-                'chat_id' => $update->getMessage()->getChat()->getId(),
-                'text' => "Неизвестный логин: {$text}",
+                'chat_id' => $chat->chat_id,
+                'text' => "Неизвестный логин: {$text}. Попробуйте ещё раз:",
             ]);
 
             $update->getMessage()->replace(['text' => '/start']);
@@ -71,13 +72,12 @@ class LoginActivity extends Activity
             return Activity::RECYCLE;
         }
 
-        $chat = ChatKeeper::instance()->getChat();
-        $chat->data['action'] = Actions::INPUT_PASSWORD;
-        $chat->data['user_id'] = $user->id;
+        $chat->data->put('action', Actions::INPUT_PASSWORD);
+        $chat->data->put('user_id', $user->id);
         $chat->save();
 
         Telegram::sendMessage([
-            'chat_id' => $update->getMessage()->getChat()->getId(),
+            'chat_id' => $chat->chat_id,
             'text' => "Здравствуйте {$user->name}, введите пароль:",
         ]);
 
@@ -91,18 +91,18 @@ class LoginActivity extends Activity
     protected function password(Update $update): int
     {
         $chat = ChatKeeper::instance()->getChat();
-        if (false === key_exists('user_id', $chat->data)) {
+        if (false === $chat->data->has('user_id')) {
             $update->getMessage()->replace(['text' => '/start']);
-            $chat->data = [];
+            $chat->data = collect();
             $chat->save();
 
             return Activity::RECYCLE;
         }
 
-        $user = User::find($chat->data['user_id']);
+        $user = User::find((int)$chat->data->get('user_id', 0));
         if (null === $user) {
             $update->getMessage()->replace(['text' => '/start']);
-            $chat->data = [];
+            $chat->data = collect();
             $chat->save();
 
             return Activity::RECYCLE;
@@ -110,7 +110,7 @@ class LoginActivity extends Activity
 
         if (false === Hash::check($update->getMessage()->getText(), $user->password)) {
             Telegram::sendMessage([
-                'chat_id' => $update->getMessage()->getChat()->getId(),
+                'chat_id' => $chat->chat_id,
                 'text' => 'Неверный пароль. Попробуйте ввести ещё раз:',
             ]);
 
@@ -118,11 +118,13 @@ class LoginActivity extends Activity
         }
 
         Telegram::sendMessage([
-            'chat_id' => $update->getMessage()->getChat()->getId(),
+            'chat_id' => $chat->chat_id,
             'text' => 'Спасибо за авторизацию!',
         ]);
 
-        unset($chat->data['user_id']);
+        $chat->data->put('action', Actions::MENU);
+        $chat->data->forget('user_id');
+        $chat->user_id = $user->id;
         $chat->save();
 
         $update->getMessage()->replace(['text' => 'Меню']);

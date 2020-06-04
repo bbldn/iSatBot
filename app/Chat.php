@@ -10,7 +10,7 @@ use Illuminate\Database\Query\Builder;
 /**
  * @property integer id
  * @property string chat_id
- * @property array|null data
+ * @property \Illuminate\Support\Collection|null data
  * @property integer user_id
  * @property User|null user
  * @method static Chat|null find(integer $id)
@@ -34,22 +34,26 @@ class Chat extends Model
     public static function boot()
     {
         parent::boot();
-        static::retrieved(function ($model){
+
+        $up = function ($model) {
             $data = json_decode($model->data, true);
 
             if (false === is_array($data)) {
                 $data = [];
             }
 
-            $model->data = $data;
-        });
+            $model->data = collect($data);
+        };
 
-        static::saving(function ($model){
-            if (false === is_array($model->data)) {
-                $model->data = [];
+        static::retrieved($up);
+        static::saved($up);
+
+        static::saving(function ($model) {
+            if (false === is_a($model->data, \Illuminate\Support\Collection::class)) {
+                $model->data = collect();
             }
 
-            $model->data = json_encode($model->data);
+            $model->data = json_encode($model->data->all());
         });
     }
 

@@ -42,14 +42,15 @@ class MenuActivity extends Activity
             'one_time_keyboard' => true
         ]);
 
+        $chat = ChatKeeper::instance()->getChat();
+
         Telegram::sendMessage([
-            'chat_id' => ChatKeeper::instance()->getChat()->chat_id,
+            'chat_id' => $chat->chat_id,
             'text' => 'Выберите пункт:',
             'reply_markup' => $replyMarkup,
         ]);
 
-        $chat = ChatKeeper::instance()->getChat();
-        $chat->data['action'] = 'menu';
+        $chat->data->put('action', 'menu');
         $chat->save();
 
         return Activity::SUCCESS;

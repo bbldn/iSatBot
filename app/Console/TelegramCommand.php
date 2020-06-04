@@ -30,11 +30,13 @@ class TelegramCommand extends Command
      */
     public function handle()
     {
+        $offset = 0;
         while (1) {
             /** @var Update[] $updates */
-            $updates = Telegram::getUpdates();
+            $updates = Telegram::getUpdates(['offset' => $offset + 1,]);
             foreach ($updates as $update) {
                 $this->telegramService->handle($update);
+                $offset = $update->getUpdateId();
             }
             sleep(1);
         }

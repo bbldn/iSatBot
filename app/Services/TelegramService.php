@@ -26,9 +26,18 @@ class TelegramService extends Service
      */
     public function authorization(Update $update): void
     {
+        $chatId = $update->getMessage()->getChat()->getId();
+
         /** @var Chat|null $chat */
-        $chat = Chat::where('chat_id', $update->getMessage()->getChat()->getId())->first();
+        $chat = Chat::where('chat_id', $chatId)->first();
         if (null === $chat) {
+            $attributes = [
+                'chat_id' => $chatId,
+                'data' => collect(),
+                'user' => null,
+            ];
+            ChatKeeper::instance()->setChat(new Chat($attributes));
+
             return;
         }
 

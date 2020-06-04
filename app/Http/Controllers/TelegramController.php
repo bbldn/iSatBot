@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Services\TelegramService;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Cache;
 use Telegram\Bot\Laravel\Facades\Telegram;
 use Telegram\Bot\Objects\Update;
 
@@ -26,11 +27,13 @@ class TelegramController extends Controller
      */
     public function webHookHandlerAction(): Response
     {
+        $offset = Cache::get('offset', 0);
         /** @var Update[] $updates */
-        $updates = Telegram::getWebhookUpdates();
+        $updates = Telegram::getWebhookUpdates(['offset' => $offset + 1,]);
 
         foreach ($updates as $update) {
             $this->telegramService->handle($update);
+            Cache::put('offset', $update->getUpdateId());
         }
 
         return response('ok');

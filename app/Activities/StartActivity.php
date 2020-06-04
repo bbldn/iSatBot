@@ -2,7 +2,7 @@
 
 namespace App\Activities;
 
-use App\Chat;
+use App\Helpers\ChatKeeper;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 use Telegram\Bot\Laravel\Facades\Telegram;
@@ -18,8 +18,13 @@ class StartActivity extends Activity
     {
         /** @var User $user */
         $user = Auth::user();
+        if (null !== $user) {
+            return false;
+        }
 
-        if (null === $user) {
+        $chat = ChatKeeper::instance()->getChat();
+
+        if (true === $chat->data->isEmpty()) {
             return true;
         }
 
@@ -37,9 +42,11 @@ class StartActivity extends Activity
         }
 
         $chatId = $update->getMessage()->getChat()->getId();
-        Chat::create([
+        $chat = ChatKeeper::instance()->getChat();
+
+        $chat->update([
             'chat_id' => $chatId,
-            'data' => ['action' => Actions::INPUT_LOGIN],
+            'data' => collect(['action' => Actions::INPUT_LOGIN]),
             'user_id' => null,
         ]);
 
