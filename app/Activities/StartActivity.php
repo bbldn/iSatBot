@@ -23,23 +23,23 @@ class StartActivity extends Activity
             return true;
         }
 
-        if (null === $user->chat) {
-            return true;
-        }
-
         return false;
     }
 
     /**
      * @param Update $update
-     * @return bool
+     * @return int
      */
-    public function handle(Update $update): bool
+    public function handle(Update $update): int
     {
+        if ('/start' !== $update->getMessage()->getText()) {
+            return Activity::FAIL;
+        }
+
         $chatId = $update->getMessage()->getChat()->getId();
         Chat::create([
             'chat_id' => $chatId,
-            'data' => json_encode(['action' => 'input-login']),
+            'data' => ['action' => Actions::INPUT_LOGIN],
             'user_id' => null,
         ]);
 
@@ -48,6 +48,6 @@ class StartActivity extends Activity
             'text' => 'Введите логин',
         ]);
 
-        return true;
+        return Activity::SUCCESS;
     }
 }

@@ -10,6 +10,7 @@ use Illuminate\Notifications\Notifiable;
 
 /**
  * @property integer id
+ * @property string login
  * @property string name
  * @property string password
  * @property Collection chats

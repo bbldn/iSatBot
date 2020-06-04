@@ -10,7 +10,7 @@ use Illuminate\Database\Query\Builder;
 /**
  * @property integer id
  * @property string chat_id
- * @property string data
+ * @property array|null data
  * @property integer user_id
  * @property User|null user
  * @method static Chat|null find(integer $id)
@@ -27,6 +27,31 @@ class Chat extends Model
     protected $fillable = [
         'chat_id', 'data', 'user_id',
     ];
+
+    /**
+     *
+     */
+    public static function boot()
+    {
+        parent::boot();
+        static::retrieved(function ($model){
+            $data = json_decode($model->data, true);
+
+            if (false === is_array($data)) {
+                $data = [];
+            }
+
+            $model->data = $data;
+        });
+
+        static::saving(function ($model){
+            if (false === is_array($model->data)) {
+                $model->data = [];
+            }
+
+            $model->data = json_encode($model->data);
+        });
+    }
 
     /**
      * @return HasOne
