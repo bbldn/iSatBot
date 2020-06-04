@@ -45,7 +45,7 @@ class StartActivity extends Activity
 
         Telegram::sendMessage([
             'chat_id' => $chatId,
-            'text' => 'Введите логин',
+            'text' => 'Введите логин:',
         ]);
 
         return Activity::SUCCESS;

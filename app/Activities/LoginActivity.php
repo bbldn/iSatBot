@@ -122,7 +122,10 @@ class LoginActivity extends Activity
             'text' => 'Спасибо за авторизацию!',
         ]);
 
-        $update->getMessage()->replace(['text' => '/menu']);
+        unset($chat->data['user_id']);
+        $chat->save();
+
+        $update->getMessage()->replace(['text' => 'Меню']);
 
         return Activity::RECYCLE;
     }

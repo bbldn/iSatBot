@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Activities\Activity;
 use App\Activities\LoginActivity;
+use App\Activities\MenuActivity;
 use App\Activities\StartActivity;
 use App\Chat;
 use App\Helpers\ChatKeeper;
@@ -17,6 +18,7 @@ class TelegramService extends Service
     protected $activities = [
         StartActivity::class,
         LoginActivity::class,
+        MenuActivity::class,
     ];
 
     /**
