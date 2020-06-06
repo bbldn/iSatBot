@@ -12,6 +12,9 @@ class TelegramCommand extends Command
     /** @var string $name */
     protected $name = 'telegram:start';
 
+    /** @var string $description */
+    protected $description = 'Long pulling';
+
     /** @var TelegramService $telegramService */
     protected $telegramService;
 
