@@ -20,9 +20,7 @@ class SettingActivity extends Activity
             return false;
         }
 
-        $chat = ChatKeeper::instance()->getChat();
-
-        return in_array($chat->data->get('action'), ['setting']);
+        return 'setting' === ChatKeeper::instance()->getChat()->data->get('action');
     }
 
     /**
@@ -69,9 +67,9 @@ class SettingActivity extends Activity
         $exists = Listener::where('user_id', $chat->user->id)->where('event', 'backup')->exists();
 
         if (true === $exists) {
-            $keyboard[] = ['Подписаться на бэкапы',];
-        } else {
             $keyboard[] = ['Отписаться от бэкапов',];
+        } else {
+            $keyboard[] = ['Подписаться на бэкапы',];
         }
 
         $keyboard[] = ['В Меню',];
@@ -119,7 +117,7 @@ class SettingActivity extends Activity
             ]);
         }
 
-        $update->getMessage()->replace(['text' => 'Настройки']);
+        $update->put('message', $update->getMessage()->put('text', 'Настройки'));
 
         return Activity::RECYCLE;
     }
@@ -147,7 +145,7 @@ class SettingActivity extends Activity
             ]);
         }
 
-        $update->getMessage()->replace(['text' => 'Настройки']);
+        $update->put('message', $update->getMessage()->put('text', 'Настройки'));
 
         return Activity::RECYCLE;
     }
@@ -168,7 +166,7 @@ class SettingActivity extends Activity
             ]);
         } else {
             Listener::create([
-                'event' => 'order_new',
+                'event' => 'backup',
                 'user_id' => $chat->user->id,
             ]);
 
@@ -178,7 +176,7 @@ class SettingActivity extends Activity
             ]);
         }
 
-        $update->getMessage()->replace(['text' => 'Настройки']);
+        $update->put('message', $update->getMessage()->put('text', 'Настройки'));
 
         return Activity::RECYCLE;
     }
@@ -206,7 +204,7 @@ class SettingActivity extends Activity
             ]);
         }
 
-        $update->getMessage()->replace(['text' => 'Настройки']);
+        $update->put('message', $update->getMessage()->put('text', 'Настройки'));
 
         return Activity::RECYCLE;
     }
@@ -220,7 +218,7 @@ class SettingActivity extends Activity
         $chat = ChatKeeper::instance()->getChat();
         $chat->data->put('action', 'menu');
         $chat->save();
-        $update->getMessage()->replace(['text' => 'Меню']);
+        $update->put('message', $update->getMessage()->put('text', 'Меню'));
 
         return Activity::RECYCLE;
     }

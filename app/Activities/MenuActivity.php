@@ -22,9 +22,7 @@ class MenuActivity extends Activity
             return false;
         }
 
-        $chat = ChatKeeper::instance()->getChat();
-
-        return in_array($chat->data->get('action'), ['menu', 'setting']);
+        return 'menu' === ChatKeeper::instance()->getChat()->data->get('action');
     }
 
     /**
@@ -75,5 +73,24 @@ class MenuActivity extends Activity
         $chat->save();
 
         return Activity::SUCCESS;
+    }
+
+    /**
+     * @param Update $update
+     * @return int
+     */
+    public function setting(Update $update): int
+    {
+        if (false === in_array($update->getMessage()->getText(), ['Настройки',])) {
+            return Activity::FAIL;
+        }
+
+        $chat = ChatKeeper::instance()->getChat();
+        $chat->data->put('action', 'setting');
+        $chat->save();
+
+        $update->put('message', $update->getMessage()->put('text', 'Настройки'));
+
+        return Activity::RECYCLE;
     }
 }

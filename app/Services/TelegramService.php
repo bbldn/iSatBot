@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Activities\Activity;
 use App\Activities\LoginActivity;
 use App\Activities\MenuActivity;
+use App\Activities\SettingActivity;
 use App\Activities\StartActivity;
 use App\Chat;
 use App\Helpers\ChatKeeper;
@@ -19,6 +20,7 @@ class TelegramService extends Service
         StartActivity::class,
         LoginActivity::class,
         MenuActivity::class,
+        SettingActivity::class,
     ];
 
     /**
@@ -57,8 +59,8 @@ class TelegramService extends Service
         $this->authorization($update);
 
         $status = Activity::FAIL;
-        $cycle = false;
         while (true) {
+            $cycle = false;
             foreach ($this->activities as $activity) {
                 if (true === $activity::able($update)) {
                     /** @var Activity $obj */

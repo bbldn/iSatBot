@@ -67,7 +67,7 @@ class LoginActivity extends Activity
                 'text' => "Неизвестный логин: {$text}. Попробуйте ещё раз:",
             ]);
 
-            $update->getMessage()->replace(['text' => '/start']);
+            $update->put('message', $update->getMessage()->put('text', '/start'));
 
             return Activity::RECYCLE;
         }
@@ -92,7 +92,7 @@ class LoginActivity extends Activity
     {
         $chat = ChatKeeper::instance()->getChat();
         if (false === $chat->data->has('user_id')) {
-            $update->getMessage()->replace(['text' => '/start']);
+            $update->put('message', $update->getMessage()->put('text', '/start'));
             $chat->data = collect();
             $chat->save();
 
@@ -101,7 +101,7 @@ class LoginActivity extends Activity
 
         $user = User::find((int)$chat->data->get('user_id', 0));
         if (null === $user) {
-            $update->getMessage()->replace(['text' => '/start']);
+            $update->put('message', $update->getMessage()->put('text', '/start'));
             $chat->data = collect();
             $chat->save();
 
@@ -127,7 +127,7 @@ class LoginActivity extends Activity
         $chat->user_id = $user->id;
         $chat->save();
 
-        $update->getMessage()->replace(['text' => 'Меню']);
+        $update->put('message', $update->getMessage()->put('text', 'Меню'));
 
         return Activity::RECYCLE;
     }
