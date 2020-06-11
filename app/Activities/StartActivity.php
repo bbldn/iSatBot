@@ -24,11 +24,11 @@ class StartActivity extends Activity
 
         $chat = ChatKeeper::instance()->getChat();
 
-        if (true === $chat->data->isEmpty()) {
-            return true;
+        if (true !== $chat->data->isEmpty()) {
+            return false;
         }
 
-        return false;
+        return true;
     }
 
     /**
@@ -44,11 +44,12 @@ class StartActivity extends Activity
         $chatId = $update->getMessage()->getChat()->getId();
         $chat = ChatKeeper::instance()->getChat();
 
-        $chat->update([
+        $chat->fill([
             'chat_id' => $chatId,
             'data' => collect(['action' => Actions::INPUT_LOGIN]),
             'user_id' => null,
         ]);
+        $chat->save();
 
         Telegram::sendMessage([
             'chat_id' => $chatId,
