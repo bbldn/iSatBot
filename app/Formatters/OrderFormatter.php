@@ -16,7 +16,7 @@ class OrderFormatter extends Formatter
             return view('order.blade.php', $order);
         } catch (Throwable $e) {
             return $e->getMessage();
-        }
+        }//
     }
 
     /**
