@@ -28,13 +28,12 @@ class TelegramController extends Controller
     public function webHookHandlerAction(): Response
     {
         $offset = Cache::get('offset', 0);
-        /** @var Update[] $updates */
-        $updates = Telegram::getWebhookUpdates(['offset' => $offset + 1,]);
 
-        foreach ($updates as $update) {
-            $this->telegramService->handle($update);
-            Cache::put('offset', $update->getUpdateId());
-        }
+        /** @var Update $update */
+        $update = Telegram::getWebhookUpdates(['offset' => $offset + 1,]);
+        $this->telegramService->handle($update);
+
+        Cache::put('offset', $update->getUpdateId());
 
         return response('ok');
     }
