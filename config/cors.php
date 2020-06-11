@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'paths' => ['api/*', '/telegram/webook'],
+    'paths' => ['api/*'],
 
     'allowed_methods' => ['*'],
 
