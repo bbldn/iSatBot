@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Activities\Activity;
 use App\Activities\LoginActivity;
 use App\Activities\MenuActivity;
+use App\Activities\SearchActivity;
 use App\Activities\SettingActivity;
 use App\Activities\StartActivity;
 use App\Chat;
@@ -19,6 +20,7 @@ class TelegramService extends Service
     protected $activities = [
         StartActivity::class,
         LoginActivity::class,
+        SearchActivity::class,
         MenuActivity::class,
         SettingActivity::class,
     ];
@@ -53,6 +55,7 @@ class TelegramService extends Service
 
     /**
      * @param Update $update
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
     public function handle(Update $update): void
     {
@@ -64,7 +67,7 @@ class TelegramService extends Service
             foreach ($this->activities as $activity) {
                 if (true === $activity::able($update)) {
                     /** @var Activity $obj */
-                    $obj = new $activity();
+                    $obj = app()->make($activity);
                     $status = $obj->handle($update);
                     if (Activity::SUCCESS === $status) {
                         break;

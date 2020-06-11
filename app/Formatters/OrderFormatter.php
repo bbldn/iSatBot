@@ -13,7 +13,7 @@ class OrderFormatter extends Formatter
     public static function formatOrderOnly(array $order): string
     {
         try {
-            return view('order.blade.php', $order);
+            return (string)view('order', $order);
         } catch (Throwable $e) {
             return $e->getMessage();
         }
@@ -28,11 +28,11 @@ class OrderFormatter extends Formatter
         $result = [];
         foreach ($orderProducts as $orderProduct) {
             try {
-                $view = view('order-product.blade.php', $orderProduct);
+                $view = view('order-product', $orderProduct);
             } catch (Throwable $e) {
                 $view = $e->getMessage();
             }
-            $result[] = $view;
+            $result[] = (string)$view;
         }
 
         return $result;

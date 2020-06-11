@@ -8,7 +8,7 @@ class OrderService extends Service
 {
     /**
      * @param int $id
-     * @return array
+     * @return string[]
      */
     public function getOrderInformation(int $id): array
     {
@@ -18,7 +18,7 @@ class OrderService extends Service
             return ['Сервер недоступен'];
         }
 
-        $response = json_encode($response);
+        $response = json_decode($response, true);
 
         if (false === $response) {
             return ['Сервер вернул не правильный ответ'];
