@@ -16,9 +16,7 @@ class StartActivity extends Activity
      */
     public static function able(Update $update): bool
     {
-        /** @var User $user */
-        $user = Auth::user();
-        if (null !== $user) {
+        if (null !== Auth::user()) {
             return false;
         }
 

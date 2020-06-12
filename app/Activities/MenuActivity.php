@@ -22,7 +22,7 @@ class MenuActivity extends Activity
             return false;
         }
 
-        return 'menu' === ChatKeeper::instance()->getChat()->data->get('action');
+        return Actions::MENU === ChatKeeper::instance()->getChat()->data->get('action');
     }
 
     /**
@@ -58,7 +58,7 @@ class MenuActivity extends Activity
         $replyMarkup = Telegram::replyKeyboardMarkup([
             'keyboard' => $keyboard,
             'resize_keyboard' => true,
-            'one_time_keyboard' => true
+            'one_time_keyboard' => true,
         ]);
 
         $chat = ChatKeeper::instance()->getChat();
@@ -69,7 +69,7 @@ class MenuActivity extends Activity
             'reply_markup' => $replyMarkup,
         ]);
 
-        $chat->data->put('action', 'menu');
+        $chat->data->put('action', Actions::MENU);
         $chat->save();
 
         return Activity::SUCCESS;
@@ -86,7 +86,7 @@ class MenuActivity extends Activity
         }
 
         $chat = ChatKeeper::instance()->getChat();
-        $chat->data->put('action', 'setting');
+        $chat->data->put('action', Actions::SETTING);
         $chat->save();
 
         $update->put('message', $update->getMessage()->put('text', 'Настройки'));

@@ -32,7 +32,7 @@ class SearchActivity extends Activity
             return false;
         }
 
-        if ('menu' !== ChatKeeper::instance()->getChat()->data->get('action')) {
+        if (Actions::MENU !== ChatKeeper::instance()->getChat()->data->get('action')) {
             return false;
         }
 

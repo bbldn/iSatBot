@@ -2,6 +2,7 @@
 
 namespace App\Activities;
 
+use App\Events\EventList;
 use App\Helpers\ChatKeeper;
 use App\Listener;
 use Illuminate\Support\Facades\Auth;
@@ -20,7 +21,7 @@ class SettingActivity extends Activity
             return false;
         }
 
-        return 'setting' === ChatKeeper::instance()->getChat()->data->get('action');
+        return Actions::SETTING === ChatKeeper::instance()->getChat()->data->get('action');
     }
 
     /**
@@ -56,7 +57,9 @@ class SettingActivity extends Activity
         $keyboard = [];
         $chat = ChatKeeper::instance()->getChat();
 
-        $exists = Listener::where('user_id', $chat->user->id)->where('event', 'order_new')->exists();
+        $exists = Listener::where('user_id', $chat->user->id)
+            ->where('event', EventList::ORDER_NEW)
+            ->exists();
 
         if (true === $exists) {
             $keyboard[] = ['Отписаться от новых заказов',];
@@ -64,7 +67,9 @@ class SettingActivity extends Activity
             $keyboard[] = ['Подписаться на новые заказы',];
         }
 
-        $exists = Listener::where('user_id', $chat->user->id)->where('event', 'backup')->exists();
+        $exists = Listener::where('user_id', $chat->user->id)
+            ->where('event', EventList::BACKUP)
+            ->exists();
 
         if (true === $exists) {
             $keyboard[] = ['Отписаться от бэкапов',];
@@ -85,7 +90,7 @@ class SettingActivity extends Activity
             'reply_markup' => $replyMarkup,
         ]);
 
-        $chat->data->put('action', 'setting');
+        $chat->data->put('action', Actions::SETTING);
         $chat->save();
 
         return Activity::SUCCESS;
@@ -98,7 +103,9 @@ class SettingActivity extends Activity
     protected function subscribeOrderAction(Update $update): int
     {
         $chat = ChatKeeper::instance()->getChat();
-        $exists = Listener::where('user_id', $chat->user->id)->where('event', 'order_new')->exists();
+        $exists = Listener::where('user_id', $chat->user->id)
+            ->where('event', EventList::ORDER_NEW)
+            ->exists();
 
         if (true === $exists) {
             Telegram::sendMessage([
@@ -107,7 +114,7 @@ class SettingActivity extends Activity
             ]);
         } else {
             Listener::create([
-                'event' => 'order_new',
+                'event' => EventList::ORDER_NEW,
                 'user_id' => $chat->user->id,
             ]);
 
@@ -129,7 +136,9 @@ class SettingActivity extends Activity
     protected function unsubscribeOrderAction(Update $update): int
     {
         $chat = ChatKeeper::instance()->getChat();
-        $exists = Listener::where('user_id', $chat->user->id)->where('event', 'order_new')->exists();
+        $exists = Listener::where('user_id', $chat->user->id)
+            ->where('event', EventList::ORDER_NEW)
+            ->exists();
 
         if (false === $exists) {
             Telegram::sendMessage([
@@ -137,7 +146,9 @@ class SettingActivity extends Activity
                 'text' => 'Вы не подписаны',
             ]);
         } else {
-            Listener::where('user_id', $chat->user->id)->where('event', 'order_new')->delete();
+            Listener::where('user_id', $chat->user->id)
+                ->where('event', EventList::ORDER_NEW)
+                ->delete();
 
             Telegram::sendMessage([
                 'chat_id' => $chat->chat_id,
@@ -157,7 +168,9 @@ class SettingActivity extends Activity
     protected function subscribeBackupAction(Update $update): int
     {
         $chat = ChatKeeper::instance()->getChat();
-        $exists = Listener::where('user_id', $chat->user->id)->where('event', 'backup')->exists();
+        $exists = Listener::where('user_id', $chat->user->id)
+            ->where('event', EventList::BACKUP)
+            ->exists();
 
         if (true === $exists) {
             Telegram::sendMessage([
@@ -166,7 +179,7 @@ class SettingActivity extends Activity
             ]);
         } else {
             Listener::create([
-                'event' => 'backup',
+                'event' => EventList::BACKUP,
                 'user_id' => $chat->user->id,
             ]);
 
@@ -188,7 +201,9 @@ class SettingActivity extends Activity
     protected function unsubscribeBackupAction(Update $update): int
     {
         $chat = ChatKeeper::instance()->getChat();
-        $exists = Listener::where('user_id', $chat->user->id)->where('event', 'backup')->exists();
+        $exists = Listener::where('user_id', $chat->user->id)
+            ->where('event', EventList::BACKUP)
+            ->exists();
 
         if (false === $exists) {
             Telegram::sendMessage([
@@ -196,7 +211,9 @@ class SettingActivity extends Activity
                 'text' => 'Вы не подписаны',
             ]);
         } else {
-            Listener::where('user_id', $chat->user->id)->where('event', 'backup')->delete();
+            Listener::where('user_id', $chat->user->id)
+                ->where('event', EventList::BACKUP)
+                ->delete();
 
             Telegram::sendMessage([
                 'chat_id' => $chat->chat_id,
@@ -205,20 +222,6 @@ class SettingActivity extends Activity
         }
 
         $update->put('message', $update->getMessage()->put('text', 'Настройки'));
-
-        return Activity::RECYCLE;
-    }
-
-    /**
-     * @param Update $update
-     * @return int
-     */
-    protected function toMenuAction(Update $update): int
-    {
-        $chat = ChatKeeper::instance()->getChat();
-        $chat->data->put('action', 'menu');
-        $chat->save();
-        $update->put('message', $update->getMessage()->put('text', 'Меню'));
 
         return Activity::RECYCLE;
     }

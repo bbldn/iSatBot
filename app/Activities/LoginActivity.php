@@ -5,6 +5,7 @@ namespace App\Activities;
 use App\Exceptions\WrongActionException;
 use App\Helpers\ChatKeeper;
 use App\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Telegram\Bot\Laravel\Facades\Telegram;
 use Telegram\Bot\Objects\Update;
@@ -126,6 +127,8 @@ class LoginActivity extends Activity
         $chat->data->forget('user_id');
         $chat->user_id = $user->id;
         $chat->save();
+
+        Auth::setUser($user);
 
         $update->put('message', $update->getMessage()->put('text', 'Меню'));
 
