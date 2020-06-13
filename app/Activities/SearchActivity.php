@@ -36,7 +36,7 @@ class SearchActivity extends Activity
             return false;
         }
 
-        return 1 === preg_match('/^\/search [0-9]+$/', $update->getMessage()->getText());
+        return 1 === preg_match('/^\#[0-9]+$/', $update->getMessage()->getText());
     }
 
 
@@ -46,7 +46,7 @@ class SearchActivity extends Activity
      */
     public function handle(Update $update): int
     {
-        preg_match('/^\/search ([0-9]+)$/', $update->getMessage()->getText(), $arr);
+        preg_match('/^\#([0-9]+)$/', $update->getMessage()->getText(), $arr);
         $id = (int)$arr[1];
 
         $texts = $this->orderService->getOrderInformation($id);
