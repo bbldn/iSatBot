@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Services\TelegramService;
+use Illuminate\Contracts\Container\BindingResolutionException;
+use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Cache;
 use Telegram\Bot\Laravel\Facades\Telegram;
@@ -23,7 +25,8 @@ class TelegramController extends Controller
     }
 
     /**
-     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     * @return ResponseFactory|Response
+     * @throws BindingResolutionException
      */
     public function webHookHandlerAction(): Response
     {

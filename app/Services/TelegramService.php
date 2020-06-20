@@ -10,6 +10,7 @@ use App\Activities\SettingActivity;
 use App\Activities\StartActivity;
 use App\Chat;
 use App\Helpers\ChatKeeper;
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Support\Facades\Auth;
 use Telegram\Bot\Laravel\Facades\Telegram;
 use Telegram\Bot\Objects\Update;
@@ -55,7 +56,7 @@ class TelegramService extends Service
 
     /**
      * @param Update $update
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     * @throws BindingResolutionException
      */
     public function handle(Update $update): void
     {

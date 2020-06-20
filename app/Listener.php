@@ -22,7 +22,7 @@ class Listener extends Model
     /** @var string $table */
     protected $table = 'listeners';
 
-    /** @var array $fillable */
+    /** @var string[] $fillable */
     protected $fillable = [
         'event', 'user_id',
     ];

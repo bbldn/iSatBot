@@ -23,7 +23,7 @@ class Chat extends Model
     /** @var string $table */
     protected $table = 'chats';
 
-    /** @var array $fillable */
+    /** @var string[] $fillable */
     protected $fillable = [
         'chat_id', 'data', 'user_id',
     ];
