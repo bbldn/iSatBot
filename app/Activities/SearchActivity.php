@@ -3,23 +3,23 @@
 namespace App\Activities;
 
 use App\Helpers\ChatKeeper;
-use App\Services\OrderService;
+use App\Services\GetOrderInformationInterface;
 use Illuminate\Support\Facades\Auth;
 use Telegram\Bot\Laravel\Facades\Telegram;
 use Telegram\Bot\Objects\Update;
 
 class SearchActivity extends Activity
 {
-    /** @var OrderService $orderService */
-    protected $orderService;
+    /** @var GetOrderInformationInterface $getOrderInformation */
+    protected $getOrderInformation;
 
     /**
      * SearchActivity constructor.
-     * @param OrderService $orderService
+     * @param GetOrderInformationInterface $getOrderInformation
      */
-    public function __construct(OrderService $orderService)
+    public function __construct(GetOrderInformationInterface $getOrderInformation)
     {
-        $this->orderService = $orderService;
+        $this->getOrderInformation = $getOrderInformation;
     }
 
     /**
@@ -49,7 +49,7 @@ class SearchActivity extends Activity
         preg_match('/^\#([0-9]+)$/', $update->getMessage()->getText(), $arr);
         $id = (int)$arr[1];
 
-        $texts = $this->orderService->getOrderInformation($id);
+        $texts = $this->getOrderInformation->getOrderInformation($id);
 
         foreach ($texts as $text) {
             Telegram::sendMessage([
