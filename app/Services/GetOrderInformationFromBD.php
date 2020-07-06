@@ -79,14 +79,15 @@ class GetOrderInformationFromBD extends Service implements GetOrderInformationIn
     }
 
     /**
-     * @param OrderBack[] $orders
+     * @param Collection $orders
      * @return array
      */
-    protected function getProducts(array $orders): array
+    protected function getProducts(Collection $orders): array
     {
         $data = [];
 
         foreach ($orders as $key => $order) {
+            /** @var OrderBack $order */
             $price = round($order->price * $order->currency_value, 2) . ' ' . $order->currency_name;
             $data[] = [
                 'number' => $key + 1,
