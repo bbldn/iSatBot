@@ -136,7 +136,7 @@ class OrderBack extends Model
      */
     public function shipping(): HasOne
     {
-        return $this->hasOne(ShippingMethodsBack::class, 'id', 'delivery');
+        return $this->hasOne(ShippingMethodsBack::class, 'SID', 'delivery');
     }
 
     /**
@@ -144,6 +144,6 @@ class OrderBack extends Model
      */
     public function paymentObject(): HasOne
     {
-        return $this->hasOne(PaymentBack::class, 'id', 'payment');
+        return $this->hasOne(PaymentBack::class, 'PID', 'payment');
     }
 }
