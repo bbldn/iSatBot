@@ -4,6 +4,7 @@ namespace App\Console;
 
 use App\Chat;
 use App\Events\EventList;
+use App\Helpers\EventListeners;
 use App\Listener;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
@@ -35,21 +36,11 @@ class SendBackupCommand extends Command
             return;
         }
 
-        $chat = new Chat();
-        $listener = new Listener();
-
-        $chats = DB::table($chat->getTable())
-            ->leftJoin(
-                $listener->getTable(),
-                "{$chat->getTable()}.user_id",
-                '=',
-                "{$listener->getTable()}.user_id"
-            )
-            ->where('event', $event)
-            ->get();
+        $chats = EventListeners::getChatsByEvent($event);
 
         foreach ($chats as $chat) {
             /** @noinspection PhpUndefinedMethodInspection */
+            /** @var Chat $chat */
             Telegram::sendDocument([
                 'chat_id' => $chat->chat_id,
                 'caption' => 'Backup',
