@@ -102,10 +102,10 @@ class GetOrderInformationFromBD extends Service implements GetOrderInformationIn
     }
 
     /**
-     * @param array $orders
+     * @param Collection $orders
      * @return float
      */
-    protected function getOrderTotal(array $orders): float
+    protected function getOrderTotal(Collection $orders): float
     {
         $total = 0;
         foreach ($orders as $key => $order) {
