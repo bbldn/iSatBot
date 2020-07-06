@@ -69,9 +69,7 @@ class LoginActivity extends Activity
                 'text' => "Неизвестный логин: {$text}. Попробуйте ещё раз:",
             ]);
 
-            $update->put('message', $update->getMessage()->put('text', '/start'));
-
-            return Activity::RECYCLE;
+            return Activity::SUCCESS;
         }
 
         $chat->data->put('action', Actions::INPUT_PASSWORD);
