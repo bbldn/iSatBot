@@ -131,6 +131,6 @@ class CustomerBack extends Model
                 cash.`income`;";
         $result = DB::connection($this->connection)->select($sql);
 
-        return round($result[0]['balance'], 2);
+        return round($result[0]->balance, 2);
     }
 }
