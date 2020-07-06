@@ -11,13 +11,13 @@ class GetOrderInformationFromBD extends Service implements GetOrderInformationIn
 {
     /**
      * @param int $id
-     * @return string[]
+     * @return Collection
      */
-    public function getOrderInformation(int $id): array
+    public function getOrderInformation(int $id): Collection
     {
         $ordersBack = OrderBack::where('order_num', $id)->get();
         if (true === $ordersBack->isEmpty()) {
-            return ['Order not found'];
+            return collect(['Order not found']);
         }
 
         /** @var OrderBack $orderBack */
@@ -74,7 +74,7 @@ class GetOrderInformationFromBD extends Service implements GetOrderInformationIn
             'products' => $this->getProducts($ordersBack),
         ];
 
-        return OrderFormatter::formatOrder($data);
+        return collect(OrderFormatter::formatOrder($data));
     }
 
     /**

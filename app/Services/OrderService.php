@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Chat;
 use App\Events\EventList;
 use App\Helpers\EventListeners;
+use Illuminate\Support\Collection;
 use Telegram\Bot\Laravel\Facades\Telegram;
 
 class OrderService extends Service
@@ -23,9 +24,9 @@ class OrderService extends Service
 
     /**
      * @param int $id
-     * @return string[]
+     * @return Collection
      */
-    public function getOrderInformation(int $id): array
+    public function getOrderInformation(int $id): Collection
     {
         return $this->getOrderInformation->getOrderInformation($id);
     }
@@ -37,10 +38,19 @@ class OrderService extends Service
     {
         $chats = EventListeners::getChatsByEvent(EventList::ORDER_NEW);
         if (true === $chats->isEmpty()) {
+            //@TODO Notify
+
             return;
         }
 
         $texts = $this->getOrderInformation->getOrderInformation($id);
+        if (true === $texts->isEmpty()) {
+            //@TODO Notify
+
+            return;
+        }
+
+        $texts->prepend('Новый заказ');
 
         foreach ($chats as $chat) {
             foreach ($texts as $text) {
