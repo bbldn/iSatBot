@@ -44,15 +44,7 @@ class OrderService extends Service
             return;
         }
 
-        /** @var Order $order */
-        $order = Order::where('front_id', $id)->first();
-        if (null === $order) {
-            //@TODO Notify
-
-            return;
-        }
-
-        $texts = $this->getOrderInformation->getOrderInformation($order->back_id);
+        $texts = $this->getOrderInformation->getOrderInformation($id);
         if (true === $texts->isEmpty()) {
             //@TODO Notify
 
