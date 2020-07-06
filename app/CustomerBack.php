@@ -126,10 +126,15 @@ class CustomerBack extends Model
             ON 
                 cash.`order_num` = orders.`order_num`
             WHERE 
-                orders.`status` != 9 AND orders.`client_id` = {$this->getKey()} 
+                orders.`status` != ? AND orders.`client_id` = ?
             GROUP BY 
                 cash.`income`;";
-        $result = DB::connection($this->connection)->select($sql);
+
+        $result = DB::connection($this->connection)->select($sql, [9, $this->getKey()]);
+
+        if (0 === count($result)) {
+            return 0;
+        }
 
         return round($result[0]->balance, 2);
     }
