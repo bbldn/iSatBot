@@ -52,6 +52,7 @@ class SearchActivity extends Activity
         $texts = $this->getOrderInformation->getOrderInformation($id);
 
         foreach ($texts as $text) {
+            /** @noinspection PhpUndefinedMethodInspection */
             Telegram::sendMessage([
                 'chat_id' => ChatKeeper::instance()->getChat()->chat_id,
                 'text' => $text,

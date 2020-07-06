@@ -20,7 +20,7 @@ class SendBackupCommand extends Command
     /**
      *
      */
-    public function handle()
+    public function handle(): void
     {
         $this->sendBackup(EventList::BACKUP, $this->argument('fileName'));
     }
@@ -49,6 +49,7 @@ class SendBackupCommand extends Command
             ->get();
 
         foreach ($chats as $chat) {
+            /** @noinspection PhpUndefinedMethodInspection */
             Telegram::sendDocument([
                 'chat_id' => $chat->chat_id,
                 'caption' => 'Backup',

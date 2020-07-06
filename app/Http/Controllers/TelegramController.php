@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Services\TelegramService;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\Routing\ResponseFactory;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Cache;
 use Telegram\Bot\Laravel\Facades\Telegram;
@@ -32,12 +33,24 @@ class TelegramController extends Controller
     {
         $offset = Cache::get('offset', 0);
 
+        /** @noinspection PhpUndefinedMethodInspection */
         /** @var Update $update */
-        $update = Telegram::getWebhookUpdates(['offset' => $offset + 1,]);
+        $update = Telegram::getWebhookUpdates(['offset' => $offset + 1]);
         $this->telegramService->handle($update);
 
         Cache::put('offset', $update->getUpdateId());
 
         return response('ok');
+    }
+
+    /**
+     * @param Request $request
+     * @return Response
+     */
+    public function newOrderNotify(Request $request): Response
+    {
+        $id = (int)$request->get('id', -1);
+
+        return response()->json(['ok' => true]);
     }
 }

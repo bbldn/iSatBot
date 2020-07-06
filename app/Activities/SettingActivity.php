@@ -78,12 +78,15 @@ class SettingActivity extends Activity
         }
 
         $keyboard[] = ['В Меню',];
+
+        /** @noinspection PhpUndefinedMethodInspection */
         $replyMarkup = Telegram::replyKeyboardMarkup([
             'keyboard' => $keyboard,
             'resize_keyboard' => true,
             'one_time_keyboard' => true,
         ]);
 
+        /** @noinspection PhpUndefinedMethodInspection */
         Telegram::sendMessage([
             'chat_id' => $chat->chat_id,
             'text' => 'Выберите пункт:',
@@ -108,6 +111,7 @@ class SettingActivity extends Activity
             ->exists();
 
         if (true === $exists) {
+            /** @noinspection PhpUndefinedMethodInspection */
             Telegram::sendMessage([
                 'chat_id' => $chat->chat_id,
                 'text' => 'Вы уже подписаны',
@@ -118,6 +122,7 @@ class SettingActivity extends Activity
                 'user_id' => $chat->user->id,
             ]);
 
+            /** @noinspection PhpUndefinedMethodInspection */
             Telegram::sendMessage([
                 'chat_id' => $chat->chat_id,
                 'text' => 'Подписка оформлена',
@@ -141,6 +146,7 @@ class SettingActivity extends Activity
             ->exists();
 
         if (false === $exists) {
+            /** @noinspection PhpUndefinedMethodInspection */
             Telegram::sendMessage([
                 'chat_id' => $chat->chat_id,
                 'text' => 'Вы не подписаны',
@@ -150,6 +156,7 @@ class SettingActivity extends Activity
                 ->where('event', EventList::ORDER_NEW)
                 ->delete();
 
+            /** @noinspection PhpUndefinedMethodInspection */
             Telegram::sendMessage([
                 'chat_id' => $chat->chat_id,
                 'text' => 'Подписка отменена',
@@ -173,6 +180,7 @@ class SettingActivity extends Activity
             ->exists();
 
         if (true === $exists) {
+            /** @noinspection PhpUndefinedMethodInspection */
             Telegram::sendMessage([
                 'chat_id' => $chat->chat_id,
                 'text' => 'Вы уже подписаны',
@@ -183,6 +191,7 @@ class SettingActivity extends Activity
                 'user_id' => $chat->user->id,
             ]);
 
+            /** @noinspection PhpUndefinedMethodInspection */
             Telegram::sendMessage([
                 'chat_id' => $chat->chat_id,
                 'text' => 'Подписка оформлена',
@@ -206,6 +215,7 @@ class SettingActivity extends Activity
             ->exists();
 
         if (false === $exists) {
+            /** @noinspection PhpUndefinedMethodInspection */
             Telegram::sendMessage([
                 'chat_id' => $chat->chat_id,
                 'text' => 'Вы не подписаны',
@@ -215,6 +225,7 @@ class SettingActivity extends Activity
                 ->where('event', EventList::BACKUP)
                 ->delete();
 
+            /** @noinspection PhpUndefinedMethodInspection */
             Telegram::sendMessage([
                 'chat_id' => $chat->chat_id,
                 'text' => 'Подписка отменена',

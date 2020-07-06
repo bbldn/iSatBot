@@ -107,6 +107,8 @@ class CustomerBack extends Model
      */
     public function balance(): float
     {
+        /** @noinspection SqlNoDataSourceInspection */
+        /** @noinspection SqlDialectInspection */
         $sql = "
             SELECT 
                 (IFNULL(cash.`income`, 0) - IFNULL(SUM(orders.`price` * orders.`amount`), 0)) as `balance` 

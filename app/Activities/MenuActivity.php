@@ -55,6 +55,7 @@ class MenuActivity extends Activity
             ['Настройки',],
         ];
 
+        /** @noinspection PhpUndefinedMethodInspection */
         $replyMarkup = Telegram::replyKeyboardMarkup([
             'keyboard' => $keyboard,
             'resize_keyboard' => true,
@@ -63,6 +64,7 @@ class MenuActivity extends Activity
 
         $chat = ChatKeeper::instance()->getChat();
 
+        /** @noinspection PhpUndefinedMethodInspection */
         Telegram::sendMessage([
             'chat_id' => $chat->chat_id,
             'text' => 'Выберите пункт:',

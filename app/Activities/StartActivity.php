@@ -3,7 +3,6 @@
 namespace App\Activities;
 
 use App\Helpers\ChatKeeper;
-use App\User;
 use Illuminate\Support\Facades\Auth;
 use Telegram\Bot\Laravel\Facades\Telegram;
 use Telegram\Bot\Objects\Update;
@@ -49,6 +48,7 @@ class StartActivity extends Activity
         ]);
         $chat->save();
 
+        /** @noinspection PhpUndefinedMethodInspection */
         Telegram::sendMessage([
             'chat_id' => $chatId,
             'text' => 'Введите логин:',

@@ -66,6 +66,7 @@ class TelegramService extends Service
         while (true) {
             $cycle = false;
             foreach ($this->activities as $activity) {
+                /** @noinspection PhpUndefinedMethodInspection */
                 if (true === $activity::able($update)) {
                     /** @var Activity $obj */
                     $obj = app()->make($activity);
@@ -86,6 +87,7 @@ class TelegramService extends Service
 
 
         if (Activity::FAIL === $status) {
+            /** @noinspection PhpUndefinedMethodInspection */
             Telegram::sendMessage([
                 'chat_id' => $update->getMessage()->getChat()->getId(),
                 'text' => 'Неизвестная комманд ' . $update->getMessage()->getText(),

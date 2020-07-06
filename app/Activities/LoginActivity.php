@@ -63,6 +63,7 @@ class LoginActivity extends Activity
         $user = User::where('login', $text)->first();
 
         if (null === $user) {
+            /** @noinspection PhpUndefinedMethodInspection */
             Telegram::sendMessage([
                 'chat_id' => $chat->chat_id,
                 'text' => "Неизвестный логин: {$text}. Попробуйте ещё раз:",
@@ -77,6 +78,7 @@ class LoginActivity extends Activity
         $chat->data->put('user_id', $user->id);
         $chat->save();
 
+        /** @noinspection PhpUndefinedMethodInspection */
         Telegram::sendMessage([
             'chat_id' => $chat->chat_id,
             'text' => "Здравствуйте {$user->name}, введите пароль:",
@@ -110,6 +112,7 @@ class LoginActivity extends Activity
         }
 
         if (false === Hash::check($update->getMessage()->getText(), $user->password)) {
+            /** @noinspection PhpUndefinedMethodInspection */
             Telegram::sendMessage([
                 'chat_id' => $chat->chat_id,
                 'text' => 'Неверный пароль. Попробуйте ввести ещё раз:',
@@ -118,6 +121,7 @@ class LoginActivity extends Activity
             return Activity::SUCCESS;
         }
 
+        /** @noinspection PhpUndefinedMethodInspection */
         Telegram::sendMessage([
             'chat_id' => $chat->chat_id,
             'text' => 'Спасибо за авторизацию!',

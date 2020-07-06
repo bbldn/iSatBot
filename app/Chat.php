@@ -2,19 +2,20 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Collection as CollectionEloquent;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Query\Builder;
+use Illuminate\Support\Collection;
 
 /**
  * @property integer id
  * @property string chat_id
- * @property \Illuminate\Support\Collection|null data
+ * @property Collection|null data
  * @property integer user_id
  * @property User|null user
  * @method static Chat|null find(integer $id)
- * @method static Collection all($columns = ['*'])
+ * @method static CollectionEloquent all($columns = ['*'])
  * @method static Builder where($column, $operator = null, $value = null, $boolean = 'and')
  * @method static Chat create($attributes)
  */
@@ -49,7 +50,7 @@ class Chat extends Model
         static::saved($up);
 
         static::saving(function ($model) {
-            if (false === is_a($model->data, \Illuminate\Support\Collection::class)) {
+            if (false === is_a($model->data, Collection::class)) {
                 $model->data = collect();
             }
 
