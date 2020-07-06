@@ -15,7 +15,8 @@
         "irazasyed/telegram-bot-sdk": "^2.0",
         "laravel/framework": "^7.0",
         "laravel/tinker": "^2.0",
-        "ext-json": "*"
+        "ext-json": "*",
+        "ext-pdo": "*"
     },
     "require-dev": {
         "facade/ignition": "^2.0",
