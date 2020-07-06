@@ -103,6 +103,26 @@ return [
             ]) : [],
         ],
 
+        'mysql_synchronizer' => [
+            'driver' => 'mysql',
+            'url' => env('DATABASE_URL'),
+            'host' => env('DB_HOST_SYNCHRONIZER', '127.0.0.1'),
+            'port' => env('DB_PORT_SYNCHRONIZER', '3306'),
+            'database' => env('DB_DATABASE_SYNCHRONIZER', 'forge'),
+            'username' => env('DB_USERNAME_SYNCHRONIZER', 'forge'),
+            'password' => env('DB_PASSWORD_SYNCHRONIZER', ''),
+            'unix_socket' => env('DB_SOCKET', ''),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'prefix_indexes' => true,
+            'strict' => true,
+            'engine' => null,
+            'options' => extension_loaded('pdo_mysql') ? array_filter([
+                PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
+            ]) : [],
+        ],
+
         'pgsql' => [
             'driver' => 'pgsql',
             'url' => env('DATABASE_URL'),
