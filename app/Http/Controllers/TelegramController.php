@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Helper\ExceptionFormatter;
+use App\Helpers\ExceptionFormatter;
 use App\Services\OrderService;
 use App\Services\TelegramService;
 use Illuminate\Contracts\Container\BindingResolutionException;
