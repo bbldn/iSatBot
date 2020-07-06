@@ -4,7 +4,7 @@ namespace App\Services;
 
 use App\Formatters\OrderFormatter;
 use App\OrderBack;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
 class GetOrderInformationFromBD extends Service implements GetOrderInformationInterface
@@ -15,7 +15,6 @@ class GetOrderInformationFromBD extends Service implements GetOrderInformationIn
      */
     public function getOrderInformation(int $id): array
     {
-        /** @var Collection|OrderBack[] $ordersBack */
         $ordersBack = OrderBack::where('order_num', $id)->get();
         if (true === $ordersBack->isEmpty()) {
             return ['Order not found'];
