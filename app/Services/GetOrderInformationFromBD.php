@@ -68,7 +68,7 @@ class GetOrderInformationFromBD extends Service implements GetOrderInformationIn
             'warehouse' => $orderBack->warehouse,
             'delivery' => $delivery,
             'payment' => $payment,
-            'comment' => $orderBack->comments,
+            'comment' => $orderBack->whant,
             'total' => $this->getOrderTotal($ordersBack) . ' ' . $orderBack->currency_name,
             'balance' => $balance,
             'products' => $this->getProducts($ordersBack),
