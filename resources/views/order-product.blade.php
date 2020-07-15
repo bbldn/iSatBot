@@ -1,6 +1,6 @@
 @foreach($products as $product)
-+++++++++++++++++++++++++++++++
-<b>#{{ $product['number'] }}</b>
+--------------------------------
+<b>№{{ $product['number'] }}</b>
 <b>Название:</b> {{ $product['name'] }}
 <b>Количество:</b> {{ $product['amount'] }}
 <b>Цена:</b> {{ $product['price'] }}
