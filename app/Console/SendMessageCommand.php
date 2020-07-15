@@ -2,7 +2,6 @@
 
 namespace App\Console;
 
-use App\Chat;
 use App\Events\EventList;
 use App\Helpers\EventListeners;
 use Illuminate\Console\Command;
@@ -23,7 +22,6 @@ class SendMessageCommand extends Command
     {
         $chats = EventListeners::getChatsByEvent(EventList::ORDER_NEW);
 
-        /** @var Chat $chat */
         foreach ($chats as $chat) {
             /** @noinspection PhpUndefinedMethodInspection */
             Telegram::sendDocument([

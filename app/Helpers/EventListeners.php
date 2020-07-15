@@ -11,7 +11,7 @@ class EventListeners
 {
     /**
      * @param string $event
-     * @return Collection
+     * @return Collection|Chat[]
      */
     public static function getChatsByEvent(string $event): Collection
     {
