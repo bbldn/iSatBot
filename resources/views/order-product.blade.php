@@ -1,6 +1,9 @@
-<b>#{{ $number }}</b>
-<b>Название:</b> {{ $name }}
-<b>Количество:</b> {{ $amount }}
-<b>Цена:</b> {{ $price }}
-<b>Валюта:</b> {{ $currency_name }}
-<b>Курс:</b> {{ $rate }}
+@foreach($products as $product)
+    <b>#{{ $product['number'] }}</b>
+    <b>Название:</b> {{ $product['name'] }}
+    <b>Количество:</b> {{ $product['amount'] }}
+    <b>Цена:</b> {{ $product['price'] }}
+    <b>Валюта:</b> {{ $product['currency_name'] }}
+    <b>Курс:</b> {{ $product['rate'] }}
+    <br>
+@endforeach

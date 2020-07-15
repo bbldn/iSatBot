@@ -42,7 +42,6 @@ class OrderService extends Service
         }
 
         $texts = $this->getOrderInformation->getOrderInformation($id);
-        $texts->prepend('Новый заказ');
 
         foreach ($chats as $chat) {
             foreach ($texts as $text) {

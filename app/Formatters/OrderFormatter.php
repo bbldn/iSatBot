@@ -44,6 +44,10 @@ class OrderFormatter extends Formatter
      */
     public static function formatOrder(array $order): array
     {
-        return array_merge([static::formatOrderOnly($order), 'Товары:'], static::formatOrderProducts($order['products']));
+        try {
+            return [(string)view('order', $order)];
+        } catch (Throwable $e) {
+            return [$e->getMessage()];
+        }
     }
 }

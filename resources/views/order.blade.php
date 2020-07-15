@@ -1,4 +1,4 @@
-<b>#{{ $id }}</b>
+<b>Новый заказ #{{ $id }}</b>
 <b>Тип:</b> {{ $type }}
 <b>ФИО:</b> {{ $FIO }}
 <b>Телефон:</b> {{ $phone }}
@@ -13,3 +13,4 @@
 <b>Комментарий:</b> {{ $comment }}
 <b>Всего:</b> {{ $total }}
 <b>Баланс:</b> {{ $balance }}
+@include('order-product', ['products' => $products])
