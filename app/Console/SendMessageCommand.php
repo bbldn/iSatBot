@@ -24,7 +24,7 @@ class SendMessageCommand extends Command
 
         foreach ($chats as $chat) {
             /** @noinspection PhpUndefinedMethodInspection */
-            Telegram::sendDocument([
+            Telegram::sendMessage([
                 'chat_id' => $chat->chat_id,
                 'text' => $this->argument('text'),
             ]);
