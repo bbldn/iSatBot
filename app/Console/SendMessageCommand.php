@@ -23,9 +23,9 @@ class SendMessageCommand extends Command
     {
         $chats = EventListeners::getChatsByEvent(EventList::ORDER_NEW);
 
+        /** @var Chat $chat */
         foreach ($chats as $chat) {
             /** @noinspection PhpUndefinedMethodInspection */
-            /** @var Chat $chat */
             Telegram::sendDocument([
                 'chat_id' => $chat->chat_id,
                 'text' => $this->argument('text'),
