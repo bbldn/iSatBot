@@ -5,5 +5,5 @@
     <b>Цена:</b> {{ $product['price'] }}
     <b>Валюта:</b> {{ $product['currency_name'] }}
     <b>Курс:</b> {{ $product['rate'] }}
-    <br>
+    \n
 @endforeach
