@@ -21,7 +21,6 @@ class SendMessageCommand extends Command
     public function handle(): void
     {
         $chats = EventListeners::getChatsByEvent(EventList::ORDER_NEW);
-
         foreach ($chats as $chat) {
             /** @noinspection PhpUndefinedMethodInspection */
             Telegram::sendMessage([

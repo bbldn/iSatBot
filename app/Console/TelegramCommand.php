@@ -4,6 +4,7 @@ namespace App\Console;
 
 use App\Services\TelegramService;
 use Illuminate\Console\Command;
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Telegram\Bot\Laravel\Facades\Telegram;
 use Telegram\Bot\Objects\Update;
 
@@ -15,32 +16,28 @@ class TelegramCommand extends Command
     /** @var string $description */
     protected $description = 'Long pulling';
 
-    /** @var TelegramService $telegramService */
-    protected $telegramService;
 
     /**
      * TelegramCommand constructor.
-     * @param TelegramService $telegramService
      */
-    public function __construct(TelegramService $telegramService)
+    public function __construct()
     {
-        $this->telegramService = $telegramService;
         parent::__construct();
     }
 
     /**
-     *
+     * @param TelegramService $telegramService
+     * @throws BindingResolutionException
      */
-    public function handle()
+    public function handle(TelegramService $telegramService)
     {
         $offset = 0;
         while (1) {
             /** @noinspection PhpUndefinedMethodInspection */
-            /** @var Update[] $updates */
-            $updates = Telegram::getUpdates(['offset' => $offset + 1,]);
+            $updates = Telegram::getUpdates(['offset' => $offset + 1]);
             foreach ($updates as $update) {
-                /** @noinspection PhpUnhandledExceptionInspection */
-                $this->telegramService->handle($update);
+                /** @var Update $update */
+                $telegramService->handle($update);
                 $offset = $update->getUpdateId();
             }
             sleep(1);

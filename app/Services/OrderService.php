@@ -44,9 +44,9 @@ class OrderService extends Service
         $texts = $this->getOrderInformation->getOrderInformation($id);
 
         foreach ($chats as $chat) {
+            /** @var Chat $chat */
             foreach ($texts as $text) {
                 /** @noinspection PhpUndefinedMethodInspection */
-                /** @var Chat $chat */
                 Telegram::sendMessage([
                     'chat_id' => $chat->chat_id,
                     'text' => $text,

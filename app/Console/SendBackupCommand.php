@@ -5,9 +5,7 @@ namespace App\Console;
 use App\Chat;
 use App\Events\EventList;
 use App\Helpers\EventListeners;
-use App\Listener;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\DB;
 use Telegram\Bot\Laravel\Facades\Telegram;
 
 class SendBackupCommand extends Command
@@ -37,7 +35,6 @@ class SendBackupCommand extends Command
         }
 
         $chats = EventListeners::getChatsByEvent($event);
-
         foreach ($chats as $chat) {
             /** @noinspection PhpUndefinedMethodInspection */
             /** @var Chat $chat */

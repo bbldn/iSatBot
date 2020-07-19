@@ -4,7 +4,7 @@ namespace App\Formatters;
 
 use Throwable;
 
-class OrderFormatter extends Formatter
+class OrderFormatter
 {
     /**
      * @param array $order

@@ -15,9 +15,7 @@ class Handler extends ExceptionHandler
      *
      * @var string[] $dontReport
      */
-    protected $dontReport = [
-        //
-    ];
+    protected $dontReport = [];
 
     /**
      * A list of the inputs that are never flashed for validation exceptions.
@@ -32,7 +30,7 @@ class Handler extends ExceptionHandler
     /**
      * Report or log an exception.
      *
-     * @param  Throwable  $exception
+     * @param  Throwable $exception
      * @return void
      *
      * @throws Exception
@@ -45,8 +43,8 @@ class Handler extends ExceptionHandler
     /**
      * Render an exception into an HTTP response.
      *
-     * @param  Request  $request
-     * @param  Throwable  $exception
+     * @param  Request $request
+     * @param  Throwable $exception
      * @return Response
      *
      * @throws Throwable

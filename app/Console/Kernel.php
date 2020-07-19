@@ -16,6 +16,7 @@ class Kernel extends ConsoleKernel
         \App\Console\TelegramCommand::class,
         \App\Console\SendBackupCommand::class,
         \App\Console\SendMessageCommand::class,
+        \App\Console\SendOrderCommand::class,
     ];
 
     /**
@@ -26,7 +27,6 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
     }
 
     /**
