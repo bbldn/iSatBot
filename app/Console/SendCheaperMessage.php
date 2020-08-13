@@ -27,15 +27,55 @@ class SendCheaperMessage extends Command
             return;
         }
 
-        $chats = EventListeners::getChatsByEvent(EventList::ORDER_NEW);
+        $result = $this->convert($data);
+        $data = [
+            'data' => $result,
+            'filter' => function ($value) {
+                return '+' . str_replace([' ', '(', ')', '-',], '', $value);
+            },
+            'tester' => function ($value) {
+                return 1 === preg_match('/^38 \([0-9]{3}\) [0-9]{3}-[0-9]{2}-[0-9]{2}$/', $value);
+            },
+        ];
+
+        $event = $this->getEventCode($result['Комментарий']);
+        $chats = EventListeners::getChatsByEvent($event);
         foreach ($chats as $chat) {
             /** @noinspection PhpUndefinedMethodInspection */
             Telegram::sendMessage([
                 'chat_id' => $chat->chat_id,
-                'text' => view('cheaper', ['data' => $data])->toHtml(),
+                'text' => view('cheaper', $data)->toHtml(),
                 'parse_mode' => 'HTML',
             ]);
         }
+    }
+
+    /**
+     * @param string $comment
+     * @return string
+     */
+    protected function getEventCode(string $comment): string
+    {
+        $comment = mb_strtolower(trim($comment));
+        if ('test' === $comment || 'тест' === $comment) {
+            return EventList::TEST;
+        }
+
+        return EventList::ORDER_NEW;
+    }
+
+    /**
+     * @param array $data
+     * @return array
+     */
+    protected function convert(array $data): array
+    {
+        $result = [];
+        foreach ($data as $value) {
+            $result[$value['name']] = $value['value'];
+        }
+
+        return $result;
     }
 
     /**

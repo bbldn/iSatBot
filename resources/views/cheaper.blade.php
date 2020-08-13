@@ -1,9 +1,11 @@
 <strong>Нашли дешевле</strong>
 
-@foreach($data as $value)
-@if (filter_var($value['value'], FILTER_VALIDATE_URL))
-{{ $value['name'] }}: <strong><a href="{{ $value['value'] }}">Перейти</a></strong>
+@foreach($data as $key => $value)
+@if (true === filter_var($value, FILTER_VALIDATE_URL))
+{{ $key }}: <strong><a href="{{ $value }}">Перейти</a></strong>
+@elseif (true === $filter($value))
+{{ $key }}: {{ $tester($value) }}
 @else
-{{ $value['name'] }}: <strong>{{ $value['value'] }}</strong>
+{{ $key }}: <strong>{{ $value }}</strong>
 @endif
 @endforeach

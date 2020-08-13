@@ -36,6 +36,8 @@ class SettingActivity extends Activity
             'Отписаться от новых заказов' => 'unsubscribeOrderAction',
             'Подписаться на бэкапы' => 'subscribeBackupAction',
             'Отписаться от бэкапов' => 'unsubscribeBackupAction',
+            'Подписаться на тестовый функционал' => 'subscribeTestAction',
+            'Отписаться на тестовый функционал' => 'unsubscribeTestAction',
             'В Меню' => 'toMenuAction',
         ];
 
@@ -223,6 +225,75 @@ class SettingActivity extends Activity
         } else {
             Listener::where('user_id', $chat->user->id)
                 ->where('event', EventList::BACKUP)
+                ->delete();
+
+            /** @noinspection PhpUndefinedMethodInspection */
+            Telegram::sendMessage([
+                'chat_id' => $chat->chat_id,
+                'text' => 'Подписка отменена',
+            ]);
+        }
+
+        $update->put('message', $update->getMessage()->put('text', 'Настройки'));
+
+        return Activity::RECYCLE;
+    }
+
+    /**
+     * @param Update $update
+     * @return int
+     */
+    protected function subscribeTestAction(Update $update): int
+    {
+        $chat = ChatKeeper::instance()->getChat();
+        $exists = Listener::where('user_id', $chat->user->id)
+            ->where('event', EventList::TEST)
+            ->exists();
+
+        if (true === $exists) {
+            /** @noinspection PhpUndefinedMethodInspection */
+            Telegram::sendMessage([
+                'chat_id' => $chat->chat_id,
+                'text' => 'Вы уже подписаны',
+            ]);
+        } else {
+            Listener::create([
+                'event' => EventList::TEST,
+                'user_id' => $chat->user->id,
+            ]);
+
+            /** @noinspection PhpUndefinedMethodInspection */
+            Telegram::sendMessage([
+                'chat_id' => $chat->chat_id,
+                'text' => 'Подписка оформлена',
+            ]);
+        }
+
+        $update->put('message', $update->getMessage()->put('text', 'Настройки'));
+
+        return Activity::RECYCLE;
+    }
+
+    /**
+     * @param Update $update
+     * @return int
+     */
+    protected function unsubscribeTestAction(Update $update): int
+    {
+        $chat = ChatKeeper::instance()->getChat();
+        $exists = Listener::where('user_id', $chat->user->id)
+            ->where('event', EventList::TEST)
+            ->exists();
+
+        if (false === $exists) {
+            /** @noinspection PhpUndefinedMethodInspection */
+            Telegram::sendMessage([
+                'chat_id' => $chat->chat_id,
+                'text' => 'Вы не подписаны',
+            ]);
+        } else {
+            Listener::where('user_id', $chat->user->id)
+                ->where('event', EventList::TEST)
                 ->delete();
 
             /** @noinspection PhpUndefinedMethodInspection */

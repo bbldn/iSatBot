@@ -9,4 +9,7 @@ class EventList
 
     /** @var string */
     const BACKUP = 'backup';
+
+    /** @var string */
+    const TEST = 'test';
 }

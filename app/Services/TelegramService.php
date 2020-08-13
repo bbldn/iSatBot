@@ -90,7 +90,7 @@ class TelegramService extends Service
             /** @noinspection PhpUndefinedMethodInspection */
             Telegram::sendMessage([
                 'chat_id' => $update->getMessage()->getChat()->getId(),
-                'text' => 'Неизвестная комманд ' . $update->getMessage()->getText(),
+                'text' => 'Неизвестная комманда: ' . $update->getMessage()->getText(),
             ]);
         }
     }
