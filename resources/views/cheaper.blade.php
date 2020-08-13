@@ -9,4 +9,3 @@
 {{ $value['name'] }}: <strong>{{ $value['value'] }}</strong>
 @endif
 @endforeach
-Тест: <strong><a href="tel:380991223344">TEST</a></strong>
