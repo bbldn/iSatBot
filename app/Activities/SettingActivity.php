@@ -37,7 +37,7 @@ class SettingActivity extends Activity
             'Подписаться на бэкапы' => 'subscribeBackupAction',
             'Отписаться от бэкапов' => 'unsubscribeBackupAction',
             'Подписаться на тестовый функционал' => 'subscribeTestAction',
-            'Отписаться на тестовый функционал' => 'unsubscribeTestAction',
+            'Отписаться от тестового функционала' => 'unsubscribeTestAction',
             'В Меню' => 'toMenuAction',
         ];
 
@@ -77,6 +77,16 @@ class SettingActivity extends Activity
             $keyboard[] = ['Отписаться от бэкапов',];
         } else {
             $keyboard[] = ['Подписаться на бэкапы',];
+        }
+
+        $exists = Listener::where('user_id', $chat->user->id)
+            ->where('event', EventList::TEST)
+            ->exists();
+
+        if (true === $exists) {
+            $keyboard[] = ['Отписаться от тестового функционала',];
+        } else {
+            $keyboard[] = ['Подписаться на тестовый функционал',];
         }
 
         $keyboard[] = ['В Меню',];
