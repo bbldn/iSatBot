@@ -25,7 +25,7 @@ class SendOrderCommand extends Command
             Log::error(ExceptionFormatter::f('`id` not found'));
         }
 
-        if (0 === preg_match('/^[0-9]+$/', $id)) {
+        if (0 === is_numeric($id)) {
             Log::error(ExceptionFormatter::f('`id` is not number'));
         }
 
