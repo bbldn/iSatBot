@@ -6,6 +6,7 @@ use App\Helpers\ExceptionFormatter;
 use App\Services\OrderService;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
+use Telegram\Bot\Exceptions\TelegramResponseException;
 
 class SendOrderCommand extends Command
 {
@@ -17,6 +18,7 @@ class SendOrderCommand extends Command
 
     /**
      * @param OrderService $orderService
+     * @throws TelegramResponseException
      */
     public function handle(OrderService $orderService): void
     {
