@@ -1,5 +1,8 @@
 <b>Новый заказ №{{ $id }}</b>
 ---------------------------
+@include('order-product', ['products' => $products])
+<b>Всего:</b> {{ $total }}
+---------------------------
 <b>Тип:</b> {{ $type }}
 <b>ФИО:</b> {{ $FIO }}
 <b>Телефон:</b> {{ $phone }}
@@ -12,8 +15,3 @@
 <b>Доставка:</b> {{ $delivery }}
 <b>Оплата:</b> {{ $payment }}
 <b>Комментарий:</b> {{ $comment }}
-<b>Баланс:</b> {{ $balance }}
-<b>Всего:</b> {{ $total }}
-@include('order-product', ['products' => $products])
----------------------------
-<b>Всего:</b> {{ $total }}

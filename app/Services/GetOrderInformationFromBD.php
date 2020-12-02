@@ -52,7 +52,7 @@ class GetOrderInformationFromBD extends Service implements GetOrderInformationIn
         if (null === $orderBack->customer) {
             $balance = 'Неизвестно';
         } else {
-            $balance = $orderBack->customer->balance() . '$';
+            $balance = "{$orderBack->customer->balance()}$";
         }
 
         $data = [
@@ -69,7 +69,7 @@ class GetOrderInformationFromBD extends Service implements GetOrderInformationIn
             'delivery' => $delivery,
             'payment' => $payment,
             'comment' => $orderBack->whant,
-            'total' => $this->getOrderTotal($ordersBack) . ' ' . $orderBack->currency_name,
+            'total' => "{$this->getOrderTotal($ordersBack)} {$orderBack->currency_name}",
             'balance' => $balance,
             'products' => $this->getProducts($ordersBack),
         ];
