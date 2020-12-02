@@ -20,10 +20,10 @@ class TelegramCommand extends Command
      * @param TelegramService $telegramService
      * @throws BindingResolutionException
      */
-    public function handle(TelegramService $telegramService)
+    public function handle(TelegramService $telegramService): void
     {
         $offset = 0;
-        while (1) {
+        while (true) {
             /** @noinspection PhpUndefinedMethodInspection */
             $updates = Telegram::getUpdates(['offset' => $offset + 1]);
             foreach ($updates as $update) {

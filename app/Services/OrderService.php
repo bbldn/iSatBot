@@ -12,7 +12,7 @@ use Telegram\Bot\Exceptions\TelegramResponseException;
 class OrderService extends Service
 {
     /** @var GetOrderInformationInterface */
-    protected $getOrderInformation;
+    private $getOrderInformation;
 
     /**
      * OrderService constructor.

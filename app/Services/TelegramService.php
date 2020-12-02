@@ -18,7 +18,7 @@ use Telegram\Bot\Objects\Update;
 class TelegramService extends Service
 {
     /** @var string[] */
-    protected $activities = [
+    private $activities = [
         StartActivity::class,
         LoginActivity::class,
         SearchActivity::class,

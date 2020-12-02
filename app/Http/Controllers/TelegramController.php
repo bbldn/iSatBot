@@ -11,16 +11,17 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\Response;
+use Telegram\Bot\Exceptions\TelegramResponseException;
 use Telegram\Bot\Laravel\Facades\Telegram;
 use Telegram\Bot\Objects\Update;
 
 class TelegramController extends Controller
 {
     /** @var OrderService */
-    protected $orderService;
+    private $orderService;
 
     /** @var TelegramService */
-    protected $telegramService;
+    private $telegramService;
 
     /**
      * TelegramController constructor.
@@ -57,6 +58,7 @@ class TelegramController extends Controller
     /**
      * @param Request $request
      * @return Response
+     * @throws TelegramResponseException
      */
     public function newOrderNotifyAction(Request $request): Response
     {
