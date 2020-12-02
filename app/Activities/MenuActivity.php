@@ -9,8 +9,11 @@ use Telegram\Bot\Objects\Update;
 
 class MenuActivity extends Activity
 {
-    /** @var array $methods */
-    protected $methods = ['menu', 'setting'];
+    /** @var array */
+    protected $methods = [
+        'menu',
+        'setting',
+    ];
 
     /**
      * @param Update $update

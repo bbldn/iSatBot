@@ -16,21 +16,24 @@ use Telegram\Bot\Objects\Update;
 
 class TelegramController extends Controller
 {
-    /** @var TelegramService $telegramService */
-    protected $telegramService;
-
-    /** @var OrderService $orderService */
+    /** @var OrderService */
     protected $orderService;
+
+    /** @var TelegramService */
+    protected $telegramService;
 
     /**
      * TelegramController constructor.
-     * @param TelegramService $telegramService
      * @param OrderService $orderService
+     * @param TelegramService $telegramService
      */
-    public function __construct(TelegramService $telegramService, OrderService $orderService)
+    public function __construct(
+        OrderService $orderService,
+        TelegramService $telegramService
+    )
     {
-        $this->telegramService = $telegramService;
         $this->orderService = $orderService;
+        $this->telegramService = $telegramService;
     }
 
     /**
@@ -64,7 +67,7 @@ class TelegramController extends Controller
             return response()->json(['ok' => true]);
         }
 
-        if (0 === preg_match('/^[0-9]+$/', $id)) {
+        if (false === is_numeric( $id)) {
             Log::error(ExceptionFormatter::f('`id` is not number'));
 
             return response()->json(['ok' => true]);

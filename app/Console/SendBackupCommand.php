@@ -10,10 +10,10 @@ use Telegram\Bot\Laravel\Facades\Telegram;
 
 class SendBackupCommand extends Command
 {
-    /** @var string $signature */
+    /** @var string */
     protected $signature = 'telegram:backup:send {fileName}';
 
-    /** @var string $description */
+    /** @var string */
     protected $description = 'Send Backups';
 
     /**

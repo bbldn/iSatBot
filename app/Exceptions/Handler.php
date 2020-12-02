@@ -11,16 +11,12 @@ use Throwable;
 class Handler extends ExceptionHandler
 {
     /**
-     * A list of the exception types that are not reported.
-     *
-     * @var string[] $dontReport
+     * @var string[]
      */
     protected $dontReport = [];
 
     /**
-     * A list of the inputs that are never flashed for validation exceptions.
-     *
-     * @var string[] $dontFlash
+     * @var string[]
      */
     protected $dontFlash = [
         'password',
@@ -28,11 +24,8 @@ class Handler extends ExceptionHandler
     ];
 
     /**
-     * Report or log an exception.
-     *
      * @param  Throwable $exception
      * @return void
-     *
      * @throws Exception
      */
     public function report(Throwable $exception): void
@@ -41,12 +34,9 @@ class Handler extends ExceptionHandler
     }
 
     /**
-     * Render an exception into an HTTP response.
-     *
      * @param  Request $request
      * @param  Throwable $exception
      * @return Response
-     *
      * @throws Throwable
      */
     public function render($request, Throwable $exception): Response

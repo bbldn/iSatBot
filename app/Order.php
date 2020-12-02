@@ -17,15 +17,15 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Order extends Model
 {
-    /** @var array $fillable */
+    /** @var array */
     protected $fillable = ['front_id', 'back_id'];
 
-    /** @var bool $timestamps */
+    /** @var bool */
     public $timestamps = false;
 
-    /** @var string $connection */
+    /** @var string */
     protected $connection = 'mysql_synchronizer';
 
-    /** @var string $table */
+    /** @var string */
     protected $table = 'orders';
 }

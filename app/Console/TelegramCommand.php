@@ -10,20 +10,11 @@ use Telegram\Bot\Objects\Update;
 
 class TelegramCommand extends Command
 {
-    /** @var string $name */
+    /** @var string */
     protected $name = 'telegram:start';
 
-    /** @var string $description */
+    /** @var string */
     protected $description = 'Long pulling';
-
-
-    /**
-     * TelegramCommand constructor.
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
 
     /**
      * @param TelegramService $telegramService

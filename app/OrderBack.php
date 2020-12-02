@@ -65,7 +65,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  */
 class OrderBack extends Model
 {
-    /** @var array $fillable */
+    /** @var array */
     protected $fillable = [
         'type', 'product_name', 'product_id', 'price',
         'amount', 'currency_name', 'parent_name',
@@ -86,16 +86,16 @@ class OrderBack extends Model
         'shipping_currency_value',
     ];
 
-    /** @var bool $timestamps */
+    /** @var bool */
     public $timestamps = false;
 
-    /** @var string $connection */
+    /** @var string */
     protected $connection = 'mysql_back';
 
-    /** @var string $table */
+    /** @var string */
     protected $table = 'SS_orders_gamepost';
 
-    /** @var array $attributes */
+    /** @var array */
     protected $attributes = [
         'product_name' => '',
         'whant' => '',
@@ -107,13 +107,13 @@ class OrderBack extends Model
         'document_type' => 2,
     ];
 
-    /** @var array $dates */
+    /** @var array */
     protected $dates = [
         'track_number_date',
         'invoice_sent',
     ];
 
-    /** @var array $casts */
+    /** @var array */
     protected $casts = [
         'price' => 'float',
         'payment_wait_first_sum' => 'float',

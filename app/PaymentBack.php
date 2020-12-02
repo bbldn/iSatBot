@@ -22,14 +22,14 @@ use Illuminate\Database\Eloquent\Model;
  */
 class PaymentBack extends Model
 {
-    /** @var array $fillable */
+    /** @var array */
     protected $fillable = [
         'Name', 'description', 'Enabled',
         'calculate_tax', 'sort_order',
         'email_comments_text', 'module_id'
     ];
 
-    /** @var array $attributes */
+    /** @var array */
     protected $attributes = [
         'Name' => null,
         'description' => null,
@@ -40,15 +40,15 @@ class PaymentBack extends Model
         'module_id' => null,
     ];
 
-    /** @var bool $timestamps */
+    /** @var bool */
     public $timestamps = false;
 
-    /** @var string $connection */
+    /** @var string */
     protected $connection = 'mysql_back';
 
-    /** @var string $table */
+    /** @var string */
     protected $table = 'SS_payment_types';
 
-    /** @var string $primaryKey */
+    /** @var string */
     protected $primaryKey = 'PID';
 }

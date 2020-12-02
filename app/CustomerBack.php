@@ -53,7 +53,7 @@ use Illuminate\Support\Facades\DB;
  */
 class CustomerBack extends Model
 {
-    /** @var array $fillable */
+    /** @var array */
     protected $fillable = [
         'login', 'password', 'fio',
         'phone', 'region', 'city',
@@ -70,21 +70,21 @@ class CustomerBack extends Model
         'warehouse',
     ];
 
-    /** @var bool $timestamps */
+    /** @var bool */
     public $timestamps = false;
 
-    /** @var string $connection */
+    /** @var string */
     protected $connection = 'mysql_back';
 
-    /** @var string $table */
+    /** @var string */
     protected $table = 'SS_buyers_gamepost';
 
-    /** @var array $dates */
+    /** @var array */
     protected $dates = [
         'date_birth',
     ];
 
-    /** @var array $attributes */
+    /** @var array */
     protected $attributes = [
         'vip' => '',
         'info' => '',
@@ -110,24 +110,24 @@ class CustomerBack extends Model
         /** @noinspection SqlNoDataSourceInspection */
         /** @noinspection SqlDialectInspection */
         $sql = "
-            SELECT 
-                (IFNULL(cash.`income`, 0) - IFNULL(SUM(orders.`price` * orders.`amount`), 0)) as `balance` 
-            FROM 
-                SS_orders_gamepost orders 
-            LEFT JOIN 
+            SELECT
+                (IFNULL(cash.`income`, 0) - IFNULL(SUM(orders.`price` * orders.`amount`), 0)) as `balance`
+            FROM
+                SS_orders_gamepost orders
+            LEFT JOIN
                 (
-                    SELECT 
-                        SUM(`price` / `currency_value`) as `income`, `order_num` 
-                    FROM 
-                        SS_cash 
-                    GROUP BY 
+                    SELECT
+                        SUM(`price` / `currency_value`) as `income`, `order_num`
+                    FROM
+                        SS_cash
+                    GROUP BY
                         `order_num`
-                ) cash 
-            ON 
+                ) cash
+            ON
                 cash.`order_num` = orders.`order_num`
-            WHERE 
+            WHERE
                 orders.`status` != ? AND orders.`client_id` = ?
-            GROUP BY 
+            GROUP BY
                 cash.`income`;";
 
         $result = DB::connection($this->connection)->select($sql, [9, $this->getKey()]);

@@ -24,24 +24,20 @@ class User extends Authenticatable
     use Notifiable;
 
     /**
-     * The attributes that are mass assignable.
-     *
-     * @var string[] $fillable
+     * @var string[]
      */
     protected $fillable = [
         'name', 'password',
     ];
 
     /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var string[] $hidden
+     * @var string[]
      */
     protected $hidden = [
         'password',
     ];
 
-    /** @var Chat|null $chat */
+    /** @var Chat|null */
     public $chat = null;
 
     /**

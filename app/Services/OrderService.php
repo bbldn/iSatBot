@@ -10,7 +10,7 @@ use Telegram\Bot\Laravel\Facades\Telegram;
 
 class OrderService extends Service
 {
-    /** @var GetOrderInformationInterface $getOrderInformation */
+    /** @var GetOrderInformationInterface */
     protected $getOrderInformation;
 
     /**

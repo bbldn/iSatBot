@@ -7,7 +7,7 @@ use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 class Kernel extends ConsoleKernel
 {
     /**
-     * @var string[] $commands
+     * @var string[]
      */
     protected $commands = [
         TelegramCommand::class,

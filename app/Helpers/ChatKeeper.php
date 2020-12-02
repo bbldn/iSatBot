@@ -6,16 +6,16 @@ use App\Chat;
 
 class ChatKeeper
 {
-    /** @var ChatKeeper|null $instance */
+    /** @var ChatKeeper|null */
     protected static $instance = null;
 
-    /** @var Chat|null $chat */
+    /** @var Chat|null */
     protected $chat;
 
     /**
      * ChatKeeper constructor.
      */
-    protected function __construct()
+    private function __construct()
     {
     }
 

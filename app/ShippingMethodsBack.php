@@ -26,10 +26,10 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  */
 class ShippingMethodsBack extends Model
 {
-    /** @var bool $timestamps */
+    /** @var bool */
     public $timestamps = false;
 
-    /** @var array $fillable */
+    /** @var array */
     protected $fillable = [
         'Name', 'description', 'email_comments_text',
         'Enabled', 'module_id', 'sort_order',
@@ -37,13 +37,13 @@ class ShippingMethodsBack extends Model
         'key',
     ];
 
-    /** @var string $connection */
+    /** @var string */
     protected $connection = 'mysql_back';
 
-    /** @var string $table */
+    /** @var string */
     protected $table = 'SS_shipping_methods';
 
-    /** @var array $attributes */
+    /** @var array */
     protected $attributes = [
         'Name' => null,
         'description' => null,
@@ -54,12 +54,12 @@ class ShippingMethodsBack extends Model
         'warehouses' => '',
     ];
 
-    /** @var array $dates */
+    /** @var array */
     protected $dates = [
         'warehouses_last_update',
     ];
 
-    /** @var string $primaryKey */
+    /** @var string */
     protected $primaryKey = 'SID';
 
     /**

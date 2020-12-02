@@ -19,15 +19,15 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  */
 class Listener extends Model
 {
-    /** @var string $table */
+    /** @var string */
     protected $table = 'listeners';
 
-    /** @var string[] $fillable */
+    /** @var string[] */
     protected $fillable = [
         'event', 'user_id',
     ];
 
-    /** @var bool $timestamps */
+    /** @var bool */
     public $timestamps = false;
 
     /**

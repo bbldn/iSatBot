@@ -21,10 +21,10 @@ use Illuminate\Support\Collection;
  */
 class Chat extends Model
 {
-    /** @var string $table */
+    /** @var string */
     protected $table = 'chats';
 
-    /** @var string[] $fillable */
+    /** @var string[] */
     protected $fillable = [
         'chat_id', 'data', 'user_id',
     ];

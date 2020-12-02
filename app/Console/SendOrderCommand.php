@@ -9,10 +9,10 @@ use Illuminate\Support\Facades\Log;
 
 class SendOrderCommand extends Command
 {
-    /** @var string $signature */
+    /** @var string */
     protected $signature = 'telegram:order:send {orderId}';
 
-    /** @var string $description */
+    /** @var string */
     protected $description = 'Send notification about order';
 
     /**

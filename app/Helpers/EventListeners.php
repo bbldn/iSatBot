@@ -18,7 +18,7 @@ class EventListeners
         $chat = new Chat();
         $listener = new Listener();
 
-        $chats = DB::table($chat->getTable())
+        return DB::table($chat->getTable())
             ->leftJoin(
                 $listener->getTable(),
                 "{$chat->getTable()}.user_id",
@@ -27,7 +27,5 @@ class EventListeners
             )
             ->where('event', $event)
             ->get();
-
-        return $chats;
     }
 }

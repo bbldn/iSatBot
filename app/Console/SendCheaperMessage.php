@@ -11,10 +11,10 @@ use Telegram\Bot\Laravel\Facades\Telegram;
 
 class SendCheaperMessage extends Command
 {
-    /** @var string $signature */
+    /** @var string */
     protected $signature = 'telegram:cheaper:send {message}';
 
-    /** @var string $description */
+    /** @var string */
     protected $description = 'Send Cheaper Notification';
 
     /**
