@@ -2,7 +2,6 @@
 @include('order-product', ['products' => $products])
 <b>Всего:</b> {{ $total }}
 ---------------------------
-<b>Тип:</b> {{ $type }}
 <b>ФИО:</b> {{ $FIO }}
 <b>Телефон:</b> {{ $phone }}
 <b>E-mail:</b> {{ $mail }}
