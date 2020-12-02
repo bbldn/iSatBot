@@ -7,11 +7,9 @@ use Illuminate\Support\Facades\Schema;
 class CreateListenersTable extends Migration
 {
     /**
-     * Run the migrations.
-     *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::create('listeners', function (Blueprint $table) {
             $table->id();
@@ -21,11 +19,9 @@ class CreateListenersTable extends Migration
     }
 
     /**
-     * Reverse the migrations.
-     *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('listeners');
     }
