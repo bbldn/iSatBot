@@ -58,7 +58,7 @@ class GetOrderInformationFromBD extends Service implements GetOrderInformationIn
         $data = [
             'id' => $orderBack->order_num,
             'type' => $orderBack->type,
-            'FIO' => $orderBack->fio,
+            'FIO' => $orderBack->customer->fio,
             'phone' => $phone,
             'mail' => $mail,
             'region' => $orderBack->region,
