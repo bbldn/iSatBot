@@ -30,7 +30,6 @@ class Kernel extends HttpKernel
      * @var string[]
      */
     protected $middleware = [
-        // \App\Http\Middleware\TrustHosts::class,
         TrustProxies::class,
         HandleCors::class,
         CheckForMaintenanceMode::class,
@@ -47,9 +46,7 @@ class Kernel extends HttpKernel
             EncryptCookies::class,
             AddQueuedCookiesToResponse::class,
             StartSession::class,
-            // \Illuminate\Session\Middleware\AuthenticateSession::class,
             ShareErrorsFromSession::class,
-//            \App\Http\Middleware\VerifyCsrfToken::class,
             SubstituteBindings::class,
         ],
 
