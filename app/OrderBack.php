@@ -65,7 +65,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  */
 class OrderBack extends Model
 {
-    /** @var array */
+    /** @var string[] */
     protected $fillable = [
         'type', 'product_name', 'product_id', 'price',
         'amount', 'currency_name', 'parent_name',
@@ -107,7 +107,7 @@ class OrderBack extends Model
         'document_type' => 2,
     ];
 
-    /** @var array */
+    /** @var string[] */
     protected $dates = [
         'track_number_date',
         'invoice_sent',

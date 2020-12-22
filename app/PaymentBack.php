@@ -22,7 +22,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class PaymentBack extends Model
 {
-    /** @var array */
+    /** @var string[] */
     protected $fillable = [
         'Name', 'description', 'Enabled',
         'calculate_tax', 'sort_order',

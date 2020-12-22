@@ -53,7 +53,7 @@ use Illuminate\Support\Facades\DB;
  */
 class CustomerBack extends Model
 {
-    /** @var array */
+    /** @var string[] */
     protected $fillable = [
         'login', 'password', 'fio',
         'phone', 'region', 'city',
@@ -79,7 +79,7 @@ class CustomerBack extends Model
     /** @var string */
     protected $table = 'SS_buyers_gamepost';
 
-    /** @var array */
+    /** @var string[] */
     protected $dates = [
         'date_birth',
     ];

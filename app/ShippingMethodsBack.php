@@ -29,7 +29,7 @@ class ShippingMethodsBack extends Model
     /** @var bool */
     public $timestamps = false;
 
-    /** @var array */
+    /** @var string[] */
     protected $fillable = [
         'Name', 'description', 'email_comments_text',
         'Enabled', 'module_id', 'sort_order',
@@ -54,7 +54,7 @@ class ShippingMethodsBack extends Model
         'warehouses' => '',
     ];
 
-    /** @var array */
+    /** @var string[] */
     protected $dates = [
         'warehouses_last_update',
     ];

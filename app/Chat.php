@@ -32,7 +32,7 @@ class Chat extends Model
     /**
      *
      */
-    public static function boot()
+    public static function boot(): void
     {
         parent::boot();
 
@@ -48,7 +48,6 @@ class Chat extends Model
 
         static::retrieved($up);
         static::saved($up);
-
         static::saving(function ($model) {
             if (false === is_a($model->data, Collection::class)) {
                 $model->data = collect();
