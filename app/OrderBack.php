@@ -65,6 +65,8 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  */
 class OrderBack extends Model
 {
+    public const clientId = 'client_id';
+
     /** @var string[] */
     protected $fillable = [
         'type', 'product_name', 'product_id', 'price',

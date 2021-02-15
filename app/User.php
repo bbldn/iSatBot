@@ -23,6 +23,8 @@ class User extends Authenticatable
 {
     use Notifiable;
 
+    public const id = 'id';
+
     /**
      * @var string[]
      */
