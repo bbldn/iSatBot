@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * @property integer id
+ * @property integer|null id
  * @property integer|null front_id
  * @property integer|null back_id
  * @method static OrderBack|null find(integer $id)
@@ -17,15 +17,27 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Order extends Model
 {
-    /** @var array */
-    protected $fillable = ['front_id', 'back_id'];
+    public const id = 'id';
+
+    public const backId = 'back_id';
+
+    public const frontId = 'front_id';
 
     /** @var bool */
     public $timestamps = false;
 
     /** @var string */
-    protected $connection = 'mysql_synchronizer';
+    protected $table = 'orders';
 
     /** @var string */
-    protected $table = 'orders';
+    protected $primaryKey = self::id;
+
+    /** @var string */
+    protected $connection = 'mysql_synchronizer';
+
+    /** @var string[] */
+    protected $fillable = [
+        self::backId,
+        self::frontId,
+    ];
 }

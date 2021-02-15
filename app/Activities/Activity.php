@@ -7,13 +7,10 @@ use Telegram\Bot\Objects\Update;
 
 abstract class Activity
 {
-    /** @var int */
     const FAIL = 0;
 
-    /** @var int */
     const SUCCESS = 1;
 
-    /** @var int */
     const RECYCLE = 2;
 
     /**
