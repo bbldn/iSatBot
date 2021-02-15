@@ -129,6 +129,9 @@ class CustomerBack extends Model
     public $timestamps = false;
 
     /** @var string */
+    protected $primaryKey = self::id;
+
+    /** @var string */
     protected $connection = 'mysql_back';
 
     /** @var string */
