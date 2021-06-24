@@ -6,14 +6,12 @@ use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
 class Kernel extends ConsoleKernel
 {
-    /**
-     * @var string[]
-     */
+    /** @psalm-var list<class-string> */
     protected $commands = [
         TelegramCommand::class,
+        SendOrderCommand::class,
         SendBackupCommand::class,
         SendMessageCommand::class,
-        SendOrderCommand::class,
         SendCheaperMessage::class,
     ];
 

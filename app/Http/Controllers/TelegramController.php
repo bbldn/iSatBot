@@ -2,18 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\ExceptionFormatter;
-use App\Services\OrderService;
-use App\Services\TelegramService;
-use Illuminate\Contracts\Container\BindingResolutionException;
-use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Log;
-use Symfony\Component\HttpFoundation\Response;
-use Telegram\Bot\Exceptions\TelegramResponseException;
-use Telegram\Bot\Laravel\Facades\Telegram;
+use App\Services\OrderService;
 use Telegram\Bot\Objects\Update;
+use App\Services\TelegramService;
+use Illuminate\Routing\Controller;
+use App\Helpers\ExceptionFormatter;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Cache;
+use Telegram\Bot\Laravel\Facades\Telegram;
+use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Contracts\Routing\ResponseFactory;
+use Telegram\Bot\Exceptions\TelegramResponseException;
+use Illuminate\Contracts\Container\BindingResolutionException;
 
 class TelegramController extends Controller
 {
@@ -69,7 +70,7 @@ class TelegramController extends Controller
             return response()->json(['ok' => true]);
         }
 
-        if (false === is_numeric( $id)) {
+        if (false === is_numeric($id)) {
             Log::error(ExceptionFormatter::f('`id` is not number'));
 
             return response()->json(['ok' => true]);

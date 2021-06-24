@@ -2,12 +2,12 @@
 
 namespace App\Activities;
 
+use App\Listener;
 use App\Events\EventList;
 use App\Helpers\ChatKeeper;
-use App\Listener;
+use Telegram\Bot\Objects\Update;
 use Illuminate\Support\Facades\Auth;
 use Telegram\Bot\Laravel\Facades\Telegram;
-use Telegram\Bot\Objects\Update;
 
 class SettingActivity extends Activity
 {

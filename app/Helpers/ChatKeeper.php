@@ -6,11 +6,9 @@ use App\Chat;
 
 class ChatKeeper
 {
-    /** @var ChatKeeper|null */
-    private static $instance = null;
+    private ?Chat $chat = null;
 
-    /** @var Chat|null */
-    private $chat;
+    private static ?ChatKeeper $instance = null;
 
     /**
      * ChatKeeper constructor.

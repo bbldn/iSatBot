@@ -2,9 +2,9 @@
 
 namespace App\Console;
 
-use App\Helpers\ExceptionFormatter;
 use App\Services\OrderService;
 use Illuminate\Console\Command;
+use App\Helpers\ExceptionFormatter;
 use Illuminate\Support\Facades\Log;
 use Telegram\Bot\Exceptions\TelegramResponseException;
 

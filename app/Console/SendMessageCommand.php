@@ -10,10 +10,10 @@ use Telegram\Bot\Laravel\Facades\Telegram;
 class SendMessageCommand extends Command
 {
     /** @var string */
-    protected $signature = 'telegram:message:send {text}';
+    protected $description = 'Send Message';
 
     /** @var string */
-    protected $description = 'Send Message';
+    protected $signature = 'telegram:message:send {text}';
 
     /**
      *

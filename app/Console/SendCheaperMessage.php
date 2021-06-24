@@ -4,18 +4,18 @@ namespace App\Console;
 
 use App\Events\EventList;
 use App\Helpers\EventListeners;
-use App\Helpers\ExceptionFormatter;
 use Illuminate\Console\Command;
+use App\Helpers\ExceptionFormatter;
 use Illuminate\Support\Facades\Log;
 use Telegram\Bot\Laravel\Facades\Telegram;
 
 class SendCheaperMessage extends Command
 {
     /** @var string */
-    protected $signature = 'telegram:cheaper:send {message}';
+    protected $description = 'Send Cheaper Notification';
 
     /** @var string */
-    protected $description = 'Send Cheaper Notification';
+    protected $signature = 'telegram:cheaper:send {message}';
 
     /**
      *
@@ -30,22 +30,19 @@ class SendCheaperMessage extends Command
         $result = $this->convert($data);
         $data = [
             'data' => $result,
-            'filter' => function ($value) {
-                return '+' . str_replace([' ', '(', ')', '-',], '', $value);
-            },
-            'tester' => function ($value) {
-                return 1 === preg_match('/^38 \([0-9]{3}\) [0-9]{3}-[0-9]{2}-[0-9]{2}$/', $value);
-            },
+            'filter' => fn($value) => '+' . str_replace([' ', '(', ')', '-',], '', $value),
+            'tester' => fn($value) => 1 === preg_match('/^38 \([0-9]{3}\) [0-9]{3}-[0-9]{2}-[0-9]{2}$/', $value),
         ];
+
 
         $event = $this->getEventCode($result['Комментарий']);
         $chats = EventListeners::getChatsByEvent($event);
         foreach ($chats as $chat) {
             /** @noinspection PhpUndefinedMethodInspection */
             Telegram::sendMessage([
+                'parse_mode' => 'HTML',
                 'chat_id' => $chat->chat_id,
                 'text' => view('cheaper', $data)->toHtml(),
-                'parse_mode' => 'HTML',
             ]);
         }
     }

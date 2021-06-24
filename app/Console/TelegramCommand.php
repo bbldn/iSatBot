@@ -2,11 +2,11 @@
 
 namespace App\Console;
 
-use App\Services\TelegramService;
 use Illuminate\Console\Command;
-use Illuminate\Contracts\Container\BindingResolutionException;
-use Telegram\Bot\Laravel\Facades\Telegram;
 use Telegram\Bot\Objects\Update;
+use App\Services\TelegramService;
+use Telegram\Bot\Laravel\Facades\Telegram;
+use Illuminate\Contracts\Container\BindingResolutionException;
 
 class TelegramCommand extends Command
 {

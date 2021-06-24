@@ -2,11 +2,11 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Collection as CollectionEloquent;
+use Illuminate\Support\Collection;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Database\Query\Builder;
-use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Collection as CollectionEloquent;
 
 /**
  * @property User|null user

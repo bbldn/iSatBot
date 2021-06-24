@@ -2,13 +2,13 @@
 
 namespace App\Activities;
 
-use App\Exceptions\WrongActionException;
-use App\Helpers\ChatKeeper;
 use App\User;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Telegram\Bot\Laravel\Facades\Telegram;
+use App\Helpers\ChatKeeper;
 use Telegram\Bot\Objects\Update;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
+use App\Exceptions\WrongActionException;
+use Telegram\Bot\Laravel\Facades\Telegram;
 
 class LoginActivity extends Activity
 {

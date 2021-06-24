@@ -3,9 +3,9 @@
 namespace App\Activities;
 
 use App\Helpers\ChatKeeper;
+use Telegram\Bot\Objects\Update;
 use Illuminate\Support\Facades\Auth;
 use Telegram\Bot\Laravel\Facades\Telegram;
-use Telegram\Bot\Objects\Update;
 
 class MenuActivity extends Activity
 {

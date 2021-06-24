@@ -4,9 +4,9 @@ namespace App\Activities;
 
 use App\Helpers\ChatKeeper;
 use App\Services\OrderService;
+use Telegram\Bot\Objects\Update;
 use Illuminate\Support\Facades\Auth;
 use Telegram\Bot\Laravel\Facades\Telegram;
-use Telegram\Bot\Objects\Update;
 
 class SearchActivity extends Activity
 {
