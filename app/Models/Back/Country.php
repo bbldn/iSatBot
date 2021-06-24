@@ -5,6 +5,7 @@ namespace App\Models\Back;
 
 use Illuminate\Support\Collection;
 use Illuminate\Database\Query\Builder;
+use Illuminate\Database\Eloquent\Model;
 
 /**
  * @property integer|null id
@@ -15,7 +16,7 @@ use Illuminate\Database\Query\Builder;
  * @method static Country create(array $attributes)
  * @method static Builder where($column, $operator = null, $value = null, $boolean = 'and')
  */
-class Country
+class Country extends Model
 {
     public const id = 'id';
 
