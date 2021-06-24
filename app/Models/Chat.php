@@ -9,15 +9,15 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * @property User|null user
- * @property integer|null id
+ * @property int|null id
  * @property string|null chat_id
  * @property Collection|null data
- * @property integer|null user_id
+ * @property int|null user_id
  *
- * @method static Chat|null find(integer $id)
+ * @method static Chat|null find(int $id)
  * @method static Chat create(array $attributes)
- * @method static Collection all($columns = ['*'])
- * @method static Builder where($column, $operator = null, $value = null, $boolean = 'and')
+ * @method static Collection all(array $columns)
+ * @method static Builder where($column, $operator, $value, $boolean)
  */
 class Chat extends Model
 {
@@ -36,11 +36,7 @@ class Chat extends Model
     protected $primaryKey = self::id;
 
     /** @var string[] */
-    protected $fillable = [
-        self::data,
-        self::chatId,
-        self::userId,
-    ];
+    protected $fillable = [self::data, self::chatId, self::userId];
 
     /**
      *

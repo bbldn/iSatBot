@@ -13,15 +13,16 @@ use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 
 /**
- * @property integer id
+ * @property int id
  * @property string name
  * @property string login
  * @property string password
- * @property Collection|Chat chats
- * @method static User|null find(integer $id)
- * @method static Collection all($columns = ['*'])
- * @method static Builder where($column, $operator = null, $value = null, $boolean = 'and')
- * @method static User create($attributes)
+ * @property Chat[]|Collection chats
+ *
+ * @method static User|null find(int $id)
+ * @method static Collection all(array $columns)
+ * @method static User create(array $attributes)
+ * @method static Builder where($column, $operator, $value, $boolean)
  */
 class User extends Model implements AuthenticatableContract, AuthorizableContract
 {
@@ -36,15 +37,10 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     public const password = 'password';
 
     /** @var string[] */
-    protected $fillable = [
-        self::name,
-        self::password,
-    ];
+    protected $hidden = [self::password];
 
     /** @var string[] */
-    protected $hidden = [
-        self::password,
-    ];
+    protected $fillable = [self::name, self::password];
 
     public ?Chat $chat = null;
 

@@ -8,14 +8,15 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
+ * @property int|null id
  * @property User|null user
- * @property integer|null id
+ * @property int|null user_id
  * @property string|null event
- * @property integer|null user_id
- * @method static Listener create($attributes)
- * @method static Listener|null find(integer $id)
- * @method static Collection all($columns = ['*'])
- * @method static Builder where($column, $operator = null, $value = null, $boolean = 'and')
+ *
+ * @method static Listener|null find(int $id)
+ * @method static Collection all(array $columns)
+ * @method static Listener create(array $attributes)
+ * @method static Builder where($column, $operator, $value, $boolean)
  */
 class Listener extends Model
 {
@@ -25,20 +26,17 @@ class Listener extends Model
 
     public const userId = 'user_id';
 
-    /** @var string */
-    protected $primaryKey = self::id;
+    /** @var bool */
+    public $timestamps = false;
 
     /** @var string */
     protected $table = 'listeners';
 
-    /** @var string[] */
-    protected $fillable = [
-        self::event,
-        self::userId,
-    ];
+    /** @var string */
+    protected $primaryKey = self::id;
 
-    /** @var bool */
-    public $timestamps = false;
+    /** @var string[] */
+    protected $fillable = [self::event, self::userId];
 
     /**
      * @return HasOne

@@ -2,24 +2,21 @@
 
 namespace App\Models;
 
-use App\Models\Back\Order;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 
 /**
- * @property integer|null id
- * @property integer|null front_id
- * @property integer|null back_id
- * @method static Order|null find(integer $id)
- * @method static Collection all($columns = ['*'])
- * @method static Builder where($column, $operator = null, $value = null, $boolean = 'and')
- * @method static Order create($attributes)
+ * @property int|null back_id
+ * @property int|null front_id
+ *
+ * @method static Order|null find(int $id)
+ * @method static Collection all(array $columns)
+ * @method static Order create(array $attributes)
+ * @method static Builder where($column, $operator, $value, $boolean)
  */
 class Order extends Model
 {
-    public const id = 'id';
-
     public const backId = 'back_id';
 
     public const frontId = 'front_id';
@@ -31,14 +28,8 @@ class Order extends Model
     protected $table = 'orders';
 
     /** @var string */
-    protected $primaryKey = self::id;
-
-    /** @var string */
     protected $connection = 'mysql_synchronizer';
 
     /** @var string[] */
-    protected $fillable = [
-        self::backId,
-        self::frontId,
-    ];
+    protected $fillable = [self::backId, self::frontId];
 }
