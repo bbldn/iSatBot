@@ -9,9 +9,9 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
- * @property integer|null id
+ * @property int|null id
  * @property string|null name
- * @property integer|null language_id
+ * @property int|null language_id
  * @property CustomerGroup|null customerGroup
  * @method static Collection all($columns = ['*'])
  * @method static CustomerGroupDescription create(array $attributes)

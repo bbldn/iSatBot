@@ -9,17 +9,17 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
- * @property integer|null id
+ * @property int|null id
  * @property string|null fio
+ * @property int|null group_id
  * @property string|null phone
  * @property string|null comment
- * @property integer|null group_id
  * @property CustomerGroup|null group
  * @property DateTimeInterface|null created_at
  * @property CustomerInformation|null information
  *
+ * @method static Customer|null find(int $id)
  * @method static Collection all($columns = ['*'])
- * @method static Customer|null find(integer $id)
  * @method static Customer create(array $attributes)
  * @method static Builder where($column, $operator = null, $value = null, $boolean = 'and')
  */

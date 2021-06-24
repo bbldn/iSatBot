@@ -8,11 +8,11 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
- * @property integer|null id
+ * @property int|null id
+ * @property int|null stateId
+ * @property int|null countryId
+ * @property int|null localityId
  * @property string|null address
- * @property integer|null stateId
- * @property integer|null countryId
- * @property integer|null localityId
  * @property Country|null country
  * @property Customer|null customer
  * @property integer|null orderStatusId
@@ -21,7 +21,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property integer|null shippingMethodId
  *
  * @method static Collection all($columns = ['*'])
- * @method static CustomerInformation|null find(integer $id)
+ * @method static CustomerInformation|null find(int $id)
  * @method static CustomerInformation create(array $attributes)
  * @method static Builder where($column, $operator = null, $value = null, $boolean = 'and')
  */

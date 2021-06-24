@@ -8,11 +8,11 @@ use Illuminate\Database\Query\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * @property integer|null id
+ * @property int|null id
  * @property string|null name
  *
+ * @method static Country|null find(int $id)
  * @method static Collection all($columns = ['*'])
- * @method static Country|null find(integer $id)
  * @method static Country create(array $attributes)
  * @method static Builder where($column, $operator = null, $value = null, $boolean = 'and')
  */
@@ -30,4 +30,7 @@ class Country extends Model
 
     /** @var string[] */
     protected $fillable = [self::name];
+
+    /** @var string */
+    protected $connection = 'mysql_back';
 }
