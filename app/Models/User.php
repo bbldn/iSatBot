@@ -2,11 +2,15 @@
 
 namespace App\Models;
 
+use Illuminate\Auth\Authenticatable;
+use Laravel\Lumen\Auth\Authorizable;
 use Illuminate\Database\Query\Builder;
-use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
+use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 
 /**
  * @property integer id
@@ -19,9 +23,9 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @method static Builder where($column, $operator = null, $value = null, $boolean = 'and')
  * @method static User create($attributes)
  */
-class User extends Authenticatable
+class User extends Model implements AuthenticatableContract, AuthorizableContract
 {
-    use Notifiable;
+    use Authenticatable, Authorizable, HasFactory;
 
     public const id = 'id';
 
@@ -31,28 +35,24 @@ class User extends Authenticatable
 
     public const password = 'password';
 
-    /**
-     * @var string[]
-     */
+    /** @var string[] */
     protected $fillable = [
-        'name', 'password',
+        self::name,
+        self::password,
     ];
 
-    /**
-     * @var string[]
-     */
+    /** @var string[] */
     protected $hidden = [
-        'password',
+        self::password,
     ];
 
-    /** @var Chat|null */
-    public $chat = null;
+    public ?Chat $chat = null;
 
     /**
      * @return HasMany
      */
     public function chats(): HasMany
     {
-        return $this->hasMany(Chat::class, 'user_id', 'id');
+        return $this->hasMany(Chat::class, Chat::userId, Chat::id);
     }
 }

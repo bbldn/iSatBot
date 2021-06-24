@@ -61,12 +61,12 @@ class Chat extends Model
 
         static::saved($up);
         static::retrieved($up);
-        static::saving(function (Chat $model) {
-            if (false === is_a($model->data, Collection::class)) {
-                $model->data = collect();
+        static::saving(function (Chat $chat) {
+            if (false === is_a($chat->data, Collection::class)) {
+                $chat->data = collect();
             }
 
-            $model->data = json_encode($model->data->all());
+            $chat->data = json_encode($chat->data->all());
         });
     }
 
