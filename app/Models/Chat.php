@@ -6,7 +6,6 @@ use Illuminate\Support\Collection;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Database\Eloquent\Collection as CollectionEloquent;
 
 /**
  * @property User|null user
@@ -14,9 +13,10 @@ use Illuminate\Database\Eloquent\Collection as CollectionEloquent;
  * @property string|null chat_id
  * @property Collection|null data
  * @property integer|null user_id
+ *
  * @method static Chat|null find(integer $id)
  * @method static Chat create(array $attributes)
- * @method static CollectionEloquent all($columns = ['*'])
+ * @method static Collection all($columns = ['*'])
  * @method static Builder where($column, $operator = null, $value = null, $boolean = 'and')
  */
 class Chat extends Model

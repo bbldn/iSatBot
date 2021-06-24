@@ -11,13 +11,14 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property integer|null id
  * @property string|null address
  * @property integer|null stateId
- * @property CustomerBack customer
  * @property integer|null countryId
  * @property integer|null localityId
+ * @property CustomerBack|null customer
  * @property integer|null orderStatusId
  * @property integer|null pickUpPointId
  * @property integer|null paymentMethodId
  * @property integer|null shippingMethodId
+ *
  * @method static Collection all($columns = ['*'])
  * @method static CustomerInformationBack|null find(integer $id)
  * @method static CustomerInformationBack create(array $attributes)

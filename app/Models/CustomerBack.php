@@ -14,10 +14,13 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property string|null phone
  * @property string|null comment
  * @property integer|null group_id
+ * @property CustomerGroupBack|null group
  * @property DateTimeInterface|null created_at
- * @method static OrderBack|null find(integer $id)
+ * @property CustomerInformationBack|null information
+ *
  * @method static Collection all($columns = ['*'])
- * @method static OrderBack create(array $attributes)
+ * @method static CustomerBack|null find(integer $id)
+ * @method static CustomerBack create(array $attributes)
  * @method static Builder where($column, $operator = null, $value = null, $boolean = 'and')
  */
 class CustomerBack extends Model
@@ -58,6 +61,14 @@ class CustomerBack extends Model
         self::groupId,
         self::createdAt,
     ];
+
+    /**
+     * @return HasOne
+     */
+    public function group(): HasOne
+    {
+        return $this->hasOne(CustomerGroupBack::class, CustomerGroupBack::id, self::id);
+    }
 
     /**
      * @return HasOne
