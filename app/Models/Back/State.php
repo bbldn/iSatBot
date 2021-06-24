@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property string|null name
  * @property string|null uuid
  * @property string|null data
+ * @property StateType|null type
  * @property Country|null country
  * @property integer|null type_id
  * @property integer|null country_id
@@ -59,5 +60,10 @@ class State extends Model
     public function country(): HasOne
     {
         return $this->hasOne(Country::class, Country::id, self::countryId);
+    }
+
+    public function type(): HasOne
+    {
+        return $this->hasOne(StateType::class, StateType::id, self::typeId);
     }
 }
