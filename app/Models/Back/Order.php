@@ -2,63 +2,12 @@
 
 namespace App\Models\Back;
 
-use DateTime;
-use App\Models\PaymentBack;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * @property integer id
- * @property string type
- * @property string product_name
- * @property integer product_id
- * @property float price
- * @property integer amount
- * @property string currency_name
- * @property string parent_name
- * @property string phone
- * @property string fio
- * @property string region
- * @property string city
- * @property string street
- * @property string house
- * @property string warehouse
- * @property string mail
- * @property string whant
- * @property string vip_num
- * @property integer time
- * @property integer status
- * @property string comments
- * @property integer archive
- * @property integer read
- * @property bool synchronize
- * @property bool client_id
- * @property bool payment
- * @property bool delivery
- * @property integer order_num
- * @property string track_number
- * @property DateTime track_number_date
- * @property bool money_given
- * @property bool track_sent
- * @property string serial_num
- * @property integer shop_id
- * @property integer shop_id_counterparty
- * @property integer payment_wait_days
- * @property float payment_wait_first_sum
- * @property integer document_id
- * @property integer document_type
- * @property DateTime invoice_sent
- * @property float currency_value
- * @property string currency_value_when_purchasing
- * @property float shipping_price
- * @property float shipping_price_old
- * @property string shipping_currency_name
- * @property float shipping_currency_value
- * @property Customer|null customer
- * @property ShippingMethod|null shipping
- * @property PaymentBack|null paymentObject
  * @method static Order|null find(integer $id)
  * @method static Collection all($columns = ['*'])
  * @method static Builder where($column, $operator = null, $value = null, $boolean = 'and')
@@ -66,28 +15,76 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  */
 class Order extends Model
 {
-    public const clientId = 'client_id';
+    public const id = 'id';
+
+    public const ip = 'ip';
+
+    public const fio = 'fio';
+
+    public const email = 'email';
+
+    public const phone = 'phone';
+
+    public const total = 'total';
+
+    public const typeId = 'type_id';
+
+    public const shopId = 'shop_id';
+
+    public const comment = 'comment';
+
+    public const address = 'address';
+
+    public const stateId = 'state_id';
+
+    public const archival = 'archival';
+
+    public const statusId = 'status_id';
+
+    public const createdAt = 'created_at';
+
+    public const updatedAt = 'updated_at';
+
+    public const userAgent = 'user_agent';
+
+    public const countryId = 'country_id';
+
+    public const customerId = 'customer_id';
+
+    public const localityId = 'locality_id';
+
+    public const warehouseId = 'warehouse_id';
+
+    public const trackNumber = 'track_number';
+
+    public const deliveryTotal = 'delivery_total';
+
+    public const deliveryOrderId = 'delivery_order_id';
+
+    public const pickUpPointId = 'pick_up_point_id';
+
+    public const customerGroupId = 'customer_group_id';
+
+    public const paymentMethodId = 'payment_method_id';
+
+    public const shippingMethodId = 'shipping_method_id';
+
+    public const paymentCurrencyId = 'payment_currency_id';
+
+    public const deliveryCreatedAt = 'delivery_created_at';
+
+    public const deliveryCurrencyId = 'delivery_currency_id';
+
+    public const paymentCurrencyValue = 'payment_currency_value';
+
+    public const trackNumberCreatedAt = 'track_number_created_at';
+
+    public const deliveryCurrencyValue = 'delivery_currency_value';
+
+    public const deliveryPaymentMethodId = 'delivery_payment_method_id';
 
     /** @var string[] */
-    protected $fillable = [
-        'type', 'product_name', 'product_id', 'price',
-        'amount', 'currency_name', 'parent_name',
-        'phone', 'fio', 'region', 'city',
-        'street', 'house', 'warehouse',
-        'mail', 'whant', 'vip_num', 'time',
-        'status', 'comments', 'archive', 'read',
-        'synchronize', 'client_id', 'payment',
-        'delivery', 'order_num', 'track_number',
-        'track_number_date', 'money_given',
-        'track_sent', 'serial_num', 'shop_id',
-        'shop_id_counterparty', 'payment_wait_days',
-        'payment_wait_first_sum', 'payment_date',
-        'document_id', 'document_type',
-        'invoice_sent', 'currency_value',
-        'currency_value_when_purchasing', 'shipping_price',
-        'shipping_price_old', 'shipping_currency_name',
-        'shipping_currency_value',
-    ];
+    protected $fillable = [];
 
     /** @var bool */
     public $timestamps = false;
@@ -96,57 +93,8 @@ class Order extends Model
     protected $connection = 'mysql_back';
 
     /** @var string */
-    protected $table = 'SS_orders_gamepost';
-
-    /** @var array */
-    protected $attributes = [
-        'product_name' => '',
-        'whant' => '',
-        'amount' => 1,
-        'currency_name' => 'грн',
-        'status' => 1,
-        'comments' => '',
-        'serial_num' => '',
-        'document_type' => 2,
-    ];
+    protected $table = 'orders';
 
     /** @var string[] */
-    protected $dates = [
-        'track_number_date',
-        'invoice_sent',
-    ];
-
-    /** @var array */
-    protected $casts = [
-        'price' => 'float',
-        'payment_wait_first_sum' => 'float',
-        'currency_value' => 'float',
-        'shipping_price' => 'float',
-        'shipping_price_old' => 'float',
-        'shipping_currency_value' => 'float',
-    ];
-
-    /**
-     * @return HasOne
-     */
-    public function customer(): HasOne
-    {
-        return $this->hasOne(Customer::class, 'id', 'client_id');
-    }
-
-    /**
-     * @return HasOne
-     */
-    public function shipping(): HasOne
-    {
-        return $this->hasOne(ShippingMethod::class, 'SID', 'delivery');
-    }
-
-    /**
-     * @return HasOne
-     */
-    public function paymentObject(): HasOne
-    {
-        return $this->hasOne(PaymentBack::class, 'PID', 'payment');
-    }
+    protected $dates = [];
 }
