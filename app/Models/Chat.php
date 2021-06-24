@@ -8,11 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
- * @property User|null user
  * @property int|null id
+ * @property User|null user
+ * @property int|null user_id
  * @property string|null chat_id
  * @property Collection|null data
- * @property int|null user_id
  *
  * @method static Chat|null find(int $id)
  * @method static Chat create(array $attributes)
@@ -39,7 +39,7 @@ class Chat extends Model
     protected $fillable = [self::data, self::chatId, self::userId];
 
     /**
-     *
+     * @return void
      */
     public static function boot(): void
     {
