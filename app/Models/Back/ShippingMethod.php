@@ -9,10 +9,11 @@ use Illuminate\Database\Eloquent\Collection;
  * @property int id
  * @property string name
  * @property string data
- * @method static Collection all($columns = ['*'])
- * @method static ShippingMethod create($attributes)
- * @method static ShippingMethod|null find(integer $id)
- * @method static Builder where($column, $operator = null, $value = null, $boolean = 'and')
+ *
+ * @method static Collection all(array $columns)
+ * @method static ShippingMethod|null find(int $id)
+ * @method static ShippingMethod create(array $attributes)
+ * @method static Builder where($column, $operator, $value, $boolean)
  */
 class ShippingMethod extends ModelBack
 {

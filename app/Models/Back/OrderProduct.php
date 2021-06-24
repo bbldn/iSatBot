@@ -2,8 +2,31 @@
 
 namespace App\Models\Back;
 
+use Illuminate\Support\Collection;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
+/**
+ * @property int|null id
+ * @property string|null name
+ * @property float|null price
+ * @property float|null total
+ * @property int|null order_id
+ * @property int|null quantity
+ * @property int|null product_id
+ * @property float|null delivery_total
+ * @property float|null delivery_price
+ * @property string|null serial_numbers
+ * @property int|null payment_currency_id
+ * @property int|null delivery_currency_id
+ * @property float|null payment_currency_value
+ * @property float|null delivery_currency_value
+ *
+ * @method static Collection all(array $columns)
+ * @method static OrderProduct|null find(int $id)
+ * @method static OrderProduct create(array $attributes)
+ * @method static Builder where($column, $operator, $value, $boolean)
+ */
 class OrderProduct extends ModelBack
 {
     public const id = 'id';

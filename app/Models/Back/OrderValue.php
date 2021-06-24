@@ -2,8 +2,20 @@
 
 namespace App\Models\Back;
 
+use Illuminate\Support\Collection;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
+/**
+ * @property int|null constId
+ * @property Order|null order
+ * @property int|null order_id
+ * @property string|null value
+ *
+ * @method static Collection all(array $columns)
+ * @method static OrderValue create(array $attributes)
+ * @method static Builder where($column, $operator, $value, $boolean)
+ */
 class OrderValue extends ModelBack
 {
     public const value = 'value';

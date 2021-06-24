@@ -58,9 +58,9 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property DateTimeInterface|null track_number_created_at
  *
  * @method static Order|null find(int $id)
+ * @method static Collection all(array $columns)
  * @method static Order create(array $attributes)
- * @method static Collection all(array $columns = ['*'])
- * @method static Builder where($column, $operator = null, $value = null, $boolean = 'and')
+ * @method static Builder where($column, $operator, $value, $boolean)
  */
 class Order extends ModelBack
 {

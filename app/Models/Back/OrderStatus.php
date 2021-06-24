@@ -11,9 +11,9 @@ use Illuminate\Database\Eloquent\Collection;
  * @property string|null data
  *
  * @method static OrderStatus|null find(int $id)
- * @method static Collection all($columns = ['*'])
+ * @method static Collection all(array $columns)
  * @method static OrderStatus create(array $attributes)
- * @method static Builder where($column, $operator = null, $value = null, $boolean = 'and')
+ * @method static Builder where($column, $operator, $value, $boolean)
  */
 class OrderStatus extends ModelBack
 {

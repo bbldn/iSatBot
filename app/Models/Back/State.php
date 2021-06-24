@@ -8,20 +8,20 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
- * @property integer|null id
+ * @property int|null id
  * @property string|null name
  * @property string|null uuid
  * @property string|null data
+ * @property int|null type_id
+ * @property int|null country_id
  * @property StateType|null type
  * @property Country|null country
- * @property integer|null type_id
- * @property integer|null country_id
  * @property Locality[]|Collection localities
  *
- * @method static State|null find(integer $id)
+ * @method static State|null find(int $id)
+ * @method static Collection all(array $columns)
  * @method static State create(array $attributes)
- * @method static Collection all($columns = ['*'])
- * @method static Builder where($column, $operator = null, $value = null, $boolean = 'and')
+ * @method static Builder where($column, $operator, $value, $boolean)
  */
 class State extends ModelBack
 {

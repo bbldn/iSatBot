@@ -13,8 +13,8 @@ use Illuminate\Database\Eloquent\Builder;
  *
  * @method static Shop|null find(integer $id)
  * @method static Shop create(array $attributes)
- * @method static Collection all($columns = ['*'])
- * @method static Builder where($column, $operator = null, $value = null, $boolean = 'and')
+ * @method static Collection all(array $columns)
+ * @method static Builder where($column, $operator, $value, $boolean)
  */
 class Shop extends ModelBack
 {

@@ -19,9 +19,9 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property ShippingMethod|null shippingMethod
  *
  * @method static PickUpPoint|null find(int $id)
- * @method static Collection all($columns = ['*'])
+ * @method static Collection all(array $columns)
  * @method static PickUpPoint create(array $attributes)
- * @method static Builder where($column, $operator = null, $value = null, $boolean = 'and')
+ * @method static Builder where($column, $operator, $value, $boolean)
  */
 class PickUpPoint extends ModelBack
 {

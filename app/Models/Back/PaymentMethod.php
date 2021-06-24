@@ -8,10 +8,11 @@ use Illuminate\Database\Eloquent\Collection;
 /**
  * @property int id
  * @property string name
- * @method static Collection all($columns = ['*'])
- * @method static PaymentMethod create($attributes)
- * @method static PaymentMethod|null find(integer $id)
- * @method static Builder where($column, $operator = null, $value = null, $boolean = 'and')
+ *
+ * @method static Collection all(array $columns)
+ * @method static PaymentMethod|null find(int $id)
+ * @method static PaymentMethod create(array $attributes)
+ * @method static Builder where($column, $operator, $value, $boolean)
  */
 class PaymentMethod extends ModelBack
 {
@@ -22,9 +23,9 @@ class PaymentMethod extends ModelBack
     /** @var bool */
     public $timestamps = false;
 
-    /** @var string */
-    protected $table = 'payment_methods';
-
     /** @var string[] */
     protected $fillable = [self::name];
+
+    /** @var string */
+    protected $table = 'payment_methods';
 }

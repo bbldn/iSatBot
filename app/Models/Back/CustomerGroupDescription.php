@@ -12,9 +12,10 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property string|null name
  * @property int|null language_id
  * @property CustomerGroup|null customerGroup
- * @method static Collection all($columns = ['*'])
+ *
+ * @method static Collection all(array $columns)
  * @method static CustomerGroupDescription create(array $attributes)
- * @method static Builder where($column, $operator = null, $value = null, $boolean = 'and')
+ * @method static Builder where($column, $operator, $value, $boolean)
  */
 class CustomerGroupDescription extends ModelBack
 {

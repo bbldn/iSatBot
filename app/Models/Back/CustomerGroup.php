@@ -10,10 +10,11 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property int|null id
  * @property int|null sort_order
  * @property CustomerGroupDescription[]|Collection descriptions
- * @method static Collection all($columns = ['*'])
+ *
+ * @method static Collection all(array $columns)
  * @method static CustomerGroup|null find(int $id)
  * @method static CustomerGroup create(array $attributes)
- * @method static Builder where($column, $operator = null, $value = null, $boolean = 'and')
+ * @method static Builder where($column, $operator, $value, $boolean)
  */
 class CustomerGroup extends ModelBack
 {
@@ -31,10 +32,7 @@ class CustomerGroup extends ModelBack
     protected $table = 'customers_groups';
 
     /** @var string[] */
-    protected $fillable = [
-        self::id,
-        self::sortOrder,
-    ];
+    protected $fillable = [self::sortOrder];
 
     /**
      * @return HasMany
