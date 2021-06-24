@@ -98,7 +98,12 @@ class Order extends Model
     protected $connection = 'mysql_back';
 
     /** @var string[] */
-    protected $dates = [self::createdAt, self::updatedAt, self::deliveryCreatedAt];
+    protected $dates = [
+        self::createdAt,
+        self::updatedAt,
+        self::deliveryCreatedAt,
+        self::trackNumberCreatedAt,
+    ];
 
     /** @var string[] */
     protected $fillable = [
@@ -159,9 +164,33 @@ class Order extends Model
     /**
      * @return HasOne
      */
+    public function paymentCurrency(): HasOne
+    {
+        return $this->hasOne(Currency::class, Currency::id, self::paymentCurrencyId);
+    }
+
+    /**
+     * @return HasOne
+     */
+    public function deliveryCurrency(): HasOne
+    {
+        return $this->hasOne(Currency::class, Currency::id, self::deliveryCurrencyId);
+    }
+
+    /**
+     * @return HasOne
+     */
     public function pickUpPoint(): HasOne
     {
         return $this->hasOne(PickUpPoint::class, PickUpPoint::id, self::pickUpPointId);
+    }
+
+    /**
+     * @return HasOne
+     */
+    public function customerGroup(): HasOne
+    {
+        return $this->hasOne(CustomerGroup::class, CustomerGroup::id, self::customerGroupId);
     }
 
     /**

@@ -69,7 +69,7 @@ class Customer extends Model
      */
     public function group(): HasOne
     {
-        return $this->hasOne(CustomerGroup::class, CustomerGroup::id, self::id);
+        return $this->hasOne(CustomerGroup::class, CustomerGroup::id, self::groupId);
     }
 
     /**
