@@ -9,19 +9,16 @@ use Illuminate\Database\Eloquent\Collection;
 /**
  * @property int id
  * @property string name
- * @property string data
  * @method static Collection all($columns = ['*'])
- * @method static ShippingMethod create($attributes)
- * @method static ShippingMethod|null find(integer $id)
+ * @method static PaymentMethod create($attributes)
+ * @method static PaymentMethod|null find(integer $id)
  * @method static Builder where($column, $operator = null, $value = null, $boolean = 'and')
  */
-class ShippingMethod extends Model
+class PaymentMethod extends Model
 {
     public const id = 'id';
 
     public const name = 'name';
-
-    public const data = 'data';
 
     /** @var bool */
     public $timestamps = false;
@@ -30,8 +27,8 @@ class ShippingMethod extends Model
     protected $connection = 'mysql_back';
 
     /** @var string */
-    protected $table = 'shipping_methods';
+    protected $table = 'payment_methods';
 
     /** @var string[] */
-    protected $fillable = [self::id, self::name, self::data];
+    protected $fillable = [self::id, self::name];
 }

@@ -9,16 +9,21 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * @property int|null id
+ * @property State|null state
  * @property int|null stateId
  * @property int|null countryId
  * @property int|null localityId
  * @property string|null address
  * @property Country|null country
  * @property Customer|null customer
+ * @property Locality|null locality
  * @property integer|null orderStatusId
  * @property integer|null pickUpPointId
+ * @property PickUpPoint|null pickUpPoint
  * @property integer|null paymentMethodId
  * @property integer|null shippingMethodId
+ * @property PaymentMethod|null paymentMethod
+ * @property ShippingMethod|null shippingMethod
  *
  * @method static Collection all($columns = ['*'])
  * @method static CustomerInformation|null find(int $id)
@@ -72,9 +77,9 @@ class CustomerInformation extends Model
     /**
      * @return HasOne
      */
-    public function country(): HasOne
+    public function state(): HasOne
     {
-        return $this->hasOne(Country::class, Country::id, self::id);
+        return $this->hasOne(State::class, State::id, self::stateId);
     }
 
     /**
@@ -83,5 +88,45 @@ class CustomerInformation extends Model
     public function customer(): HasOne
     {
         return $this->hasOne(Customer::class, Customer::id, self::id);
+    }
+
+    /**
+     * @return HasOne
+     */
+    public function country(): HasOne
+    {
+        return $this->hasOne(Country::class, Country::id, self::countryId);
+    }
+
+    /**
+     * @return HasOne
+     */
+    public function locality(): HasOne
+    {
+        return $this->hasOne(Locality::class, Locality::id, self::localityId);
+    }
+
+    /**
+     * @return HasOne
+     */
+    public function pickUpPoint(): HasOne
+    {
+        return $this->hasOne(PickUpPoint::class, PickUpPoint::id, self::pickUpPointId);
+    }
+
+    /**
+     * @return HasOne
+     */
+    public function paymentMethod(): HasOne
+    {
+        return $this->hasOne(PaymentMethod::class, PaymentMethod::id, self::paymentMethodId);
+    }
+
+    /**
+     * @return HasOne
+     */
+    public function shippingMethod(): HasOne
+    {
+        return $this->hasOne(ShippingMethod::class, ShippingMethod::id, self::shippingMethodId);
     }
 }
