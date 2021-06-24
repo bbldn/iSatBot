@@ -5,13 +5,15 @@ namespace App\Models\Back;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * @property integer id
+ *
+ * @method static Order create($attributes)
  * @method static Order|null find(integer $id)
  * @method static Collection all($columns = ['*'])
  * @method static Builder where($column, $operator = null, $value = null, $boolean = 'and')
- * @method static Order create($attributes)
  */
 class Order extends Model
 {
@@ -59,9 +61,9 @@ class Order extends Model
 
     public const deliveryTotal = 'delivery_total';
 
-    public const deliveryOrderId = 'delivery_order_id';
-
     public const pickUpPointId = 'pick_up_point_id';
+
+    public const deliveryOrderId = 'delivery_order_id';
 
     public const customerGroupId = 'customer_group_id';
 
@@ -83,18 +85,98 @@ class Order extends Model
 
     public const deliveryPaymentMethodId = 'delivery_payment_method_id';
 
-    /** @var string[] */
-    protected $fillable = [];
+    /** @var string */
+    protected $table = 'orders';
 
-    /** @var bool */
-    public $timestamps = false;
+    /** @var string */
+    const CREATED_AT = 'created_at';
+
+    /** @var string */
+    const UPDATED_AT = 'updated_at';
 
     /** @var string */
     protected $connection = 'mysql_back';
 
-    /** @var string */
-    protected $table = 'orders';
+    /** @var string[] */
+    protected $dates = [self::createdAt, self::updatedAt, self::deliveryCreatedAt];
 
     /** @var string[] */
-    protected $dates = [];
+    protected $fillable = [
+        self::deliveryPaymentMethodId,
+        self::id, self::ip, self::fio,
+        self::email, self::phone, self::total,
+        self::typeId, self::shopId, self::comment,
+        self::address, self::stateId, self::archival,
+        self::statusId, self::createdAt, self::updatedAt,
+        self::userAgent, self::countryId, self::customerId,
+        self::localityId, self::warehouseId, self::trackNumber,
+        self::deliveryTotal, self::pickUpPointId, self::deliveryOrderId,
+        self::customerGroupId, self::paymentMethodId, self::shippingMethodId,
+        self::paymentCurrencyId, self::deliveryCreatedAt, self::deliveryCurrencyId,
+        self::paymentCurrencyValue, self::trackNumberCreatedAt, self::deliveryCurrencyValue,
+    ];
+
+    /**
+     * @return HasOne
+     */
+    public function state(): HasOne
+    {
+        return $this->hasOne(State::class, State::id, self::stateId);
+    }
+
+    /**
+     * @return HasOne
+     */
+    public function country(): HasOne
+    {
+        return $this->hasOne(Country::class, Country::id, self::countryId);
+    }
+
+    /**
+     * @return HasOne
+     */
+    public function deliveryOrder(): HasOne
+    {
+        return $this->hasOne(Order::class, Order::id, self::deliveryOrderId);
+    }
+
+    /**
+     * @return HasOne
+     */
+    public function customer(): HasOne
+    {
+        return $this->hasOne(Customer::class, Customer::id, self::customerId);
+    }
+
+    /**
+     * @return HasOne
+     */
+    public function locality(): HasOne
+    {
+        return $this->hasOne(Locality::class, Locality::id, self::localityId);
+    }
+
+    /**
+     * @return HasOne
+     */
+    public function pickUpPoint(): HasOne
+    {
+        return $this->hasOne(PickUpPoint::class, PickUpPoint::id, self::pickUpPointId);
+    }
+
+    /**
+     * @return HasOne
+     */
+    public function paymentMethod(): HasOne
+    {
+        return $this->hasOne(PaymentMethod::class, PaymentMethod::id, self::paymentMethodId);
+    }
+
+    /**
+     * @return HasOne
+     */
+    public function shippingMethod(): HasOne
+    {
+        return $this->hasOne(ShippingMethod::class, ShippingMethod::id, self::shippingMethodId);
+    }
 }

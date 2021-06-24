@@ -53,6 +53,9 @@ class CustomerInformation extends Model
     /** @var bool */
     public $timestamps = false;
 
+    /** @var bool */
+    public $incrementing = false;
+
     /** @var string */
     protected $primaryKey = self::id;
 

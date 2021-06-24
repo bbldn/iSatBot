@@ -37,6 +37,8 @@ class Customer extends Model
 
     public const createdAt = 'created_at';
 
+    const CREATED_AT = 'created_at';
+
     /** @var bool */
     public $timestamps = false;
 
