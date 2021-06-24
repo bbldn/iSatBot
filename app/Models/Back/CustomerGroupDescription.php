@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Models;
+namespace App\Models\Back;
 
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -12,12 +12,12 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property integer|null id
  * @property string|null name
  * @property integer|null language_id
- * @property CustomerGroupBack|null customerGroup
+ * @property CustomerGroup|null customerGroup
  * @method static Collection all($columns = ['*'])
- * @method static CustomerGroupDescriptionBack create(array $attributes)
+ * @method static CustomerGroupDescription create(array $attributes)
  * @method static Builder where($column, $operator = null, $value = null, $boolean = 'and')
  */
-class CustomerGroupDescriptionBack extends Model
+class CustomerGroupDescription extends Model
 {
     public const id = 'id';
 
@@ -49,6 +49,6 @@ class CustomerGroupDescriptionBack extends Model
      */
     public function customerGroup(): HasOne
     {
-        return $this->hasOne(CustomerGroupBack::class, CustomerGroupBack::id, self::id);
+        return $this->hasOne(CustomerGroup::class, CustomerGroup::id, self::id);
     }
 }

@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Back;
 
 use DateTime;
+use App\Models\PaymentBack;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -55,15 +56,15 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property float shipping_price_old
  * @property string shipping_currency_name
  * @property float shipping_currency_value
- * @property CustomerBack|null customer
- * @property ShippingMethodsBack|null shipping
+ * @property Customer|null customer
+ * @property ShippingMethod|null shipping
  * @property PaymentBack|null paymentObject
- * @method static OrderBack|null find(integer $id)
+ * @method static Order|null find(integer $id)
  * @method static Collection all($columns = ['*'])
  * @method static Builder where($column, $operator = null, $value = null, $boolean = 'and')
- * @method static OrderBack create($attributes)
+ * @method static Order create($attributes)
  */
-class OrderBack extends Model
+class Order extends Model
 {
     public const clientId = 'client_id';
 
@@ -130,7 +131,7 @@ class OrderBack extends Model
      */
     public function customer(): HasOne
     {
-        return $this->hasOne(CustomerBack::class, 'id', 'client_id');
+        return $this->hasOne(Customer::class, 'id', 'client_id');
     }
 
     /**
@@ -138,7 +139,7 @@ class OrderBack extends Model
      */
     public function shipping(): HasOne
     {
-        return $this->hasOne(ShippingMethodsBack::class, 'SID', 'delivery');
+        return $this->hasOne(ShippingMethod::class, 'SID', 'delivery');
     }
 
     /**

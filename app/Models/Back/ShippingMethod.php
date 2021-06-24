@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Back;
 
 use DateTime;
 use Illuminate\Database\Eloquent\Model;
@@ -20,11 +20,11 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property DateTime warehouses_last_update
  * @property string key
  * @method static Collection all($columns = ['*'])
- * @method static ShippingMethodsBack create($attributes)
- * @method static ShippingMethodsBack|null find(integer $id)
+ * @method static ShippingMethod create($attributes)
+ * @method static ShippingMethod|null find(integer $id)
  * @method static Builder where($column, $operator = null, $value = null, $boolean = 'and')
  */
-class ShippingMethodsBack extends Model
+class ShippingMethod extends Model
 {
     /** @var bool */
     public $timestamps = false;
@@ -67,7 +67,7 @@ class ShippingMethodsBack extends Model
      */
     public function orders(): HasMany
     {
-        return $this->hasMany(OrderBack::class, 'delivery', $this->primaryKey)
+        return $this->hasMany(Order::class, 'delivery', $this->primaryKey)
             ->where('SS_orders_gamepost.id', '=', 'SS_orders_gamepost.order_num');
     }
 }

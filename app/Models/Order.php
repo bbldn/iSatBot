@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Back\Order;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -10,10 +11,10 @@ use Illuminate\Database\Eloquent\Collection;
  * @property integer|null id
  * @property integer|null front_id
  * @property integer|null back_id
- * @method static OrderBack|null find(integer $id)
+ * @method static Order|null find(integer $id)
  * @method static Collection all($columns = ['*'])
  * @method static Builder where($column, $operator = null, $value = null, $boolean = 'and')
- * @method static OrderBack create($attributes)
+ * @method static Order create($attributes)
  */
 class Order extends Model
 {

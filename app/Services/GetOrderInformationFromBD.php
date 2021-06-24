@@ -2,8 +2,8 @@
 
 namespace App\Services;
 
-use App\Models\OrderBack;
 use Illuminate\Support\Str;
+use App\Models\Back\Order;
 use Illuminate\Support\Collection;
 use App\Formatters\OrderFormatter;
 
@@ -15,12 +15,12 @@ class GetOrderInformationFromBD implements GetOrderInformationInterface
      */
     public function getOrderInformation(int $id): Collection
     {
-        $ordersBack = OrderBack::where('order_num', $id)->get();
+        $ordersBack = Order::where('order_num', $id)->get();
         if (true === $ordersBack->isEmpty()) {
             return collect(['Order not found']);
         }
 
-        /** @var OrderBack $orderBack */
+        /** @var Order $orderBack */
         $orderBack = $ordersBack->first();
 
         $phone = trim($orderBack->phone);
@@ -86,7 +86,7 @@ class GetOrderInformationFromBD implements GetOrderInformationInterface
         $data = [];
 
         foreach ($orders as $key => $order) {
-            /** @var OrderBack $order */
+            /** @var Order $order */
             $price = round($order->price * $order->currency_value, 2) . ' ' . $order->currency_name;
             $data[] = [
                 'number' => $key + 1,

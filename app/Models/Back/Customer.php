@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Back;
 
 use DateTimeInterface;
 use Illuminate\Support\Collection;
@@ -14,16 +14,16 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property string|null phone
  * @property string|null comment
  * @property integer|null group_id
- * @property CustomerGroupBack|null group
+ * @property CustomerGroup|null group
  * @property DateTimeInterface|null created_at
- * @property CustomerInformationBack|null information
+ * @property CustomerInformation|null information
  *
  * @method static Collection all($columns = ['*'])
- * @method static CustomerBack|null find(integer $id)
- * @method static CustomerBack create(array $attributes)
+ * @method static Customer|null find(integer $id)
+ * @method static Customer create(array $attributes)
  * @method static Builder where($column, $operator = null, $value = null, $boolean = 'and')
  */
-class CustomerBack extends Model
+class Customer extends Model
 {
     public const id = 'id';
 
@@ -67,7 +67,7 @@ class CustomerBack extends Model
      */
     public function group(): HasOne
     {
-        return $this->hasOne(CustomerGroupBack::class, CustomerGroupBack::id, self::id);
+        return $this->hasOne(CustomerGroup::class, CustomerGroup::id, self::id);
     }
 
     /**
@@ -75,6 +75,6 @@ class CustomerBack extends Model
      */
     public function information(): HasOne
     {
-        return $this->hasOne(CustomerInformationBack::class, CustomerInformationBack::id, self::id);
+        return $this->hasOne(CustomerInformation::class, CustomerInformation::id, self::id);
     }
 }

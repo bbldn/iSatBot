@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Back;
 
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -13,18 +13,19 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property integer|null stateId
  * @property integer|null countryId
  * @property integer|null localityId
- * @property CustomerBack|null customer
+ * @property Country|null country
+ * @property Customer|null customer
  * @property integer|null orderStatusId
  * @property integer|null pickUpPointId
  * @property integer|null paymentMethodId
  * @property integer|null shippingMethodId
  *
  * @method static Collection all($columns = ['*'])
- * @method static CustomerInformationBack|null find(integer $id)
- * @method static CustomerInformationBack create(array $attributes)
+ * @method static CustomerInformation|null find(integer $id)
+ * @method static CustomerInformation create(array $attributes)
  * @method static Builder where($column, $operator = null, $value = null, $boolean = 'and')
  */
-class CustomerInformationBack extends Model
+class CustomerInformation extends Model
 {
     public const id = 'id';
 
@@ -71,8 +72,16 @@ class CustomerInformationBack extends Model
     /**
      * @return HasOne
      */
+    public function country(): HasOne
+    {
+        return $this->hasOne(Country::class, Country::id, self::id);
+    }
+
+    /**
+     * @return HasOne
+     */
     public function customer(): HasOne
     {
-        return $this->hasOne(CustomerBack::class, CustomerBack::id, self::id);
+        return $this->hasOne(Customer::class, Customer::id, self::id);
     }
 }
