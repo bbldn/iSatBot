@@ -124,6 +124,14 @@ class Order extends Model
     /**
      * @return HasOne
      */
+    public function shop(): HasOne
+    {
+        return $this->hasOne(Shop::class, Shop::id, self::shopId);
+    }
+
+    /**
+     * @return HasOne
+     */
     public function state(): HasOne
     {
         return $this->hasOne(State::class, State::id, self::stateId);
@@ -159,6 +167,14 @@ class Order extends Model
     public function locality(): HasOne
     {
         return $this->hasOne(Locality::class, Locality::id, self::localityId);
+    }
+
+    /**
+     * @return HasOne
+     */
+    public function status(): HasOne
+    {
+        return $this->hasOne(OrderStatus::class, OrderStatus::id, self::statusId);
     }
 
     /**
