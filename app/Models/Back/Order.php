@@ -2,17 +2,53 @@
 
 namespace App\Models\Back;
 
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
- * @property integer id
+ * @property int|null id
+ * @property string|null ip
+ * @property string|null fio
+ * @property string|null email
+ * @property string|null phone
+ * @property float|null total
+ * @property int|null type_id
+ * @property int|null shop_id
+ * @property int|null state_id
+ * @property string|null comment
+ * @property string|null address
+ * @property bool|null archival
+ * @property int|null status_id
+ * @property string|null user_agent
+ * @property int|null country_id
+ * @property int|null customer_id
+ * @property int|null locality_id
+ * @property int|null warehouse_id
+ * @property string|null track_number
+ * @property float|null delivery_total
+ * @property int|null pick_up_point_id
+ * @property int|null delivery_order_id
+ * @property int|null customer_group_id
+ * @property int|null payment_method_id
+ * @property int|null delivery_currency_id
+ * @property float|null payment_currency_value
+ * @property float|null delivery_currency_value
+ * @property int|null delivery_payment_method_id
+ * @property DateTimeInterface|null created_at
+ * @property DateTimeInterface|null updated_at
+ * @property DateTimeInterface|null delivery_created_at
+ * @property DateTimeInterface|null track_number_created_at
  *
- * @method static Order create($attributes)
- * @method static Order|null find(integer $id)
- * @method static Collection all($columns = ['*'])
+ * @property Shop|null shop
+ * @property State|null state
+ * @property Country|null country
+ *
+ * @method static Order|null find(int $id)
+ * @method static Order create(array $attributes)
+ * @method static Collection all(array $columns = ['*'])
  * @method static Builder where($column, $operator = null, $value = null, $boolean = 'and')
  */
 class Order extends Model
