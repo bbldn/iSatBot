@@ -10,7 +10,7 @@
     "type": "project",
     "require": {
         "php": "^7.4",
-        "bbldn/laravel-symfony-messenger": "^0.1.0",
+        "bbldn/laravel-symfony-messenger": "^0.1.2",
         "laravel/lumen-framework": "^8.0",
         "symfony/redis-messenger": "^5.3"
     },
@@ -24,11 +24,6 @@
             "App\\": "app/",
             "Messenger\\": "messenger/"
         }
-    },
-    "autoload-dev": {
-        "classmap": [
-            "tests/"
-        ]
     },
     "config": {
         "preferred-install": "dist",
