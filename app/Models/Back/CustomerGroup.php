@@ -3,7 +3,6 @@
 namespace App\Models\Back;
 
 use Illuminate\Support\Collection;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
@@ -16,7 +15,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static CustomerGroup create(array $attributes)
  * @method static Builder where($column, $operator = null, $value = null, $boolean = 'and')
  */
-class CustomerGroup extends Model
+class CustomerGroup extends ModelBack
 {
     public const id = 'id';
 
@@ -30,9 +29,6 @@ class CustomerGroup extends Model
 
     /** @var string */
     protected $table = 'customers_groups';
-
-    /** @var string */
-    protected $connection = 'mysql_back';
 
     /** @var string[] */
     protected $fillable = [

@@ -2,7 +2,6 @@
 
 namespace App\Models\Back;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -16,7 +15,7 @@ use Illuminate\Database\Eloquent\Collection;
  * @method static OrderStatus create(array $attributes)
  * @method static Builder where($column, $operator = null, $value = null, $boolean = 'and')
  */
-class OrderStatus extends Model
+class OrderStatus extends ModelBack
 {
     public const id = 'id';
 
@@ -32,9 +31,6 @@ class OrderStatus extends Model
 
     /** @var string */
     protected $table = 'orders_statuses';
-
-    /** @var string */
-    protected $connection = 'mysql_back';
 
     /** @var string[] */
     protected $fillable = [self::name, self::data];

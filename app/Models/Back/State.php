@@ -3,7 +3,6 @@
 namespace App\Models\Back;
 
 use Illuminate\Support\Collection;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -24,7 +23,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static Collection all($columns = ['*'])
  * @method static Builder where($column, $operator = null, $value = null, $boolean = 'and')
  */
-class State extends Model
+class State extends ModelBack
 {
     public const id = 'id';
 
@@ -49,11 +48,8 @@ class State extends Model
 
     /** @var string[] */
     protected $fillable = [
-        self::name,
-        self::uuid,
-        self::data,
-        self::typeId,
-        self::countryId,
+        self::name, self::uuid,
+        self::data, self::typeId, self::countryId,
     ];
 
     /**
@@ -64,6 +60,9 @@ class State extends Model
         return $this->hasOne(Country::class, Country::id, self::countryId);
     }
 
+    /**
+     * @return HasOne
+     */
     public function type(): HasOne
     {
         return $this->hasOne(StateType::class, StateType::id, self::typeId);

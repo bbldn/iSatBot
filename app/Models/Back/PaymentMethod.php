@@ -2,7 +2,6 @@
 
 namespace App\Models\Back;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -14,7 +13,7 @@ use Illuminate\Database\Eloquent\Collection;
  * @method static PaymentMethod|null find(integer $id)
  * @method static Builder where($column, $operator = null, $value = null, $boolean = 'and')
  */
-class PaymentMethod extends Model
+class PaymentMethod extends ModelBack
 {
     public const id = 'id';
 
@@ -24,11 +23,8 @@ class PaymentMethod extends Model
     public $timestamps = false;
 
     /** @var string */
-    protected $connection = 'mysql_back';
-
-    /** @var string */
     protected $table = 'payment_methods';
 
     /** @var string[] */
-    protected $fillable = [self::id, self::name];
+    protected $fillable = [self::name];
 }

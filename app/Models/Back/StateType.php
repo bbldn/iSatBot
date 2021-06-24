@@ -3,7 +3,6 @@
 namespace App\Models\Back;
 
 use Illuminate\Support\Collection;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 
 /**
@@ -12,12 +11,12 @@ use Illuminate\Database\Eloquent\Builder;
  * @property string|null labelLeft
  * @property string|null labelRight
  *
- * @method static Collection all($columns = ['*'])
- * @method static StateType|null find(integer $id)
+ * @method static StateType|null find(int $id)
  * @method static StateType create(array $attributes)
+ * @method static Collection all(array $columns = ['*'])
  * @method static Builder where($column, $operator = null, $value = null, $boolean = 'and')
  */
-class StateType extends Model
+class StateType extends ModelBack
 {
     public const id = 'id';
 

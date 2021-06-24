@@ -3,7 +3,6 @@
 namespace App\Models\Back;
 
 use Illuminate\Support\Collection;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
@@ -24,7 +23,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @method static PickUpPoint create(array $attributes)
  * @method static Builder where($column, $operator = null, $value = null, $boolean = 'and')
  */
-class PickUpPoint extends Model
+class PickUpPoint extends ModelBack
 {
     public const id = 'id';
 
@@ -39,6 +38,18 @@ class PickUpPoint extends Model
     public const localityId = 'locality_id';
 
     public const shippingMethodId = 'shipping_method_id';
+
+    /** @var bool */
+    public $timestamps = false;
+
+    /** @var string */
+    protected $table = 'pick_up_points';
+
+    /** @var string[] */
+    protected $fillable = [
+        self::name, self::uuid, self::data,
+        self::enabled, self::localityId, self::shippingMethodId,
+    ];
 
     /**
      * @return HasOne

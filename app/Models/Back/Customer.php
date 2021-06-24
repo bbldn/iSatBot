@@ -4,7 +4,6 @@ namespace App\Models\Back;
 
 use DateTimeInterface;
 use Illuminate\Support\Collection;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
@@ -23,7 +22,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @method static Customer create(array $attributes)
  * @method static Builder where($column, $operator = null, $value = null, $boolean = 'and')
  */
-class Customer extends Model
+class Customer extends ModelBack
 {
     public const id = 'id';
 
@@ -50,9 +49,6 @@ class Customer extends Model
 
     /** @var string[] */
     protected $dates = [self::createdAt];
-
-    /** @var string */
-    protected $connection = 'mysql_back';
 
     /** @var string[] */
     protected $fillable = [

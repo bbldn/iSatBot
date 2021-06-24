@@ -3,7 +3,6 @@
 namespace App\Models\Back;
 
 use Illuminate\Support\Collection;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
@@ -30,7 +29,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @method static CustomerInformation create(array $attributes)
  * @method static Builder where($column, $operator = null, $value = null, $boolean = 'and')
  */
-class CustomerInformation extends Model
+class CustomerInformation extends ModelBack
 {
     public const id = 'id';
 
@@ -58,9 +57,6 @@ class CustomerInformation extends Model
 
     /** @var string */
     protected $primaryKey = self::id;
-
-    /** @var string */
-    protected $connection = 'mysql_back';
 
     /** @var string */
     protected $table = 'customers_informations';

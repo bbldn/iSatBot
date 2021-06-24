@@ -1,11 +1,9 @@
 <?php
 
-
 namespace App\Models\Back;
 
 use Illuminate\Support\Collection;
 use Illuminate\Database\Query\Builder;
-use Illuminate\Database\Eloquent\Model;
 
 /**
  * @property int|null id
@@ -16,7 +14,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static Country create(array $attributes)
  * @method static Builder where($column, $operator = null, $value = null, $boolean = 'and')
  */
-class Country extends Model
+class Country extends ModelBack
 {
     public const id = 'id';
 
@@ -30,7 +28,4 @@ class Country extends Model
 
     /** @var string[] */
     protected $fillable = [self::name];
-
-    /** @var string */
-    protected $connection = 'mysql_back';
 }

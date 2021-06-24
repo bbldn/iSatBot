@@ -3,10 +3,10 @@
 namespace App\Models\Back;
 
 use DateTimeInterface;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @property int|null id
@@ -52,6 +52,8 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property float|null delivery_currency_value
  * @property ShippingMethod|null shippingMethod
  * @property int|null delivery_payment_method_id
+ * @property OrderValue[]|Collection orderValues
+ * @property OrderProduct[]|Collection orderProducts
  * @property DateTimeInterface|null delivery_created_at
  * @property DateTimeInterface|null track_number_created_at
  *
@@ -60,7 +62,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @method static Collection all(array $columns = ['*'])
  * @method static Builder where($column, $operator = null, $value = null, $boolean = 'and')
  */
-class Order extends Model
+class Order extends ModelBack
 {
     public const id = 'id';
 
@@ -139,9 +141,6 @@ class Order extends Model
     /** @var string */
     const UPDATED_AT = 'updated_at';
 
-    /** @var string */
-    protected $connection = 'mysql_back';
-
     /** @var string[] */
     protected $dates = [
         self::createdAt,
@@ -215,11 +214,27 @@ class Order extends Model
     }
 
     /**
+     * @return HasMany
+     */
+    public function orderValues(): HasMany
+    {
+        return $this->hasMany(OrderValue::class, OrderValue::orderId, self::id);
+    }
+
+    /**
      * @return HasOne
      */
     public function status(): HasOne
     {
         return $this->hasOne(OrderStatus::class, OrderStatus::id, self::statusId);
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function orderProducts(): HasMany
+    {
+        return $this->hasMany(OrderProduct::class, OrderProduct::orderId, self::id);
     }
 
     /**

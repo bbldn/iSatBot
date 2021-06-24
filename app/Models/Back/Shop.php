@@ -3,7 +3,6 @@
 namespace App\Models\Back;
 
 use Illuminate\Support\Collection;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 
 /**
@@ -17,7 +16,7 @@ use Illuminate\Database\Eloquent\Builder;
  * @method static Collection all($columns = ['*'])
  * @method static Builder where($column, $operator = null, $value = null, $boolean = 'and')
  */
-class Shop extends Model
+class Shop extends ModelBack
 {
     public const id = 'id';
 
@@ -39,7 +38,6 @@ class Shop extends Model
     /** @var string[] */
     protected $fillable = [
         self::url,
-        self::ssl,
-        self::name,
+        self::ssl, self::name,
     ];
 }

@@ -4,7 +4,6 @@ namespace App\Models\Back;
 
 use DateTimeInterface;
 use Illuminate\Support\Collection;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 
 /**
@@ -23,7 +22,7 @@ use Illuminate\Database\Eloquent\Builder;
  * @method static Currency create(array $attributes)
  * @method static Builder where($column, $operator = null, $value = null, $boolean = 'and')
  */
-class Currency extends Model
+class Currency extends ModelBack
 {
     public const id = 'id';
 
@@ -51,9 +50,6 @@ class Currency extends Model
 
     /** @var string */
     const UPDATED_AT = 'updated_at';
-
-    /** @var string */
-    protected $connection = 'mysql_back';
 
     /** @var string[] */
     protected $dates = [self::updatedAt];
