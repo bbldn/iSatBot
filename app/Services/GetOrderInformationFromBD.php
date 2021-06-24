@@ -2,12 +2,12 @@
 
 namespace App\Services;
 
-use App\Formatters\OrderFormatter;
 use App\OrderBack;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
+use Illuminate\Support\Collection;
+use App\Formatters\OrderFormatter;
 
-class GetOrderInformationFromBD extends Service implements GetOrderInformationInterface
+class GetOrderInformationFromBD implements GetOrderInformationInterface
 {
     /**
      * @param int $id

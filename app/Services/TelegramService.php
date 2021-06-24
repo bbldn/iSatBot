@@ -2,22 +2,22 @@
 
 namespace App\Services;
 
-use App\Activities\Activity;
-use App\Activities\LoginActivity;
-use App\Activities\MenuActivity;
-use App\Activities\SearchActivity;
-use App\Activities\SettingActivity;
-use App\Activities\StartActivity;
 use App\Chat;
 use App\Helpers\ChatKeeper;
-use Illuminate\Contracts\Container\BindingResolutionException;
+use App\Activities\Activity;
+use App\Activities\MenuActivity;
+use Telegram\Bot\Objects\Update;
+use App\Activities\LoginActivity;
+use App\Activities\StartActivity;
+use App\Activities\SearchActivity;
+use App\Activities\SettingActivity;
 use Illuminate\Support\Facades\Auth;
 use Telegram\Bot\Laravel\Facades\Telegram;
-use Telegram\Bot\Objects\Update;
+use Illuminate\Contracts\Container\BindingResolutionException;
 
-class TelegramService extends Service
+class TelegramService
 {
-    /** @var string[] */
+    /** @psalm-var list<class-string> */
     private $activities = [
         StartActivity::class,
         LoginActivity::class,
@@ -37,9 +37,9 @@ class TelegramService extends Service
         $chat = Chat::where('chat_id', $chatId)->first();
         if (null === $chat) {
             $attributes = [
-                'chat_id' => $chatId,
-                'data' => collect(),
                 'user' => null,
+                'data' => collect(),
+                'chat_id' => $chatId,
             ];
             ChatKeeper::instance()->setChat(new Chat($attributes));
 
@@ -66,7 +66,6 @@ class TelegramService extends Service
         while (true) {
             $cycle = false;
             foreach ($this->activities as $activity) {
-                /** @noinspection PhpUndefinedMethodInspection */
                 if (true === $activity::able($update)) {
                     /** @var Activity $obj */
                     $obj = app()->make($activity);

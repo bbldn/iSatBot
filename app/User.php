@@ -10,10 +10,10 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 /**
  * @property integer id
- * @property string login
  * @property string name
+ * @property string login
  * @property string password
- * @property Collection chats
+ * @property Collection|Chat chats
  * @method static User|null find(integer $id)
  * @method static Collection all($columns = ['*'])
  * @method static Builder where($column, $operator = null, $value = null, $boolean = 'and')
@@ -24,6 +24,12 @@ class User extends Authenticatable
     use Notifiable;
 
     public const id = 'id';
+
+    public const name = 'name';
+
+    public const login = 'login';
+
+    public const password = 'password';
 
     /**
      * @var string[]

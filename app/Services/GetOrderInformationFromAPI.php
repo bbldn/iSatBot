@@ -5,7 +5,7 @@ namespace App\Services;
 use App\Formatters\OrderFormatter;
 use Illuminate\Support\Collection;
 
-class GetOrderInformationFromAPI extends Service implements GetOrderInformationInterface
+class GetOrderInformationFromAPI implements GetOrderInformationInterface
 {
     /**
      * @param int $id

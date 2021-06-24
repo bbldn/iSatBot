@@ -2,10 +2,10 @@
 
 namespace App\Providers;
 
-use App\Services\GetOrderInformationFromAPI;
-use App\Services\GetOrderInformationFromBD;
-use App\Services\GetOrderInformationInterface;
 use Illuminate\Support\ServiceProvider;
+use App\Services\GetOrderInformationFromBD;
+use App\Services\GetOrderInformationFromAPI;
+use App\Services\GetOrderInformationInterface;
 
 class AppServiceProvider extends ServiceProvider
 {

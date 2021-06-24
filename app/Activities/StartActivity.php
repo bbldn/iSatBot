@@ -42,9 +42,9 @@ class StartActivity extends Activity
         $chat = ChatKeeper::instance()->getChat();
 
         $chat->fill([
+            'user_id' => null,
             'chat_id' => $chatId,
             'data' => collect(['action' => Actions::INPUT_LOGIN]),
-            'user_id' => null,
         ]);
         $chat->save();
 

@@ -55,9 +55,9 @@ class SearchActivity extends Activity
             /** @var string $text */
             /** @noinspection PhpUndefinedMethodInspection */
             Telegram::sendMessage([
-                'chat_id' => ChatKeeper::instance()->getChat()->chat_id,
                 'text' => $text,
                 'parse_mode' => 'HTML',
+                'chat_id' => ChatKeeper::instance()->getChat()->chat_id,
             ]);
         }
 

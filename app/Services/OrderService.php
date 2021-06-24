@@ -2,17 +2,14 @@
 
 namespace App\Services;
 
-use App\Chat;
 use App\Events\EventList;
 use App\Helpers\EventListeners;
 use Illuminate\Support\Collection;
 use Telegram\Bot\Laravel\Facades\Telegram;
-use Telegram\Bot\Exceptions\TelegramResponseException;
 
-class OrderService extends Service
+class OrderService
 {
-    /** @var GetOrderInformationInterface */
-    private $getOrderInformation;
+    private GetOrderInformationInterface $getOrderInformation;
 
     /**
      * OrderService constructor.
@@ -34,7 +31,6 @@ class OrderService extends Service
 
     /**
      * @param int $id
-     * @throws TelegramResponseException
      */
     public function newOrderNotify(int $id): void
     {
@@ -46,20 +42,13 @@ class OrderService extends Service
         $texts = $this->getOrderInformation->getOrderInformation($id);
 
         foreach ($chats as $chat) {
-            /** @var Chat $chat */
             foreach ($texts as $text) {
-                try {
-                    /** @noinspection PhpUndefinedMethodInspection */
-                    Telegram::sendMessage([
-                        'chat_id' => $chat->chat_id,
-                        'text' => $text,
-                        'parse_mode' => 'HTML',
-                    ]);
-                } catch (TelegramResponseException $e) {
-                    if (true !== is_numeric($e->getCode()) || 403 !== (int)$e->getCode()) {
-                        throw $e;
-                    }
-                }
+                /** @noinspection PhpUndefinedMethodInspection */
+                Telegram::sendMessage([
+                    'text' => $text,
+                    'parse_mode' => 'HTML',
+                    'chat_id' => $chat->chat_id,
+                ]);
             }
         }
     }

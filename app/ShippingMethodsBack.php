@@ -9,20 +9,20 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
- * @property integer SID
+ * @property int SID
  * @property string|null Name
  * @property string|null description
  * @property string|null email_comments_text
- * @property integer|null Enabled
- * @property integer|null module_id
- * @property integer|null sort_order
+ * @property int|null Enabled
+ * @property int|null module_id
+ * @property int|null sort_order
  * @property string warehouses
  * @property DateTime warehouses_last_update
  * @property string key
- * @method static ShippingMethodsBack|null find(integer $id)
  * @method static Collection all($columns = ['*'])
- * @method static Builder where($column, $operator = null, $value = null, $boolean = 'and')
  * @method static ShippingMethodsBack create($attributes)
+ * @method static ShippingMethodsBack|null find(integer $id)
+ * @method static Builder where($column, $operator = null, $value = null, $boolean = 'and')
  */
 class ShippingMethodsBack extends Model
 {
