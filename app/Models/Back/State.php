@@ -6,6 +6,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @property integer|null id
@@ -16,6 +17,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property Country|null country
  * @property integer|null type_id
  * @property integer|null country_id
+ * @property Locality[]|Collection localities
  *
  * @method static State|null find(integer $id)
  * @method static State create(array $attributes)
@@ -65,5 +67,13 @@ class State extends Model
     public function type(): HasOne
     {
         return $this->hasOne(StateType::class, StateType::id, self::typeId);
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function localities(): HasMany
+    {
+        return $this->hasMany(Locality::class, Locality::stateId, self::id);
     }
 }

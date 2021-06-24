@@ -6,6 +6,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @property int|null id
@@ -14,6 +15,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property string|null data
  * @property State|null state
  * @property bool|null enabled
+ * @property PickUpPoint[]|Collection pickUpPoints
  *
  * @method static Locality|null find(integer $id)
  * @method static Collection all($columns = ['*'])
@@ -60,6 +62,14 @@ class Locality extends Model
      */
     public function state(): HasOne
     {
-        return $this->hasOne(State::class, State::id, self::id);
+        return $this->hasOne(State::class, State::id, self::stateId);
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function pickUpPoints(): HasMany
+    {
+        return $this->hasMany(PickUpPoint::class, PickUpPoint::localityId, self::id);
     }
 }

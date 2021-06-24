@@ -26,6 +26,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  */
 class ShippingMethod extends Model
 {
+    public const id = 'id';
+
     /** @var bool */
     public $timestamps = false;
 
