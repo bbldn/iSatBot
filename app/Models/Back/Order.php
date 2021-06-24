@@ -10,41 +10,50 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * @property int|null id
+ * @property Shop|null shop
  * @property string|null ip
  * @property string|null fio
- * @property string|null email
- * @property string|null phone
  * @property float|null total
+ * @property State|null state
  * @property int|null type_id
  * @property int|null shop_id
+ * @property string|null email
+ * @property string|null phone
  * @property int|null state_id
- * @property string|null comment
- * @property string|null address
  * @property bool|null archival
  * @property int|null status_id
- * @property string|null user_agent
  * @property int|null country_id
+ * @property string|null comment
+ * @property string|null address
+ * @property Country|null country
  * @property int|null customer_id
  * @property int|null locality_id
  * @property int|null warehouse_id
+ * @property Locality|null locality
+ * @property Customer|null customer
+ * @property string|null user_agent
+ * @property OrderStatus|null status
+ * @property Order|null deliveryOrder
  * @property string|null track_number
  * @property float|null delivery_total
  * @property int|null pick_up_point_id
  * @property int|null delivery_order_id
  * @property int|null customer_group_id
  * @property int|null payment_method_id
+ * @property PickUpPoint|null pickUpPoint
+ * @property Currency|null paymentCurrency
  * @property int|null delivery_currency_id
- * @property float|null payment_currency_value
- * @property float|null delivery_currency_value
- * @property int|null delivery_payment_method_id
+ * @property Currency|null deliveryCurrency
+ * @property CustomerGroup|null customerGroup
+ * @property PaymentMethod|null paymentMethod
  * @property DateTimeInterface|null created_at
  * @property DateTimeInterface|null updated_at
+ * @property float|null payment_currency_value
+ * @property float|null delivery_currency_value
+ * @property ShippingMethod|null shippingMethod
+ * @property int|null delivery_payment_method_id
  * @property DateTimeInterface|null delivery_created_at
  * @property DateTimeInterface|null track_number_created_at
- *
- * @property Shop|null shop
- * @property State|null state
- * @property Country|null country
  *
  * @method static Order|null find(int $id)
  * @method static Order create(array $attributes)
