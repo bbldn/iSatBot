@@ -6,6 +6,7 @@ use App\Helpers\CustomerEnum;
 use Illuminate\Support\Collection;
 use App\Formatters\OrderFormatter;
 use App\Models\Back\Order as OrderBack;
+use App\Repositories\Back\OrderRepository as OrderBackRepository;
 
 /**
  * @psalm-type OrderProductPsalm = array{
@@ -19,6 +20,17 @@ use App\Models\Back\Order as OrderBack;
  */
 class GetOrderInformationFromBD implements GetOrderInformationInterface
 {
+    private OrderBackRepository $orderBackRepository;
+
+    /**
+     * GetOrderInformationFromBD constructor.
+     * @param OrderBackRepository $orderBackRepository
+     */
+    public function __construct(OrderBackRepository $orderBackRepository)
+    {
+        $this->orderBackRepository = $orderBackRepository;
+    }
+
     /**
      * @param OrderBack $orderBack
      * @return string|null
@@ -69,7 +81,7 @@ class GetOrderInformationFromBD implements GetOrderInformationInterface
      */
     public function getOrderInformation(int $id): Collection
     {
-        $orderBack = OrderBack::find($id);
+        $orderBack = $this->orderBackRepository->find($id);
         if (null === $orderBack) {
             return collect(['Order not found']);
         }

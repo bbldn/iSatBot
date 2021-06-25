@@ -12,10 +12,13 @@ use App\Activities\StartActivity;
 use App\Activities\SearchActivity;
 use App\Activities\SettingActivity;
 use Illuminate\Support\Facades\Auth;
+use App\Repositories\ChatRepository;
 use Telegram\Bot\Laravel\Facades\Telegram;
 
 class TelegramService
 {
+    private ChatRepository $chatRepository;
+
     /** @psalm-var list<class-string> */
     private $activities = [
         StartActivity::class,
@@ -26,14 +29,22 @@ class TelegramService
     ];
 
     /**
+     * TelegramService constructor.
+     * @param ChatRepository $chatRepository
+     */
+    public function __construct(ChatRepository $chatRepository)
+    {
+        $this->chatRepository = $chatRepository;
+    }
+
+    /**
      * @param Update $update
      */
     public function authorization(Update $update): void
     {
         $chatId = $update->getMessage()->chat->id;
 
-        /** @var Chat|null $chat */
-        $chat = Chat::where(Chat::chatId, $chatId)->first();
+        $chat = $this->chatRepository->findOneByChatId($chatId);
         if (null === $chat) {
             $attributes = [
                 'user' => null,
