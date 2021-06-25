@@ -4,14 +4,14 @@ namespace App\Handler;
 
 use App\Services\OrderService;
 use App\Models\Synchronizer\Order;
-use Messenger\OrderFrontHasBeenUpdatedMessage;
+use Messenger\OrderFrontHasBeenCreatedMessage;
 
-class OrderFrontHasBeenUpdatedMessageHandler
+class OrderFrontHasBeenCreatedMessageHandler
 {
     private OrderService $orderService;
 
     /**
-     * OrderFrontHasBeenUpdatedMessageHandler constructor.
+     * OrderFrontHasBeenCreatedMessageHandler constructor.
      * @param OrderService $orderService
      */
     public function __construct(OrderService $orderService)
@@ -20,9 +20,9 @@ class OrderFrontHasBeenUpdatedMessageHandler
     }
 
     /**
-     * @param OrderFrontHasBeenUpdatedMessage $message
+     * @param OrderFrontHasBeenCreatedMessage $message
      */
-    public function handle(OrderFrontHasBeenUpdatedMessage $message): void
+    public function handle(OrderFrontHasBeenCreatedMessage $message): void
     {
         $order = Order::where(Order::frontId, $message->getId())->first();
         if (null === $order) {
