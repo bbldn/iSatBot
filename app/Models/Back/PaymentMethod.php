@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Collection;
  * @method static Collection all(array $columns)
  * @method static PaymentMethod|null find(int $id)
  * @method static PaymentMethod create(array $attributes)
- * @method static Builder where($column, $operator, $value, $boolean)
+ * @method static Builder where($column, $operator = null, $value = null, $boolean = 'and')
  */
 class PaymentMethod extends ModelBack
 {

@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Collection;
  * @method static Order|null find(int $id)
  * @method static Collection all(array $columns)
  * @method static Order create(array $attributes)
- * @method static Builder where($column, $operator, $value, $boolean)
+ * @method static Builder where($column, $operator = null, $value = null, $boolean = 'and')
  */
 class Order extends SynchronizerModel
 {

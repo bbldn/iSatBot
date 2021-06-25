@@ -22,6 +22,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property int|null state_id
  * @property bool|null archival
  * @property int|null status_id
+ * @property OrderType|null type
  * @property int|null country_id
  * @property string|null comment
  * @property string|null address
@@ -33,6 +34,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property Customer|null customer
  * @property string|null user_agent
  * @property OrderStatus|null status
+ * @property Warehouse|null warehouse
  * @property Order|null deliveryOrder
  * @property string|null track_number
  * @property float|null delivery_total
@@ -60,7 +62,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static Order|null find(int $id)
  * @method static Collection all(array $columns)
  * @method static Order create(array $attributes)
- * @method static Builder where($column, $operator, $value, $boolean)
+ * @method static Builder where($column, $operator = null, $value = null, $boolean = 'and')
  */
 class Order extends ModelBack
 {
@@ -192,6 +194,14 @@ class Order extends ModelBack
     /**
      * @return HasOne
      */
+    public function type(): HasOne
+    {
+        return $this->hasOne(OrderType::class, OrderType::id, self::typeId);
+    }
+
+    /**
+     * @return HasOne
+     */
     public function deliveryOrder(): HasOne
     {
         return $this->hasOne(Order::class, Order::id, self::deliveryOrderId);
@@ -219,6 +229,14 @@ class Order extends ModelBack
     public function orderValues(): HasMany
     {
         return $this->hasMany(OrderValue::class, OrderValue::orderId, self::id);
+    }
+
+    /**
+     * @return HasOne
+     */
+    public function warehouse(): HasOne
+    {
+        return $this->hasOne(Warehouse::class, Warehouse::id, self::warehouseId);
     }
 
     /**

@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Events\EventList;
+use App\Helpers\EventList;
 use App\Helpers\EventListeners;
 use Illuminate\Support\Collection;
 use Telegram\Bot\Laravel\Facades\Telegram;

@@ -3,8 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Support\Collection;
-use Illuminate\Database\Query\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
@@ -17,7 +17,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @method static Chat|null find(int $id)
  * @method static Chat create(array $attributes)
  * @method static Collection all(array $columns)
- * @method static Builder where($column, $operator, $value, $boolean)
+ * @method static Builder where($column, $operator = null, $value = null, $boolean = 'and')
  */
 class Chat extends Model
 {

@@ -22,7 +22,7 @@ use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
  * @method static User|null find(int $id)
  * @method static Collection all(array $columns)
  * @method static User create(array $attributes)
- * @method static Builder where($column, $operator, $value, $boolean)
+ * @method static Builder where($column, $operator = null, $value = null, $boolean = 'and')
  */
 class User extends Model implements AuthenticatableContract, AuthorizableContract
 {

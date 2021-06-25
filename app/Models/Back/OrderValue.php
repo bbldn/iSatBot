@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  *
  * @method static Collection all(array $columns)
  * @method static OrderValue create(array $attributes)
- * @method static Builder where($column, $operator, $value, $boolean)
+ * @method static Builder where($column, $operator = null, $value = null, $boolean = 'and')
  */
 class OrderValue extends ModelBack
 {

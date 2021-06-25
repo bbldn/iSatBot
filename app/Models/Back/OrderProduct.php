@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * @property int|null id
+ * @property Order|null order
  * @property string|null name
  * @property float|null price
  * @property float|null total
@@ -19,13 +20,15 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property string|null serial_numbers
  * @property int|null payment_currency_id
  * @property int|null delivery_currency_id
+ * @property Currency|null paymentCurrency
+ * @property Currency|null deliveryCurrency
  * @property float|null payment_currency_value
  * @property float|null delivery_currency_value
  *
  * @method static Collection all(array $columns)
  * @method static OrderProduct|null find(int $id)
  * @method static OrderProduct create(array $attributes)
- * @method static Builder where($column, $operator, $value, $boolean)
+ * @method static Builder where($column, $operator = null, $value = null, $boolean = 'and')
  */
 class OrderProduct extends ModelBack
 {
