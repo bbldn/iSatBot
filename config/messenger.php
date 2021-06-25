@@ -1,5 +1,7 @@
 <?php
 
+use Messenger\OrderFrontHasBeenUpdatedMessage;
+use App\Handler\OrderFrontHasBeenUpdatedMessageHandler;
 use BBLDN\Laravel\Messenger\Serializers\TransportJsonSerializer;
 use Symfony\Component\Messenger\Bridge\Redis\Transport\Connection;
 use Symfony\Component\Messenger\Bridge\Redis\Transport\RedisSender;
@@ -11,7 +13,11 @@ return [
     'sender' => fn(string $queue, Serializer $serializer) => new RedisSender(Connection::fromDsn($queue), $serializer),
     'receiver' => fn(string $queue, Serializer $serializer) => new RedisReceiver(Connection::fromDsn($queue), $serializer),
 
-    'handlers' => [],
+    'handlers' => [
+        OrderFrontHasBeenUpdatedMessage::class => [
+            OrderFrontHasBeenUpdatedMessageHandler::class,
+        ],
+    ],
     'queues' => [
         'failed' => env('FAILED_MESSENGER_TRANSPORT_DSN'),
         'synchronizer_ua' => env('SYNCHRONIZER_UA_MESSENGER_TRANSPORT_DSN'),

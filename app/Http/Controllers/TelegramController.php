@@ -13,8 +13,6 @@ use Illuminate\Support\Facades\Cache;
 use Telegram\Bot\Laravel\Facades\Telegram;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Contracts\Routing\ResponseFactory;
-use Telegram\Bot\Exceptions\TelegramResponseException;
-use Illuminate\Contracts\Container\BindingResolutionException;
 
 class TelegramController extends Controller
 {
@@ -38,7 +36,6 @@ class TelegramController extends Controller
 
     /**
      * @return ResponseFactory|Response
-     * @throws BindingResolutionException
      */
     public function webHookHandlerAction(): Response
     {
@@ -49,7 +46,7 @@ class TelegramController extends Controller
         $update = Telegram::getWebhookUpdates(['offset' => $offset + 1]);
         $this->telegramService->handle($update);
 
-        Cache::put('offset', $update->getUpdateId());
+        Cache::put('offset', $update->updateId);
 
         return response('ok');
     }
@@ -57,7 +54,6 @@ class TelegramController extends Controller
     /**
      * @param Request $request
      * @return Response
-     * @throws TelegramResponseException
      */
     public function newOrderNotifyAction(Request $request): Response
     {

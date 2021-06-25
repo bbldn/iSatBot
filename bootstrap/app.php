@@ -10,8 +10,7 @@ date_default_timezone_set(env('APP_TIMEZONE', 'UTC'));
 
 $app = new Laravel\Lumen\Application($path);
 $app->withFacades();
-
-// $app->withEloquent();
+$app->withEloquent();
 
 $app->singleton(Illuminate\Contracts\Console\Kernel::class, App\Console\Kernel::class);
 $app->singleton(Illuminate\Contracts\Debug\ExceptionHandler::class, App\Exceptions\Handler::class);

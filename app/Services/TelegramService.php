@@ -33,7 +33,7 @@ class TelegramService
         $chatId = $update->getMessage()->chat->id;
 
         /** @var Chat|null $chat */
-        $chat = Chat::where('chat_id', $chatId)->first();
+        $chat = Chat::where(Chat::chatId, $chatId)->first();
         if (null === $chat) {
             $attributes = [
                 'user' => null,
