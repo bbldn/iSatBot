@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Chat;
+use App\Models\Chat;
 use App\Helpers\ChatKeeper;
 use App\Activities\Activity;
 use App\Activities\MenuActivity;
@@ -12,11 +12,13 @@ use App\Activities\StartActivity;
 use App\Activities\SearchActivity;
 use App\Activities\SettingActivity;
 use Illuminate\Support\Facades\Auth;
+use App\Repositories\ChatRepository;
 use Telegram\Bot\Laravel\Facades\Telegram;
-use Illuminate\Contracts\Container\BindingResolutionException;
 
 class TelegramService
 {
+    private ChatRepository $chatRepository;
+
     /** @psalm-var list<class-string> */
     private $activities = [
         StartActivity::class,
@@ -27,14 +29,22 @@ class TelegramService
     ];
 
     /**
+     * TelegramService constructor.
+     * @param ChatRepository $chatRepository
+     */
+    public function __construct(ChatRepository $chatRepository)
+    {
+        $this->chatRepository = $chatRepository;
+    }
+
+    /**
      * @param Update $update
      */
     public function authorization(Update $update): void
     {
-        $chatId = $update->getMessage()->getChat()->getId();
+        $chatId = $update->getMessage()->chat->id;
 
-        /** @var Chat|null $chat */
-        $chat = Chat::where('chat_id', $chatId)->first();
+        $chat = $this->chatRepository->findOneByChatId($chatId);
         if (null === $chat) {
             $attributes = [
                 'user' => null,
@@ -56,7 +66,6 @@ class TelegramService
 
     /**
      * @param Update $update
-     * @throws BindingResolutionException
      */
     public function handle(Update $update): void
     {
@@ -84,12 +93,11 @@ class TelegramService
             }
         }
 
-
         if (Activity::FAIL === $status) {
             /** @noinspection PhpUndefinedMethodInspection */
             Telegram::sendMessage([
-                'chat_id' => $update->getMessage()->getChat()->getId(),
-                'text' => 'Неизвестная комманда: ' . $update->getMessage()->getText(),
+                'chat_id' => $update->getMessage()->chat->id,
+                'text' => "Неизвестная комманда: {$update->getMessage()->text}",
             ]);
         }
     }

@@ -2,7 +2,7 @@
 
 namespace App\Helpers;
 
-use App\Chat;
+use App\Models\Chat;
 
 class ChatKeeper
 {

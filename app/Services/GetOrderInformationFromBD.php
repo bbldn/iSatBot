@@ -2,99 +2,73 @@
 
 namespace App\Services;
 
-use App\OrderBack;
-use Illuminate\Support\Str;
+use App\Helpers\CustomerEnum;
 use Illuminate\Support\Collection;
 use App\Formatters\OrderFormatter;
+use App\Models\Back\Order as OrderBack;
+use App\Repositories\Back\OrderRepository as OrderBackRepository;
 
+/**
+ * @psalm-type OrderProductPsalm = array{
+ *     name: string,
+ *     price: string,
+ *     number: string,
+ *     amount: string,
+ *     currency_name: string,
+ *     currency_value: string,
+ * }
+ */
 class GetOrderInformationFromBD implements GetOrderInformationInterface
 {
+    private OrderBackRepository $orderBackRepository;
+
     /**
-     * @param int $id
-     * @return Collection
+     * GetOrderInformationFromBD constructor.
+     * @param OrderBackRepository $orderBackRepository
      */
-    public function getOrderInformation(int $id): Collection
+    public function __construct(OrderBackRepository $orderBackRepository)
     {
-        $ordersBack = OrderBack::where('order_num', $id)->get();
-        if (true === $ordersBack->isEmpty()) {
-            return collect(['Order not found']);
-        }
-
-        /** @var OrderBack $orderBack */
-        $orderBack = $ordersBack->first();
-
-        $phone = trim($orderBack->phone);
-        if (Str::length($phone) === 0 && $orderBack->client_id > 1) {
-            if (null !== $orderBack->customer) {
-                $phone = $orderBack->customer->phone;
-            }
-        }
-
-        $mail = trim($orderBack->mail);
-        if (Str::length($mail) === 0 && $orderBack->client_id > 1) {
-            if (null !== $orderBack->customer) {
-                $mail = $orderBack->customer->mail;
-            }
-        }
-
-        if (null === $orderBack->shipping) {
-            $delivery = 'Неизвестно';
-        } else {
-            $delivery = $orderBack->shipping->Name;
-        }
-
-        if (null === $orderBack->paymentObject) {
-            $payment = 'Неизвестно';
-        } else {
-            $payment = $orderBack->paymentObject->Name;
-        }
-
-        if (null === $orderBack->customer) {
-            $balance = 'Неизвестно';
-        } else {
-            $balance = "{$orderBack->customer->balance()}$";
-        }
-
-        $data = [
-            'id' => $orderBack->order_num,
-            'type' => $orderBack->type,
-            'FIO' => $orderBack->customer->fio,
-            'phone' => $phone,
-            'mail' => $mail,
-            'region' => $orderBack->region,
-            'city' => $orderBack->city,
-            'street' => $orderBack->street,
-            'house' => $orderBack->house,
-            'warehouse' => $orderBack->warehouse,
-            'delivery' => $delivery,
-            'payment' => $payment,
-            'comment' => $orderBack->whant,
-            'total' => "{$this->getOrderTotal($ordersBack)} {$orderBack->currency_name}",
-            'balance' => $balance,
-            'products' => $this->getProducts($ordersBack),
-        ];
-
-        return collect(OrderFormatter::formatOrder($data));
+        $this->orderBackRepository = $orderBackRepository;
     }
 
     /**
-     * @param Collection $orders
-     * @return array
+     * @param OrderBack $orderBack
+     * @return string|null
      */
-    protected function getProducts(Collection $orders): array
+    private function getBalance(OrderBack $orderBack): ?string
+    {
+        foreach ($orderBack->orderValues as $orderValue) {
+            if ($orderValue->constId === CustomerEnum::BALANCE) {
+                return (string)$orderValue->value;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * @param OrderBack $orderBack
+     * @return array
+     *
+     * @psalm-return list<OrderProductPsalm>
+     */
+    protected function getProducts(OrderBack $orderBack): array
     {
         $data = [];
 
-        foreach ($orders as $key => $order) {
-            /** @var OrderBack $order */
-            $price = round($order->price * $order->currency_value, 2) . ' ' . $order->currency_name;
+        foreach ($orderBack->orderProducts as $key => $orderProduct) {
+            $paymentCurrencyName = null;
+            if (null !== $orderProduct->paymentCurrency) {
+                $paymentCurrencyName = $orderProduct->paymentCurrency->name;
+            }
+
             $data[] = [
-                'number' => $key + 1,
-                'name' => $order->product_name,
-                'price' => $price,
-                'amount' => $order->amount,
-                'currency_name' => $order->currency_name,
-                'rate' => $order->currency_value,
+                'number' => (string)($key + 1),
+                'name' => (string)$orderProduct->name,
+                'price' => (string)$orderProduct->price,
+                'amount' => (string)$orderProduct->quantity,
+                'currency_name' => (string)$paymentCurrencyName,
+                'currency_value' => (string)$orderProduct->payment_currency_value,
             ];
         }
 
@@ -102,16 +76,76 @@ class GetOrderInformationFromBD implements GetOrderInformationInterface
     }
 
     /**
-     * @param Collection $orders
-     * @return float
+     * @param int $id
+     * @return Collection
      */
-    protected function getOrderTotal(Collection $orders): float
+    public function getOrderInformation(int $id): Collection
     {
-        $total = 0;
-        foreach ($orders as $key => $order) {
-            $total += round($order->price * $order->currency_value, 2);
+        $orderBack = $this->orderBackRepository->find($id);
+        if (null === $orderBack) {
+            return collect(['Order not found']);
         }
 
-        return $total;
+        $typeName = null;
+        if (null !== $orderBack->type) {
+            $typeName = $orderBack->type->name;
+        }
+
+        $fio = null;
+        $phone = null;
+        if (null !== $orderBack->customer) {
+            $fio = $orderBack->customer->fio;
+            $phone = $orderBack->customer->phone;
+        }
+
+        $stateName = null;
+        if (null !== $orderBack->state) {
+            $stateName = $orderBack->state->name;
+        }
+
+        $localityName = null;
+        if (null !== $orderBack->locality) {
+            $localityName = $orderBack->locality->name;
+        }
+
+        $warehouseName = null;
+        if (null !== $orderBack->warehouse) {
+            $warehouseName = $orderBack->warehouse->name;
+        }
+
+        $paymentMethodName = null;
+        if (null !== $orderBack->paymentMethod) {
+            $paymentMethodName = $orderBack->paymentMethod->name;
+        }
+
+        $shippingMethodName = null;
+        if (null !== $orderBack->shippingMethod) {
+            $shippingMethodName = $orderBack->shippingMethod->name;
+        }
+
+        $paymentCurrencyName = null;
+        if (null !== $orderBack->paymentCurrency) {
+            $paymentCurrencyName = $orderBack->paymentCurrency->name;
+        }
+
+        $data = [
+            'fio' => (string)$fio,
+            'phone' => (string)$phone,
+            'id' => (int)$orderBack->id,
+            'typeName' => (string)$typeName,
+            'stateName' => (string)$stateName,
+            'email' => (string)$orderBack->email,
+            'localityName' => (string)$localityName,
+            'address' => (string)$orderBack->address,
+            'comment' => (string)$orderBack->comment,
+            'warehouseName' => (string)$warehouseName,
+            'products' => $this->getProducts($orderBack),
+            'paymentMethodName' => (string)$paymentMethodName,
+            'balance' => (string)$this->getBalance($orderBack),
+            'shippingMethodName' => (string)$shippingMethodName,
+            'total' => "{$orderBack->total} {$paymentCurrencyName}",
+        ];
+
+        return collect(OrderFormatter::formatOrder($data));
     }
 }

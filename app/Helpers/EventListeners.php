@@ -2,8 +2,8 @@
 
 namespace App\Helpers;
 
-use App\Chat;
-use App\Listener;
+use App\Models\Chat;
+use App\Models\Listener;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 

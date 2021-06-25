@@ -1,9 +1,6 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
+/** @var \Laravel\Lumen\Routing\Router $router */
 
-Route::get('/', 'MainController@indexAction');
-Route::post('/telegram/webook', 'TelegramController@webHookHandlerAction');
-
-Route::get('/order/new', 'TelegramController@newOrderNotifyAction');
-Route::post('/order/new', 'TelegramController@newOrderNotifyAction');
+$router->get('/front/order/add', 'MainController@orderAction');
+$router->get('/front/customer/add', 'MainController@customerAction');
