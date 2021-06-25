@@ -32,7 +32,7 @@ class OrderService
     /**
      * @param int $id
      */
-    public function newOrderNotify(int $id): void
+    public function orderCreatedNotify(int $id): void
     {
         $chats = EventListeners::getChatsByEvent(EventList::ORDER_NEW);
         if (true === $chats->isEmpty()) {

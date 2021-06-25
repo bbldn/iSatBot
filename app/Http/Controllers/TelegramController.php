@@ -70,7 +70,7 @@ class TelegramController extends Controller
             return response()->json(['ok' => true]);
         }
 
-        $this->orderService->newOrderNotify((int)$id);
+        $this->orderService->orderCreatedNotify((int)$id);
 
         return response()->json(['ok' => true]);
     }

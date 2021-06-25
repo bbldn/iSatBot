@@ -2,6 +2,6 @@
 
 namespace Messenger;
 
-class CustomerFrontHasBeenCreatedMessage extends EntityHasBeenUpdatedMessage implements ToSynchronizer
+class CustomerFrontHasBeenCreatedMessage extends EntityHasBeenUpdatedMessage
 {
 }

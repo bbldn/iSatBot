@@ -1,6 +1,8 @@
 <?php
 
+use Messenger\OrderBackHasBeenCreatedMessage;
 use Messenger\OrderFrontHasBeenCreatedMessage;
+use App\Handler\OrderBackHasBeenCreatedMessageHandler;
 use App\Handler\OrderFrontHasBeenCreatedMessageHandler;
 use BBLDN\Laravel\Messenger\Serializers\TransportJsonSerializer;
 use Symfony\Component\Messenger\Bridge\Redis\Transport\Connection;
@@ -14,9 +16,8 @@ return [
     'receiver' => fn(string $queue, Serializer $serializer) => new RedisReceiver(Connection::fromDsn($queue), $serializer),
 
     'handlers' => [
-        OrderFrontHasBeenCreatedMessage::class => [
-            OrderFrontHasBeenCreatedMessageHandler::class,
-        ],
+        OrderBackHasBeenCreatedMessage::class => [OrderBackHasBeenCreatedMessageHandler::class],
+        OrderFrontHasBeenCreatedMessage::class => [OrderFrontHasBeenCreatedMessageHandler::class],
     ],
     'queues' => [
         'failed' => env('FAILED_MESSENGER_TRANSPORT_DSN'),

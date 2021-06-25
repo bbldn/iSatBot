@@ -34,6 +34,6 @@ class OrderFrontHasBeenCreatedMessageHandler
             return;
         }
 
-        $this->orderService->newOrderNotify((int)$orderBackId);
+        $this->orderService->orderCreatedNotify((int)$orderBackId);
     }
 }
