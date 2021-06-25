@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Synchronizer;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -15,7 +14,7 @@ use Illuminate\Database\Eloquent\Collection;
  * @method static Order create(array $attributes)
  * @method static Builder where($column, $operator, $value, $boolean)
  */
-class Order extends Model
+class Order extends SynchronizerModel
 {
     public const backId = 'back_id';
 
@@ -26,9 +25,6 @@ class Order extends Model
 
     /** @var string */
     protected $table = 'orders';
-
-    /** @var string */
-    protected $connection = 'mysql_synchronizer';
 
     /** @var string[] */
     protected $fillable = [self::backId, self::frontId];
