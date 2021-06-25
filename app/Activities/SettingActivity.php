@@ -7,10 +7,22 @@ use App\Helpers\EventList;
 use App\Helpers\ChatKeeper;
 use Telegram\Bot\Objects\Update;
 use Illuminate\Support\Facades\Auth;
+use App\Repositories\ListenerRepository;
 use Telegram\Bot\Laravel\Facades\Telegram;
 
 class SettingActivity extends Activity
 {
+    private ListenerRepository $listenerRepository;
+
+    /**
+     * SettingActivity constructor.
+     * @param ListenerRepository $listenerRepository
+     */
+    public function __construct(ListenerRepository $listenerRepository)
+    {
+        $this->listenerRepository = $listenerRepository;
+    }
+
     /**
      * @param Update $update
      * @return bool
@@ -62,37 +74,31 @@ class SettingActivity extends Activity
         $keyboard = [];
         $chat = ChatKeeper::instance()->getChat();
 
-        $exists = Listener::where('user_id', $chat->user->id)
-            ->where('event', EventList::ORDER_NEW)
-            ->exists();
+        $listener = $this->listenerRepository->findOneByUserAndEvent($chat->user, EventList::ORDER_NEW);
 
-        if (true === $exists) {
-            $keyboard[] = ['Отписаться от новых заказов',];
+        if (null !== $listener) {
+            $keyboard[] = ['Отписаться от новых заказов'];
         } else {
-            $keyboard[] = ['Подписаться на новые заказы',];
+            $keyboard[] = ['Подписаться на новые заказы'];
         }
 
-        $exists = Listener::where('user_id', $chat->user->id)
-            ->where('event', EventList::BACKUP)
-            ->exists();
+        $listener = $this->listenerRepository->findOneByUserAndEvent($chat->user, EventList::BACKUP);
 
-        if (true === $exists) {
-            $keyboard[] = ['Отписаться от бэкапов',];
+        if (true !== $listener) {
+            $keyboard[] = ['Отписаться от бэкапов'];
         } else {
-            $keyboard[] = ['Подписаться на бэкапы',];
+            $keyboard[] = ['Подписаться на бэкапы'];
         }
 
-        $exists = Listener::where('user_id', $chat->user->id)
-            ->where('event', EventList::TEST)
-            ->exists();
+        $listener = $this->listenerRepository->findOneByUserAndEvent($chat->user, EventList::TEST);
 
-        if (true === $exists) {
-            $keyboard[] = ['Отписаться от тестового функционала',];
+        if (true !== $listener) {
+            $keyboard[] = ['Отписаться от тестового функционала'];
         } else {
-            $keyboard[] = ['Подписаться на тестовый функционал',];
+            $keyboard[] = ['Подписаться на тестовый функционал'];
         }
 
-        $keyboard[] = ['В Меню',];
+        $keyboard[] = ['В Меню'];
 
         /** @noinspection PhpUndefinedMethodInspection */
         $replyMarkup = Telegram::replyKeyboardMarkup([
@@ -121,21 +127,19 @@ class SettingActivity extends Activity
     protected function subscribeOrderAction(Update $update): int
     {
         $chat = ChatKeeper::instance()->getChat();
-        $exists = Listener::where('user_id', $chat->user->id)
-            ->where('event', EventList::ORDER_NEW)
-            ->exists();
+        $listener = $this->listenerRepository->findOneByUserAndEvent($chat->user, EventList::ORDER_NEW);
 
-        if (true === $exists) {
+        if (null !== $listener) {
             /** @noinspection PhpUndefinedMethodInspection */
             Telegram::sendMessage([
                 'chat_id' => $chat->chat_id,
                 'text' => 'Вы уже подписаны',
             ]);
         } else {
-            Listener::create([
-                'event' => EventList::ORDER_NEW,
-                'user_id' => $chat->user->id,
-            ]);
+            $listener = new Listener();
+            $listener->user_id = $chat->user->id;
+            $listener->event = EventList::ORDER_NEW;
+            $listener->save();
 
             /** @noinspection PhpUndefinedMethodInspection */
             Telegram::sendMessage([
@@ -156,20 +160,16 @@ class SettingActivity extends Activity
     protected function unsubscribeOrderAction(Update $update): int
     {
         $chat = ChatKeeper::instance()->getChat();
-        $exists = Listener::where('user_id', $chat->user->id)
-            ->where('event', EventList::ORDER_NEW)
-            ->exists();
+        $listener = $this->listenerRepository->findOneByUserAndEvent($chat->user, EventList::ORDER_NEW);
 
-        if (false === $exists) {
+        if (null === $listener) {
             /** @noinspection PhpUndefinedMethodInspection */
             Telegram::sendMessage([
                 'chat_id' => $chat->chat_id,
                 'text' => 'Вы не подписаны',
             ]);
         } else {
-            Listener::where('user_id', $chat->user->id)
-                ->where('event', EventList::ORDER_NEW)
-                ->delete();
+            $listener->delete();
 
             /** @noinspection PhpUndefinedMethodInspection */
             Telegram::sendMessage([
@@ -190,21 +190,19 @@ class SettingActivity extends Activity
     protected function subscribeBackupAction(Update $update): int
     {
         $chat = ChatKeeper::instance()->getChat();
-        $exists = Listener::where('user_id', $chat->user->id)
-            ->where('event', EventList::BACKUP)
-            ->exists();
+        $listener = $this->listenerRepository->findOneByUserAndEvent($chat->user, EventList::BACKUP);
 
-        if (true === $exists) {
+        if (null !== $listener) {
             /** @noinspection PhpUndefinedMethodInspection */
             Telegram::sendMessage([
                 'chat_id' => $chat->chat_id,
                 'text' => 'Вы уже подписаны',
             ]);
         } else {
-            Listener::create([
-                'event' => EventList::BACKUP,
-                'user_id' => $chat->user->id,
-            ]);
+            $listener = new Listener();
+            $listener->user_id = $chat->user->id;
+            $listener->event = EventList::BACKUP;
+            $listener->save();
 
             /** @noinspection PhpUndefinedMethodInspection */
             Telegram::sendMessage([
@@ -225,20 +223,16 @@ class SettingActivity extends Activity
     protected function unsubscribeBackupAction(Update $update): int
     {
         $chat = ChatKeeper::instance()->getChat();
-        $exists = Listener::where('user_id', $chat->user->id)
-            ->where('event', EventList::BACKUP)
-            ->exists();
+        $listener = $this->listenerRepository->findOneByUserAndEvent($chat->user, EventList::BACKUP);
 
-        if (false === $exists) {
+        if (null === $listener) {
             /** @noinspection PhpUndefinedMethodInspection */
             Telegram::sendMessage([
                 'chat_id' => $chat->chat_id,
                 'text' => 'Вы не подписаны',
             ]);
         } else {
-            Listener::where('user_id', $chat->user->id)
-                ->where('event', EventList::BACKUP)
-                ->delete();
+            $listener->delete();
 
             /** @noinspection PhpUndefinedMethodInspection */
             Telegram::sendMessage([
@@ -259,21 +253,19 @@ class SettingActivity extends Activity
     protected function subscribeTestAction(Update $update): int
     {
         $chat = ChatKeeper::instance()->getChat();
-        $exists = Listener::where('user_id', $chat->user->id)
-            ->where('event', EventList::TEST)
-            ->exists();
+        $listener = $this->listenerRepository->findOneByUserAndEvent($chat->user, EventList::TEST);
 
-        if (true === $exists) {
+        if (null !== $listener) {
             /** @noinspection PhpUndefinedMethodInspection */
             Telegram::sendMessage([
                 'chat_id' => $chat->chat_id,
                 'text' => 'Вы уже подписаны',
             ]);
         } else {
-            Listener::create([
-                'event' => EventList::TEST,
-                'user_id' => $chat->user->id,
-            ]);
+            $listener = new Listener();
+            $listener->event = EventList::TEST;
+            $listener->user_id = $chat->user->id;
+            $listener->save();
 
             /** @noinspection PhpUndefinedMethodInspection */
             Telegram::sendMessage([
@@ -294,20 +286,16 @@ class SettingActivity extends Activity
     protected function unsubscribeTestAction(Update $update): int
     {
         $chat = ChatKeeper::instance()->getChat();
-        $exists = Listener::where('user_id', $chat->user->id)
-            ->where('event', EventList::TEST)
-            ->exists();
+        $listener = $this->listenerRepository->findOneByUserAndEvent($chat->user, EventList::TEST);
 
-        if (false === $exists) {
+        if (null === $listener) {
             /** @noinspection PhpUndefinedMethodInspection */
             Telegram::sendMessage([
                 'chat_id' => $chat->chat_id,
                 'text' => 'Вы не подписаны',
             ]);
         } else {
-            Listener::where('user_id', $chat->user->id)
-                ->where('event', EventList::TEST)
-                ->delete();
+            $listener->delete();
 
             /** @noinspection PhpUndefinedMethodInspection */
             Telegram::sendMessage([
