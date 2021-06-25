@@ -2,8 +2,8 @@
 
 namespace App\Activities;
 
-use App\Listener;
-use App\Events\EventList;
+use App\Models\Listener;
+use App\Helpers\EventList;
 use App\Helpers\ChatKeeper;
 use Telegram\Bot\Objects\Update;
 use Illuminate\Support\Facades\Auth;
@@ -41,11 +41,11 @@ class SettingActivity extends Activity
             'В Меню' => 'toMenuAction',
         ];
 
-        if (false === key_exists($update->getMessage()->getText(), $actions)) {
+        if (false === key_exists($update->getMessage()->text, $actions)) {
             return Activity::FAIL;
         }
 
-        $action = $actions[$update->getMessage()->getText()];
+        $action = $actions[$update->getMessage()->text];
 
         return $this->$action($update);
     }
@@ -54,7 +54,10 @@ class SettingActivity extends Activity
      * @param Update $update
      * @return int
      */
-    protected function settingAction(Update $update): int
+    protected function settingAction(
+        /** @noinspection PhpUnusedParameterInspection */
+        Update $update
+    ): int
     {
         $keyboard = [];
         $chat = ChatKeeper::instance()->getChat();

@@ -34,11 +34,11 @@ class StartActivity extends Activity
      */
     public function handle(Update $update): int
     {
-        if ('/start' !== $update->getMessage()->getText()) {
+        if ('/start' !== $update->getMessage()->text) {
             return Activity::FAIL;
         }
 
-        $chatId = $update->getMessage()->getChat()->getId();
+        $chatId = $update->getMessage()->chat->id;
         $chat = ChatKeeper::instance()->getChat();
 
         $chat->fill([

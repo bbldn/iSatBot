@@ -9,7 +9,7 @@ use Telegram\Bot\Laravel\Facades\Telegram;
 
 class MenuActivity extends Activity
 {
-    /** @var array */
+    /** @var string[] */
     protected $methods = [
         'menu',
         'setting',
@@ -50,12 +50,12 @@ class MenuActivity extends Activity
      */
     public function menu(Update $update): int
     {
-        if (false === in_array($update->getMessage()->getText(), ['Меню',])) {
+        if (false === in_array($update->getMessage()->text, ['Меню'])) {
             return Activity::FAIL;
         }
 
         $keyboard = [
-            ['Настройки',],
+            ['Настройки'],
         ];
 
         /** @noinspection PhpUndefinedMethodInspection */
@@ -86,7 +86,7 @@ class MenuActivity extends Activity
      */
     public function setting(Update $update): int
     {
-        if (false === in_array($update->getMessage()->getText(), ['Настройки',])) {
+        if (false === in_array($update->getMessage()->text, ['Настройки'])) {
             return Activity::FAIL;
         }
 

@@ -37,9 +37,6 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     public const password = 'password';
 
     /** @var string[] */
-    protected $hidden = [self::password];
-
-    /** @var string[] */
     protected $fillable = [self::name, self::password];
 
     public ?Chat $chat = null;

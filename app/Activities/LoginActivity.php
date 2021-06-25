@@ -2,16 +2,27 @@
 
 namespace App\Activities;
 
-use App\User;
 use App\Helpers\ChatKeeper;
 use Telegram\Bot\Objects\Update;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use App\Repositories\UserRepository;
 use App\Exceptions\WrongActionException;
 use Telegram\Bot\Laravel\Facades\Telegram;
 
 class LoginActivity extends Activity
 {
+    private UserRepository $userRepository;
+
+    /**
+     * LoginActivity constructor.
+     * @param UserRepository $userRepository
+     */
+    public function __construct(UserRepository $userRepository)
+    {
+        $this->userRepository = $userRepository;
+    }
+
     /**
      * @param Update $update
      * @return bool
@@ -58,9 +69,9 @@ class LoginActivity extends Activity
      */
     protected function login(Update $update): int
     {
+        $text = $update->getMessage()->text;
         $chat = ChatKeeper::instance()->getChat();
-        $text = $update->getMessage()->getText();
-        $user = User::where('login', $text)->first();
+        $user = $this->userRepository->findOneByLogin($text);
 
         if (null === $user) {
             /** @noinspection PhpUndefinedMethodInspection */
@@ -100,7 +111,7 @@ class LoginActivity extends Activity
             return Activity::RECYCLE;
         }
 
-        $user = User::find((int)$chat->data->get('user_id', 0));
+        $user = $this->userRepository->find((int)$chat->data->get('user_id', 0));
         if (null === $user) {
             $update->put('message', $update->getMessage()->put('text', '/start'));
             $chat->data = collect();
@@ -109,7 +120,7 @@ class LoginActivity extends Activity
             return Activity::RECYCLE;
         }
 
-        if (false === Hash::check($update->getMessage()->getText(), $user->password)) {
+        if (false === Hash::check($update->getMessage()->text, $user->password)) {
             /** @noinspection PhpUndefinedMethodInspection */
             Telegram::sendMessage([
                 'chat_id' => $chat->chat_id,

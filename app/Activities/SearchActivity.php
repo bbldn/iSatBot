@@ -10,8 +10,7 @@ use Telegram\Bot\Laravel\Facades\Telegram;
 
 class SearchActivity extends Activity
 {
-    /** @var OrderService */
-    protected $orderService;
+    private OrderService $orderService;
 
     /**
      * SearchActivity constructor.
@@ -36,7 +35,7 @@ class SearchActivity extends Activity
             return false;
         }
 
-        return 1 === preg_match('/^#[0-9]+$/', $update->getMessage()->getText());
+        return 1 === preg_match('/^#[0-9]+$/', $update->getMessage()->text);
     }
 
 
@@ -46,7 +45,7 @@ class SearchActivity extends Activity
      */
     public function handle(Update $update): int
     {
-        preg_match('/^#([0-9]+)$/', $update->getMessage()->getText(), $arr);
+        preg_match('/^#([0-9]+)$/', $update->getMessage()->text, $arr);
         $id = (int)$arr[1];
 
         $texts = $this->orderService->getOrderInformation($id);
