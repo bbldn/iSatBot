@@ -66,7 +66,7 @@ class GetOrderInformationFromBD implements GetOrderInformationInterface
                 'number' => (string)($key + 1),
                 'name' => (string)$orderProduct->name,
                 'price' => (string)$orderProduct->price,
-                'amount' => (string)$orderProduct->quantity,
+                'quantity' => (string)$orderProduct->quantity,
                 'currency_name' => (string)$paymentCurrencyName,
                 'currency_value' => (string)$orderProduct->payment_currency_value,
             ];
@@ -108,11 +108,6 @@ class GetOrderInformationFromBD implements GetOrderInformationInterface
             $localityName = $orderBack->locality->name;
         }
 
-        $warehouseName = null;
-        if (null !== $orderBack->warehouse) {
-            $warehouseName = $orderBack->warehouse->name;
-        }
-
         $paymentMethodName = null;
         if (null !== $orderBack->paymentMethod) {
             $paymentMethodName = $orderBack->paymentMethod->name;
@@ -128,6 +123,11 @@ class GetOrderInformationFromBD implements GetOrderInformationInterface
             $paymentCurrencyName = $orderBack->paymentCurrency->name;
         }
 
+        $pickUpPointName = null;
+        if (null !== $orderBack->pickUpPoint) {
+            $pickUpPointName = $orderBack->pickUpPoint->name;
+        }
+
         $data = [
             'fio' => (string)$fio,
             'phone' => (string)$phone,
@@ -138,8 +138,8 @@ class GetOrderInformationFromBD implements GetOrderInformationInterface
             'localityName' => (string)$localityName,
             'address' => (string)$orderBack->address,
             'comment' => (string)$orderBack->comment,
-            'warehouseName' => (string)$warehouseName,
             'products' => $this->getProducts($orderBack),
+            'pickUpPointName' => (string)$pickUpPointName,
             'paymentMethodName' => (string)$paymentMethodName,
             'balance' => (string)$this->getBalance($orderBack),
             'shippingMethodName' => (string)$shippingMethodName,

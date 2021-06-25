@@ -2,5 +2,7 @@
 
 /** @var \Laravel\Lumen\Routing\Router $router */
 
-$router->get('/front/order/add', 'MainController@orderAction');
-$router->get('/front/customer/add', 'MainController@customerAction');
+$router->get('/order/new', 'TelegramController@newOrderNotifyAction');
+$router->post('/order/new', 'TelegramController@newOrderNotifyAction');
+
+$router->post('/telegram/webook', 'TelegramController@webHookHandlerAction');
